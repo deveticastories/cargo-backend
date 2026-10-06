@@ -12,6 +12,7 @@ import employeeRoutes from "./src/modules/employee/employeeRoutes.ts";
 import customerRoutes from "./src/modules/customer/customerRoutes.ts";
 import storeRoutes from "./src/modules/store/storeRoutes.ts";
 import countryRoutes from "./src/modules/country/countryRoutes.ts";
+import deliveryPartnerRoutes from "./src/modules/deliveryPartner/deliveryPartnerRoutes.ts";
 import swaggerSpec from "./src/config/swagger.js";
 
 
@@ -37,4 +38,5 @@ app.use("/api/employees", employeeRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/stores", storeRoutes);
 app.use("/api/countries", countryRoutes);
+app.use("/api/delivery-partners", deliveryPartnerRoutes);
 export default app;

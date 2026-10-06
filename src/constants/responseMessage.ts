@@ -28,5 +28,11 @@ export const message = {
     COUNTRY_NOT_FOUND: "Country not found",
     INVALID_COUNTRY_ID: "Invalid country ID",
     COUNTRY_STATUS_UPDATED: "Country status updated successfully",
+    DELIVERY_PARTNER_CREATED: "Delivery partner created successfully",
+    DELIVERY_PARTNER_UPDATED: "Delivery partner updated successfully",
+    DELIVERY_PARTNER_DELETED: "Delivery partner deleted successfully",
+    DELIVERY_PARTNER_NOT_FOUND: "Delivery partner not found",
+    INVALID_DELIVERY_PARTNER_ID: "Invalid delivery partner ID",
+    DELIVERY_PARTNER_STATUS_UPDATED: "Delivery partner status updated successfully",
 
 };

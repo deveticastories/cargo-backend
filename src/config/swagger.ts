@@ -42,6 +42,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
         name: "Countries",
         description: "Country management APIs",
       },
+      {
+        name: "Delivery Partners",
+        description: "Delivery partner management APIs",
+      },
 
     ],
 
@@ -182,7 +186,145 @@ const swaggerOptions: swaggerJSDoc.Options = {
             },
           },
         },
+        DeliveryPartner: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
 
+            name: {
+              type: "string",
+              example: "DHL Express",
+            },
+
+            whatsapp: {
+              type: "string",
+              example: "+919876543210",
+            },
+
+            from: {
+              $ref: "#/components/schemas/Country",
+            },
+
+            toCountry: {
+              $ref: "#/components/schemas/Country",
+            },
+
+            charge: {
+              type: "number",
+              example: 500,
+            },
+
+            status: {
+              type: "boolean",
+              example: true,
+            },
+
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+
+            deletedAt: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+            },
+
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        CreateDeliveryPartnerRequest: {
+          type: "object",
+          required: [
+            "name",
+            "whatsapp",
+            "from",
+            "toCountry",
+          ],
+          properties: {
+            name: {
+              type: "string",
+              example: "DHL Express",
+            },
+
+            whatsapp: {
+              type: "string",
+              example: "+919876543210",
+            },
+
+            from: {
+              type: "string",
+              description: "Country ID",
+              example: "665c2f8a9b12345678901234",
+            },
+
+            toCountry: {
+              type: "string",
+              description: "Destination country ID",
+              example: "665c2f8a9b12345678901235",
+            },
+
+            charge: {
+              type: "number",
+              example: 500,
+            },
+          },
+        },
+
+        UpdateDeliveryPartnerRequest: {
+          type: "object",
+          properties: {
+            name: {
+              type: "string",
+              example: "DHL Express",
+            },
+
+            whatsapp: {
+              type: "string",
+              example: "+919876543210",
+            },
+
+            from: {
+              type: "string",
+              description: "Country ID",
+              example: "665c2f8a9b12345678901234",
+            },
+
+            toCountry: {
+              type: "string",
+              description: "Destination country ID",
+              example: "665c2f8a9b12345678901235",
+            },
+
+            charge: {
+              type: "number",
+              example: 750,
+            },
+          },
+        },
+
+        UpdateDeliveryPartnerStatusRequest: {
+          type: "object",
+          required: ["status"],
+          properties: {
+            status: {
+              type: "boolean",
+              example: false,
+            },
+          },
+        },
         // =========================
         // EMPLOYEE
         // =========================
