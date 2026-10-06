@@ -34,6 +34,15 @@ const swaggerOptions: swaggerJSDoc.Options = {
         name: "Customers",
         description: "Customer management APIs",
       },
+      {
+        name: "Stores",
+        description: "Store management APIs",
+      },
+      {
+        name: "Countries",
+        description: "Country management APIs",
+      },
+
     ],
 
     components: {
@@ -88,10 +97,72 @@ const swaggerOptions: swaggerJSDoc.Options = {
           },
         },
 
-        // =========================
-        // USER
-        // =========================
+        Country: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+            name: {
+              type: "string",
+              example: "India",
+            },
+            status: {
+              type: "boolean",
+              example: true,
+            },
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+            deletedAt: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+            },
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
 
+        CreateCountryRequest: {
+          type: "object",
+          required: ["name"],
+          properties: {
+            name: {
+              type: "string",
+              example: "India",
+            },
+          },
+        },
+
+        UpdateCountryRequest: {
+          type: "object",
+          properties: {
+            name: {
+              type: "string",
+              example: "United Arab Emirates",
+            },
+          },
+        },
+
+        UpdateCountryStatusRequest: {
+          type: "object",
+          required: ["status"],
+          properties: {
+            status: {
+              type: "boolean",
+              example: false,
+            },
+          },
+        },
         User: {
           type: "object",
           properties: {
@@ -258,7 +329,109 @@ const swaggerOptions: swaggerJSDoc.Options = {
             },
           },
         },
+        Store: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+            location: {
+              type: "string",
+              example: "Kochi",
+            },
+            contact: {
+              type: "string",
+              example: "+91 9876543210",
+            },
+            inCharge: {
+              type: "string",
+              example: "John Doe",
+            },
+            status: {
+              type: "string",
+              enum: ["Active", "Inactive"],
+              example: "Active",
+            },
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+            deletedAt: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+            },
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
 
+        CreateStoreRequest: {
+          type: "object",
+          required: ["location", "contact", "inCharge"],
+          properties: {
+            location: {
+              type: "string",
+              example: "Kochi",
+            },
+            contact: {
+              type: "string",
+              example: "+91 9876543210",
+            },
+            inCharge: {
+              type: "string",
+              example: "John Doe",
+            },
+            status: {
+              type: "string",
+              enum: ["Active", "Inactive"],
+              default: "Active",
+              example: "Active",
+            },
+          },
+        },
+
+        UpdateStoreRequest: {
+          type: "object",
+          properties: {
+            location: {
+              type: "string",
+              example: "Dubai",
+            },
+            contact: {
+              type: "string",
+              example: "+971 501234567",
+            },
+            inCharge: {
+              type: "string",
+              example: "John Doe",
+            },
+            status: {
+              type: "string",
+              enum: ["Active", "Inactive"],
+              example: "Active",
+            },
+          },
+        },
+
+        UpdateStoreStatusRequest: {
+          type: "object",
+          required: ["status"],
+          properties: {
+            status: {
+              type: "string",
+              enum: ["Active", "Inactive"],
+              example: "Inactive",
+            },
+          },
+        },
         // =========================
         // CUSTOMER
         // =========================

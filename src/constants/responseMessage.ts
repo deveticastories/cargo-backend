@@ -16,5 +16,17 @@ export const message = {
     CUSTOMER_NOT_FOUND: "Customer not found",
     INVALID_CUSTOMER_ID: "Invalid customer ID",
     CUSTOMER_STATUS_UPDATED: "Customer status updated successfully",
+    STORE_CREATED: "Store created successfully",
+    STORE_UPDATED: "Store updated successfully",
+    STORE_DELETED: "Store deleted successfully",
+    STORE_NOT_FOUND: "Store not found",
+    STORE_STATUS_UPDATED: "Store status updated successfully",
+    INVALID_STORE_ID: "Invalid store ID",
+    COUNTRY_CREATED: "Country created successfully",
+    COUNTRY_UPDATED: "Country updated successfully",
+    COUNTRY_DELETED: "Country deleted successfully",
+    COUNTRY_NOT_FOUND: "Country not found",
+    INVALID_COUNTRY_ID: "Invalid country ID",
+    COUNTRY_STATUS_UPDATED: "Country status updated successfully",
 
 };
