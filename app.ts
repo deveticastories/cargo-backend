@@ -5,14 +5,14 @@ import express, {
 } from "express";
 
 import cors from "cors";
-import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 
 import authRoutes from "./src/modules/auth/authRoutes.ts";
 import employeeRoutes from "./src/modules/employee/employeeRoutes.ts";
+import customerRoutes from "./src/modules/customer/customerRoutes.ts";
 import swaggerSpec from "./src/config/swagger.js";
 
-dotenv.config();
+
 
 const app: Application = express();
 
@@ -32,5 +32,6 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/employees", employeeRoutes);
+app.use("/api/customers", customerRoutes);
 
 export default app;

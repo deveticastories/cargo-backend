@@ -30,6 +30,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
         name: "Employees",
         description: "Employee management APIs",
       },
+      {
+        name: "Customers",
+        description: "Customer management APIs",
+      },
     ],
 
     components: {
@@ -55,33 +59,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
               format: "email",
               example: "admin@example.com",
             },
-
             password: {
               type: "string",
               format: "password",
               example: "Password@123",
-            },
-          },
-        },
-
-        User: {
-          type: "object",
-          properties: {
-            _id: {
-              type: "string",
-              example: "65f123456789abcdef123456",
-            },
-
-            email: {
-              type: "string",
-              format: "email",
-              example: "admin@example.com",
-            },
-
-            role: {
-              type: "string",
-              enum: ["SuperAdmin", "Admin", "Employee"],
-              example: "SuperAdmin",
             },
           },
         },
@@ -93,19 +74,40 @@ const swaggerOptions: swaggerJSDoc.Options = {
               type: "boolean",
               example: true,
             },
-
             message: {
               type: "string",
               example: "Login successful",
             },
-
             token: {
               type: "string",
-              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+              example: "eyJhbGciOiJIUzI1NiIs...",
             },
-
             user: {
               $ref: "#/components/schemas/User",
+            },
+          },
+        },
+
+        // =========================
+        // USER
+        // =========================
+
+        User: {
+          type: "object",
+          properties: {
+            id: {
+              type: "string",
+              example: "65f123456789abcdef123456",
+            },
+            email: {
+              type: "string",
+              format: "email",
+              example: "admin@example.com",
+            },
+            role: {
+              type: "string",
+              enum: ["SuperAdmin", "Admin", "Employee"],
+              example: "SuperAdmin",
             },
           },
         },
@@ -121,59 +123,47 @@ const swaggerOptions: swaggerJSDoc.Options = {
               type: "string",
               example: "665c2f8a9b12345678901234",
             },
-
             name: {
               type: "string",
               example: "John Doe",
             },
-
             empId: {
               type: "string",
               example: "EMP001",
             },
-
             contact: {
               type: "string",
               example: "9876543210",
             },
-
             bloodGroup: {
               type: "string",
               example: "O+",
             },
-
             email: {
               type: "string",
               format: "email",
               example: "john@example.com",
             },
-
             role: {
               type: "string",
               enum: ["SuperAdmin", "Admin", "Employee"],
               example: "Employee",
             },
-
             status: {
               type: "boolean",
               example: true,
             },
-
             isDeleted: {
               type: "boolean",
               example: false,
             },
-
             createdAt: {
               type: "string",
               format: "date-time",
-              example: "2026-10-06T10:00:00.000Z",
             },
-
             updatedAt: {
               type: "string",
               format: "date-time",
-              example: "2026-10-06T10:00:00.000Z",
             },
           },
         },
@@ -192,37 +182,31 @@ const swaggerOptions: swaggerJSDoc.Options = {
               type: "string",
               example: "John Doe",
             },
-
             empId: {
               type: "string",
               example: "EMP001",
             },
-
             contact: {
               type: "string",
               example: "9876543210",
             },
-
             bloodGroup: {
               type: "string",
               example: "O+",
             },
-
             email: {
               type: "string",
               format: "email",
               example: "john@example.com",
             },
-
             password: {
               type: "string",
               format: "password",
               example: "Password@123",
             },
-
             role: {
               type: "string",
-              enum: ["Admin", "Employee"],
+              enum: ["SuperAdmin", "Admin", "Employee"],
               example: "Employee",
             },
           },
@@ -235,37 +219,31 @@ const swaggerOptions: swaggerJSDoc.Options = {
               type: "string",
               example: "John Doe",
             },
-
             empId: {
               type: "string",
               example: "EMP001",
             },
-
             contact: {
               type: "string",
               example: "9876543210",
             },
-
             bloodGroup: {
               type: "string",
               example: "O+",
             },
-
             email: {
               type: "string",
               format: "email",
               example: "john@example.com",
             },
-
             password: {
               type: "string",
               format: "password",
-              example: "Password@123",
+              example: "NewPassword@123",
             },
-
             role: {
               type: "string",
-              enum: ["Admin", "Employee"],
+              enum: ["SuperAdmin", "Admin", "Employee"],
               example: "Employee",
             },
           },
@@ -273,11 +251,161 @@ const swaggerOptions: swaggerJSDoc.Options = {
 
         UpdateEmployeeStatusRequest: {
           type: "object",
-          required: ["status"],
           properties: {
             status: {
               type: "boolean",
               example: true,
+            },
+          },
+        },
+
+        // =========================
+        // CUSTOMER
+        // =========================
+
+        Customer: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+            customerType: {
+              type: "string",
+              enum: ["Sender", "Receiver"],
+              example: "Sender",
+            },
+            name: {
+              type: "string",
+              example: "John Doe",
+            },
+            whatsapp: {
+              type: "string",
+              example: "9876543210",
+            },
+            alternativeNo: {
+              type: "string",
+              example: "9123456780",
+            },
+            country: {
+              type: "string",
+              example: "India",
+            },
+            location: {
+              type: "string",
+              example: "Kochi",
+            },
+            discount: {
+              type: "number",
+              example: 10,
+            },
+            status: {
+              type: "string",
+              enum: ["Active", "Inactive"],
+              example: "Active",
+            },
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        CreateCustomerRequest: {
+          type: "object",
+          properties: {
+            customerType: {
+              type: "string",
+              enum: ["Sender", "Receiver"],
+              example: "Sender",
+            },
+            name: {
+              type: "string",
+              example: "John Doe",
+            },
+            whatsapp: {
+              type: "string",
+              example: "9876543210",
+            },
+            alternativeNo: {
+              type: "string",
+              example: "9123456780",
+            },
+            country: {
+              type: "string",
+              example: "India",
+            },
+            location: {
+              type: "string",
+              example: "Kochi",
+            },
+            discount: {
+              type: "number",
+              example: 10,
+            },
+            status: {
+              type: "string",
+              enum: ["Active", "Inactive"],
+              example: "Active",
+            },
+          },
+        },
+
+        UpdateCustomerRequest: {
+          type: "object",
+          properties: {
+            customerType: {
+              type: "string",
+              enum: ["Sender", "Receiver"],
+              example: "Receiver",
+            },
+            name: {
+              type: "string",
+              example: "John Doe",
+            },
+            whatsapp: {
+              type: "string",
+              example: "9876543210",
+            },
+            alternativeNo: {
+              type: "string",
+              example: "9123456780",
+            },
+            country: {
+              type: "string",
+              example: "UAE",
+            },
+            location: {
+              type: "string",
+              example: "Dubai",
+            },
+            discount: {
+              type: "number",
+              example: 10,
+            },
+            status: {
+              type: "string",
+              enum: ["Active", "Inactive"],
+              example: "Active",
+            },
+          },
+        },
+
+        UpdateCustomerStatusRequest: {
+          type: "object",
+          properties: {
+            status: {
+              type: "string",
+              enum: ["Active", "Inactive"],
+              example: "Active",
             },
           },
         },

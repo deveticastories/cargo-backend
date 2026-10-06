@@ -10,5 +10,11 @@ export const message = {
     EMPLOYEE_STATUS_UPDATED: "Employee status updated successfully",
     INVALID_TOKEN: "Invalid token. Please login again",
     TOKEN_EXPIRED: "Token has expired. Please login again",
+    CUSTOMER_CREATED: "Customer created successfully",
+    CUSTOMER_UPDATED: "Customer updated successfully",
+    CUSTOMER_DELETED: "Customer deleted successfully",
+    CUSTOMER_NOT_FOUND: "Customer not found",
+    INVALID_CUSTOMER_ID: "Invalid customer ID",
+    CUSTOMER_STATUS_UPDATED: "Customer status updated successfully",
 
 };
