@@ -10,12 +10,12 @@ const swaggerOptions: swaggerJSDoc.Options = {
       description: "API documentation for Cargo Backend",
     },
 
-   servers: [
-  {
-    url: `http://localhost:${process.env.PORT || 3000}`,
-    description: "Local development server",
-  },
-],
+    servers: [
+      {
+        url: `http://localhost:${process.env.PORT || 3000}`,
+        description: "Local development server",
+      },
+    ],
 
     tags: [
       {
@@ -25,6 +25,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
       {
         name: "Users",
         description: "User management APIs",
+      },
+      {
+        name: "Employees",
+        description: "Employee management APIs",
       },
     ],
 
@@ -38,6 +42,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
       },
 
       schemas: {
+        // =========================
+        // AUTH
+        // =========================
+
         LoginRequest: {
           type: "object",
           required: ["email", "password"],
@@ -59,7 +67,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
         User: {
           type: "object",
           properties: {
-            id: {
+            _id: {
               type: "string",
               example: "65f123456789abcdef123456",
             },
@@ -72,7 +80,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
 
             role: {
               type: "string",
-              enum: ["SuperAdmin", "Admin"],
+              enum: ["SuperAdmin", "Admin", "Employee"],
               example: "SuperAdmin",
             },
           },
@@ -91,18 +99,185 @@ const swaggerOptions: swaggerJSDoc.Options = {
               example: "Login successful",
             },
 
-            data: {
-              type: "object",
-              properties: {
-                accessToken: {
-                  type: "string",
-                  example: "eyJhbGciOiJIUzI1NiIs...",
-                },
+            token: {
+              type: "string",
+              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+            },
 
-                user: {
-                  $ref: "#/components/schemas/User",
-                },
-              },
+            user: {
+              $ref: "#/components/schemas/User",
+            },
+          },
+        },
+
+        // =========================
+        // EMPLOYEE
+        // =========================
+
+        Employee: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+
+            name: {
+              type: "string",
+              example: "John Doe",
+            },
+
+            empId: {
+              type: "string",
+              example: "EMP001",
+            },
+
+            contact: {
+              type: "string",
+              example: "9876543210",
+            },
+
+            bloodGroup: {
+              type: "string",
+              example: "O+",
+            },
+
+            email: {
+              type: "string",
+              format: "email",
+              example: "john@example.com",
+            },
+
+            role: {
+              type: "string",
+              enum: ["SuperAdmin", "Admin", "Employee"],
+              example: "Employee",
+            },
+
+            status: {
+              type: "boolean",
+              example: true,
+            },
+
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+
+            createdAt: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-06T10:00:00.000Z",
+            },
+
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-06T10:00:00.000Z",
+            },
+          },
+        },
+
+        CreateEmployeeRequest: {
+          type: "object",
+          required: [
+            "name",
+            "empId",
+            "contact",
+            "email",
+            "password",
+          ],
+          properties: {
+            name: {
+              type: "string",
+              example: "John Doe",
+            },
+
+            empId: {
+              type: "string",
+              example: "EMP001",
+            },
+
+            contact: {
+              type: "string",
+              example: "9876543210",
+            },
+
+            bloodGroup: {
+              type: "string",
+              example: "O+",
+            },
+
+            email: {
+              type: "string",
+              format: "email",
+              example: "john@example.com",
+            },
+
+            password: {
+              type: "string",
+              format: "password",
+              example: "Password@123",
+            },
+
+            role: {
+              type: "string",
+              enum: ["Admin", "Employee"],
+              example: "Employee",
+            },
+          },
+        },
+
+        UpdateEmployeeRequest: {
+          type: "object",
+          properties: {
+            name: {
+              type: "string",
+              example: "John Doe",
+            },
+
+            empId: {
+              type: "string",
+              example: "EMP001",
+            },
+
+            contact: {
+              type: "string",
+              example: "9876543210",
+            },
+
+            bloodGroup: {
+              type: "string",
+              example: "O+",
+            },
+
+            email: {
+              type: "string",
+              format: "email",
+              example: "john@example.com",
+            },
+
+            password: {
+              type: "string",
+              format: "password",
+              example: "Password@123",
+            },
+
+            role: {
+              type: "string",
+              enum: ["Admin", "Employee"],
+              example: "Employee",
+            },
+          },
+        },
+
+        UpdateEmployeeStatusRequest: {
+          type: "object",
+          required: ["status"],
+          properties: {
+            status: {
+              type: "boolean",
+              example: true,
             },
           },
         },
