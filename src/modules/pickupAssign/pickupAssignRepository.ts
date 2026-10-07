@@ -1,11 +1,12 @@
 import PickupAssign, {
   PickupAssignDocument,
-} from "../../models/pickupAssignModel.js";
+} from "../../models/pickupAssignModel";
 
 export const create = async (
   pickupAssignData: Partial<PickupAssignDocument>,
 ): Promise<PickupAssignDocument> => {
   const pickupAssign = new PickupAssign(pickupAssignData);
+
   return await pickupAssign.save();
 };
 
@@ -29,9 +30,11 @@ export const updateById = async (
       _id: id,
       isDeleted: false,
     },
-    { $set: updateData },
     {
-      new: true,
+      $set: updateData,
+    },
+    {
+      returnDocument: "after",
       runValidators: true,
     },
   )
@@ -64,7 +67,10 @@ export const deletePickupAssign = async (
         deletedAt: new Date(),
       },
     },
-    { new: true },
+    {
+      returnDocument: "after",
+      runValidators: true,
+    },
   )
     .populate("transport")
     .exec();
@@ -88,7 +94,7 @@ export const changePickupAssignStatus = async (
       },
     },
     {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     },
   )
@@ -125,7 +131,7 @@ export const changePaymentStatus = async (
       },
     },
     {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     },
   )
@@ -152,7 +158,7 @@ export const markCollected = async (
       },
     },
     {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     },
   )

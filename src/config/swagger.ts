@@ -66,7 +66,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
         name: "Pickup Assigns",
         description: "Pickup assignment management APIs",
       },
-
+      {
+        name: "PreBookings",
+        description: "Pre-booking management APIs",
+      }
     ],
 
     components: {
@@ -702,6 +705,159 @@ const swaggerOptions: swaggerJSDoc.Options = {
               example: 10,
               description:
                 "Number of bundles actually collected. Cannot exceed bundleCount.",
+            },
+          },
+        },
+        PreBooking: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "6ac60a656955d9a90ad2f41c",
+            },
+
+            preBookingId: {
+              type: "string",
+              example: "PBK-0006",
+            },
+
+            sender: {
+              $ref: "#/components/schemas/Customer",
+            },
+
+            phoneNumber: {
+              type: "string",
+              example: "+919876543210",
+            },
+
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-07T10:30:00.000Z",
+            },
+
+            bundleCount: {
+              type: "number",
+              example: 10,
+            },
+
+            bundleType: {
+              type: "string",
+              enum: ["Bundle", "Box", "CBM", "KG"],
+              example: "Bundle",
+            },
+
+            preBookingStatus: {
+              type: "string",
+              enum: ["Pending", "Collected", "Canceled"],
+              example: "Collected",
+            },
+
+            status: {
+              type: "boolean",
+              example: true,
+            },
+
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        CreatePreBookingRequest: {
+          type: "object",
+          required: [
+            "sender",
+            "phoneNumber",
+            "date",
+            "bundleCount",
+            "bundleType",
+          ],
+          properties: {
+            sender: {
+              type: "string",
+              description: "Customer ID",
+              example: "665c2f8a9b12345678901234",
+            },
+
+            phoneNumber: {
+              type: "string",
+              example: "+919876543210",
+            },
+
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-07T10:30:00.000Z",
+            },
+
+            bundleCount: {
+              type: "number",
+              minimum: 1,
+              example: 10,
+            },
+
+            bundleType: {
+              type: "string",
+              enum: ["Bundle", "Box", "CBM", "KG"],
+              example: "Bundle",
+            },
+          },
+        },
+
+        UpdatePreBookingRequest: {
+          type: "object",
+          properties: {
+            sender: {
+              type: "string",
+              description: "Customer ID",
+              example: "665c2f8a9b12345678901234",
+            },
+
+            phoneNumber: {
+              type: "string",
+              example: "+919876543210",
+            },
+
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-07T10:30:00.000Z",
+            },
+
+            bundleCount: {
+              type: "number",
+              minimum: 1,
+              example: 15,
+            },
+
+            bundleType: {
+              type: "string",
+              enum: ["Bundle", "Box", "CBM", "KG"],
+              example: "Box",
+            },
+          },
+        },
+
+        UpdatePreBookingStatusRequest: {
+          type: "object",
+          required: ["preBookingStatus"],
+          properties: {
+            preBookingStatus: {
+              type: "string",
+              enum: ["Pending", "Collected", "Canceled"],
+              example: "Collected",
             },
           },
         },

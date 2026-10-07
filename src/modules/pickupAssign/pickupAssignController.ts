@@ -1,10 +1,10 @@
 import { Response } from "express";
 
-import * as pickupAssignService from "./pickupAssignService.js";
+import * as pickupAssignService from "./pickupAssignService";
 
-import { message } from "../../constants/responseMessage.js";
+import { message } from "../../constants/responseMessage";
 
-import { RequestWithAuthData } from "../../@types/express.js";
+import { RequestWithAuthData } from "../../@types/express";
 
 export const createPickupAssign = async (
     req: RequestWithAuthData,

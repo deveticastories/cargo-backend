@@ -65,6 +65,16 @@ export const message = {
     PICKUP_ASSIGN_STATUS_UPDATED: "Pickup assign status updated successfully",
     PICKUP_ASSIGN_COLLECTED: "Pickup assign marked as collected successfully",
     PICKUP_ASSIGN_PAYMENT_STATUS_UPDATED: "Pickup assign payment status updated successfully",
+    INVALID_PICKUP_ASSIGN_PAYMENT_STATUS: "Invalid pickup assign payment status",
+    INVALID_PICKUP_ASSIGN_PICKUP_STATUS: "Invalid pickup assign pickup status",
+    PRE_BOOKING_CREATED: "Pre-booking created successfully",
+    PRE_BOOKING_UPDATED: "Pre-booking updated successfully",
+    PRE_BOOKING_DELETED: "Pre-booking deleted successfully",
+    PRE_BOOKING_NOT_FOUND: "Pre-booking not found",
+    INVALID_PREBOOKING_ID: "Invalid pre-booking ID",
+    PRE_BOOKING_STATUS_UPDATED: "Pre-booking status updated successfully",
+    INVALID_PRE_BOOKING_ID: "Invalid pre-booking ID",
+
 
 
 };

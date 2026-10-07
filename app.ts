@@ -18,6 +18,7 @@ import pricingRoutes from "./src/modules/price/priceRoutes.ts";
 import productRoutes from "./src/modules/product/productRoutes.ts";
 import fabricRoutes from "./src/modules/fabric/fabricRoutes.ts";
 import pickupAssignRoutes from "./src/modules/pickupAssign/pickupAssignRoutes.ts";
+import prebookingRoutes from "./src/modules/prebooking/prebookingRoutes.ts";
 import swaggerSpec from "./src/config/swagger.js";
 
 
@@ -49,4 +50,5 @@ app.use("/api/pricing", pricingRoutes);
 app.use("/api/fabrics", fabricRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/pickup-assigns", pickupAssignRoutes);
+app.use("/api/pre-bookings", prebookingRoutes);
 export default app;
