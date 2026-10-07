@@ -31,6 +31,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
         description: "Employee management APIs",
       },
       {
+        name: "Pickup Partners",
+        description: "Pickup partner management APIs",
+      },
+      {
         name: "Customers",
         description: "Customer management APIs",
       },
@@ -45,6 +49,18 @@ const swaggerOptions: swaggerJSDoc.Options = {
       {
         name: "Delivery Partners",
         description: "Delivery partner management APIs",
+      },
+      {
+        name: "Fabrics",
+        description: "Fabric management APIs",
+      },
+      {
+        name: "Pricing",
+        description: "Pricing management APIs",
+      },
+      {
+        name: "Products",
+        description: "Product management APIs",
       },
 
     ],
@@ -74,7 +90,96 @@ const swaggerOptions: swaggerJSDoc.Options = {
             },
             password: {
               type: "string",
-              format: "password",
+              fPickupPartner: {
+                type: "object",
+                properties: {
+                  _id: {
+                    type: "string",
+                    example: "665c2f8a9b12345678901234",
+                  },
+
+                  name: {
+                    type: "string",
+                    example: "ABC Pickup Services",
+                  },
+
+                  whatsapp: {
+                    type: "string",
+                    example: "+919876543210",
+                  },
+
+                  status: {
+                    type: "boolean",
+                    example: true,
+                  },
+
+                  isDeleted: {
+                    type: "boolean",
+                    example: false,
+                  },
+
+                  deletedAt: {
+                    type: "string",
+                    format: "date-time",
+                    nullable: true,
+                  },
+
+                  createdAt: {
+                    type: "string",
+                    format: "date-time",
+                  },
+
+                  updatedAt: {
+                    type: "string",
+                    format: "date-time",
+                  },
+                },
+              },
+
+              CreatePickupPartnerRequest: {
+                type: "object",
+                required: [
+                  "name",
+                  "whatsapp",
+                ],
+                properties: {
+                  name: {
+                    type: "string",
+                    example: "ABC Pickup Services",
+                  },
+
+                  whatsapp: {
+                    type: "string",
+                    example: "+919876543210",
+                  },
+                },
+              },
+
+              UpdatePickupPartnerRequest: {
+                type: "object",
+                properties: {
+                  name: {
+                    type: "string",
+                    example: "ABC Pickup Services",
+                  },
+
+                  whatsapp: {
+                    type: "string",
+                    example: "+919876543210",
+                  },
+                },
+              },
+
+              UpdatePickupPartnerStatusRequest: {
+                type: "object",
+                required: ["status"],
+                properties: {
+                  status: {
+                    type: "boolean",
+                    example: false,
+                  },
+                },
+              }, format: "password",
               example: "Password@123",
             },
           },
@@ -100,7 +205,72 @@ const swaggerOptions: swaggerJSDoc.Options = {
             },
           },
         },
+        Fabric: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+            name: {
+              type: "string",
+              example: "Cotton",
+            },
+            status: {
+              type: "boolean",
+              example: true,
+            },
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+            deletedAt: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+            },
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
 
+        CreateFabricRequest: {
+          type: "object",
+          required: ["name"],
+          properties: {
+            name: {
+              type: "string",
+              example: "Cotton",
+            },
+          },
+        },
+
+        UpdateFabricRequest: {
+          type: "object",
+          properties: {
+            name: {
+              type: "string",
+              example: "Premium Cotton",
+            },
+          },
+        },
+
+        UpdateFabricStatusRequest: {
+          type: "object",
+          required: ["status"],
+          properties: {
+            status: {
+              type: "boolean",
+              example: false,
+            },
+          },
+        },
         Country: {
           type: "object",
           properties: {
@@ -328,7 +498,96 @@ const swaggerOptions: swaggerJSDoc.Options = {
         // =========================
         // EMPLOYEE
         // =========================
+        PickupPartner: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
 
+            name: {
+              type: "string",
+              example: "ABC Pickup Services",
+            },
+
+            whatsapp: {
+              type: "string",
+              example: "+919876543210",
+            },
+
+            status: {
+              type: "boolean",
+              example: true,
+            },
+
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+
+            deletedAt: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+            },
+
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        CreatePickupPartnerRequest: {
+          type: "object",
+          required: [
+            "name",
+            "whatsapp",
+          ],
+          properties: {
+            name: {
+              type: "string",
+              example: "ABC Pickup Services",
+            },
+
+            whatsapp: {
+              type: "string",
+              example: "+919876543210",
+            },
+          },
+        },
+
+        UpdatePickupPartnerRequest: {
+          type: "object",
+          properties: {
+            name: {
+              type: "string",
+              example: "ABC Pickup Services",
+            },
+
+            whatsapp: {
+              type: "string",
+              example: "+919876543210",
+            },
+          },
+        },
+
+        UpdatePickupPartnerStatusRequest: {
+          type: "object",
+          required: ["status"],
+          properties: {
+            status: {
+              type: "boolean",
+              example: false,
+            },
+          },
+        },
         Employee: {
           type: "object",
           properties: {
@@ -574,9 +833,166 @@ const swaggerOptions: swaggerJSDoc.Options = {
             },
           },
         },
-        // =========================
-        // CUSTOMER
-        // =========================
+        Pricing: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+            from: {
+              type: "string",
+              example: "India",
+            },
+            to: {
+              type: "string",
+              example: "UAE",
+            },
+            uom: {
+              type: "string",
+              enum: ["Bundle", "Box", "CBM", "KG"],
+              example: "Bundle",
+            },
+            price: {
+              type: "number",
+              example: 500,
+            },
+            status: {
+              type: "boolean",
+              example: true,
+            },
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+            deletedAt: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+            },
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        CreatePricingRequest: {
+          type: "object",
+          required: ["from", "to", "uom", "price"],
+          properties: {
+            from: {
+              type: "string",
+              example: "India",
+            },
+            to: {
+              type: "string",
+              example: "UAE",
+            },
+            uom: {
+              type: "string",
+              enum: ["Bundle", "Box", "CBM", "KG"],
+              example: "Bundle",
+            },
+            price: {
+              type: "number",
+              example: 500,
+            },
+          },
+        },
+
+        UpdatePricingRequest: {
+          type: "object",
+          properties: {
+            from: {
+              type: "string",
+              example: "India",
+            },
+            to: {
+              type: "string",
+              example: "UAE",
+            },
+            uom: {
+              type: "string",
+              enum: ["Bundle", "Box", "CBM", "KG"],
+              example: "KG",
+            },
+            price: {
+              type: "number",
+              example: 750,
+            },
+          },
+        },
+        Product: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+            name: {
+              type: "string",
+              example: "Electronics",
+            },
+            status: {
+              type: "boolean",
+              example: true,
+            },
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+            deletedAt: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+            },
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        CreateProductRequest: {
+          type: "object",
+          required: ["name"],
+          properties: {
+            name: {
+              type: "string",
+              example: "Electronics",
+            },
+          },
+        },
+
+        UpdateProductRequest: {
+          type: "object",
+          properties: {
+            name: {
+              type: "string",
+              example: "Mobile Accessories",
+            },
+          },
+        },
+
+        UpdateProductStatusRequest: {
+          type: "object",
+          required: ["status"],
+          properties: {
+            status: {
+              type: "boolean",
+              example: false,
+            },
+          },
+        },
 
         Customer: {
           type: "object",

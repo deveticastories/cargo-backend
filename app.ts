@@ -13,6 +13,10 @@ import customerRoutes from "./src/modules/customer/customerRoutes.ts";
 import storeRoutes from "./src/modules/store/storeRoutes.ts";
 import countryRoutes from "./src/modules/country/countryRoutes.ts";
 import deliveryPartnerRoutes from "./src/modules/deliveryPartner/deliveryPartnerRoutes.ts";
+import pickupPartnerRoutes from "./src/modules/pickupPartner/pickupPartnerRoutes.ts";
+import pricingRoutes from "./src/modules/price/priceRoutes.ts";
+import productRoutes from "./src/modules/product/productRoutes.ts";
+import fabricRoutes from "./src/modules/fabric/fabricRoutes.ts";
 import swaggerSpec from "./src/config/swagger.js";
 
 
@@ -39,4 +43,8 @@ app.use("/api/customers", customerRoutes);
 app.use("/api/stores", storeRoutes);
 app.use("/api/countries", countryRoutes);
 app.use("/api/delivery-partners", deliveryPartnerRoutes);
+app.use("/api/pickup-partners", pickupPartnerRoutes);
+app.use("/api/pricing", pricingRoutes);
+app.use("/api/fabrics", fabricRoutes);
+app.use("/api/products", productRoutes);
 export default app;
