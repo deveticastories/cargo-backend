@@ -44,7 +44,7 @@ export const message = {
     PRICING_UPDATED: "Pricing updated successfully",
     PRICING_DELETED: "Pricing deleted successfully",
     PRICING_NOT_FOUND: "Pricing not found",
-    INVALID_PRICING_ID: "Invalid pricing ID",   
+    INVALID_PRICING_ID: "Invalid pricing ID",
     PRODUCT_CREATED: "Product created successfully",
     PRODUCT_UPDATED: "Product updated successfully",
     PRODUCT_DELETED: "Product deleted successfully",
@@ -57,5 +57,14 @@ export const message = {
     FABRIC_NOT_FOUND: "Fabric not found",
     INVALID_FABRIC_ID: "Invalid fabric ID",
     FABRIC_STATUS_UPDATED: "Fabric status updated successfully",
+    PICKUP_ASSIGN_CREATED: "Pickup assign created successfully",
+    PICKUP_ASSIGN_UPDATED: "Pickup assign updated successfully",
+    PICKUP_ASSIGN_DELETED: "Pickup assign deleted successfully",
+    PICKUP_ASSIGN_NOT_FOUND: "Pickup assign not found",
+    INVALID_PICKUP_ASSIGN_ID: "Invalid pickup assign ID",
+    PICKUP_ASSIGN_STATUS_UPDATED: "Pickup assign status updated successfully",
+    PICKUP_ASSIGN_COLLECTED: "Pickup assign marked as collected successfully",
+    PICKUP_ASSIGN_PAYMENT_STATUS_UPDATED: "Pickup assign payment status updated successfully",
+
 
 };
