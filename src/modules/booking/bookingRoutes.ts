@@ -47,9 +47,20 @@ router.post("/", verifyToken, createBooking);
  *       - Bookings
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: packingStatus
+ *         required: false
+ *         description: Filter bookings by packing status
+ *         schema:
+ *           type: string
+ *           enum:
+ *             - Ready to Ship
+ *             - Repacking Required
+ *         example: Ready to Ship
  *     responses:
  *       200:
- *         description: Bookings retrieved successfully
+ *         description: Bookings fetched successfully
  *         content:
  *           application/json:
  *             schema:
@@ -57,20 +68,28 @@ router.post("/", verifyToken, createBooking);
  *               properties:
  *                 success:
  *                   type: boolean
+ *                   example: true
  *                 totalBookings:
- *                   type: integer
+ *                   type: number
+ *                   example: 3
  *                 bookingList:
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/Booking'
  *                 bundle:
  *                   type: number
+ *                   example: 10
  *                 box:
  *                   type: number
+ *                   example: 5
  *                 cbm:
  *                   type: number
+ *                   example: 3
  *                 kg:
  *                   type: number
+ *                   example: 25
+ *       400:
+ *         description: Invalid packing status
  *       401:
  *         description: Unauthorized
  *       500:

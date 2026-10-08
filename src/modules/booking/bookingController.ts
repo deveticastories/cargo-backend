@@ -37,21 +37,41 @@ export const createBooking = async (
 };
 
 export const getAllBookings = async (
-  req: Request,
+  req: RequestWithAuthData,
   res: Response,
 ) => {
+  if (!req.userId) {
+    return res.status(401).json({
+      success: false,
+      message: message.UNAUTHORIZED,
+    });
+  }
+
+  const packingStatus = req.query.packingStatus;
+
+  if (
+    packingStatus !== undefined &&
+    packingStatus !== "Ready to Ship" &&
+    packingStatus !== "Repacking Required"
+  ) {
+    return res.status(400).json({
+      success: false,
+      message:
+        "packingStatus must be Ready to Ship or Repacking Required",
+    });
+  }
+
   try {
-    const result =
-      await bookingService.getAllBookings();
+    const result = await bookingService.getAllBookings(
+      packingStatus as
+        | "Ready to Ship"
+        | "Repacking Required"
+        | undefined,
+    );
 
     return res.status(200).json({
       success: true,
-      totalBookings: result.totalBookings,
-      bookingList: result.bookingList,
-      bundle: result.bundle,
-      box: result.box,
-      cbm: result.cbm,
-      kg: result.kg,
+      ...result,
     });
   } catch (error: any) {
     return res.status(500).json({

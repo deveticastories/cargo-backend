@@ -46,10 +46,18 @@ export const updateById = async (
     .exec();
 };
 
-export const getAllBookings = async (): Promise<BookingDocument[]> => {
-  return Booking.find({
+export const getAllBookings = async (
+  packingStatus?: "Ready to Ship" | "Repacking Required",
+): Promise<BookingDocument[]> => {
+  const filter: Record<string, any> = {
     isDeleted: false,
-  })
+  };
+
+  if (packingStatus) {
+    filter.packingStatus = packingStatus;
+  }
+
+  return Booking.find(filter)
     .populate("sender")
     .populate("receiver")
     .populate("pickupOption")
@@ -170,6 +178,43 @@ export const changeStuffStatus = async (
     {
       $set: {
         stuffStatus,
+        updatedBy,
+        updatedAt: new Date(),
+      },
+    },
+    {
+      returnDocument: "after",
+      runValidators: true,
+    },
+  )
+    .populate("sender")
+    .populate("receiver")
+    .populate("pickupOption")
+    .exec();
+};
+export const changePackingStatus = async (
+  id: string,
+  packingStatus:
+    | "Ready to Ship"
+    | "Repacking Required",
+  updatedBy?: string,
+): Promise<BookingDocument | null> => {
+  const bundle =
+    packingStatus === "Ready to Ship"
+      ? undefined
+      : null;
+
+  return Booking.findOneAndUpdate(
+    {
+      _id: id,
+      isDeleted: false,
+    },
+    {
+      $set: {
+        packingStatus,
+        ...(packingStatus === "Repacking Required"
+          ? { bundle: null }
+          : {}),
         updatedBy,
         updatedAt: new Date(),
       },

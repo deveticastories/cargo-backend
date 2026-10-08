@@ -58,7 +58,7 @@ const BookingSchema: Schema<Booking> = new Schema({
 
   pickupOption: {
     type: Schema.Types.ObjectId,
-    ref: "PickupPartner",
+    ref: "PickupAssign",
     required: true,
   },
 

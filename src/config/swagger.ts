@@ -74,6 +74,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
         name: "Bookings",
         description: "Booking management APIs",
       },
+      {
+        name: "Packages",
+        description: "Package management APIs",
+      }
     ],
 
     components: {
@@ -1233,6 +1237,408 @@ const swaggerOptions: swaggerJSDoc.Options = {
         // EMPLOYEE
         // =========================
 
+        PackageProduct: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "6ac5cc549c7d9b82ddfd8bc9",
+            },
+
+            product: {
+              type: "object",
+              description: "Populated product",
+              properties: {
+                _id: {
+                  type: "string",
+                  example: "6ac5cc549c7d9b82ddfd8bc6",
+                },
+                name: {
+                  type: "string",
+                  example: "MENS T SHIRT",
+                },
+              },
+            },
+
+            quantity: {
+              type: "number",
+              example: 10,
+            },
+
+            fabric: {
+              type: "object",
+              nullable: true,
+              description: "Populated fabric",
+              properties: {
+                _id: {
+                  type: "string",
+                  example: "6ac5cc619c7d9b82ddfd8bc7",
+                },
+                name: {
+                  type: "string",
+                  example: "Cotton",
+                },
+              },
+            },
+
+            description: {
+              type: "string",
+              nullable: true,
+              example: "Cotton shirts",
+            },
+          },
+        },
+
+        PackageBundle: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "6ac5cc549c7d9b82ddfd8bc9",
+            },
+
+            bundleNo: {
+              type: "number",
+              example: 1,
+            },
+
+            netWeight: {
+              type: "number",
+              example: 20,
+            },
+
+            grossWeight: {
+              type: "number",
+              example: 22,
+            },
+
+            products: {
+              type: "array",
+              items: {
+                $ref: "#/components/schemas/PackageProduct",
+              },
+            },
+          },
+        },
+
+        Package: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "65f123456789abcdef123456",
+            },
+
+            booking: {
+              type: "object",
+              description: "Populated booking",
+              properties: {
+                _id: {
+                  type: "string",
+                  example: "65f123456789abcdef123456",
+                },
+
+                bookingId: {
+                  type: "string",
+                  example: "BKG-0034",
+                },
+
+                date: {
+                  type: "string",
+                  format: "date-time",
+                  example: "2026-10-08T00:00:00.000Z",
+                },
+
+                sender: {
+                  type: "object",
+                  properties: {
+                    _id: {
+                      type: "string",
+                      example: "65f123456789abcdef123401",
+                    },
+
+                    name: {
+                      type: "string",
+                      example: "Muthu",
+                    },
+
+                    whatsapp: {
+                      type: "string",
+                      example: "+919876543210",
+                    },
+
+                    alternativeNo: {
+                      type: "string",
+                      nullable: true,
+                      example: "+919876543211",
+                    },
+
+                    country: {
+                      type: "string",
+                      example: "India",
+                    },
+
+                    location: {
+                      type: "string",
+                      example: "Kerala",
+                    },
+                  },
+                },
+
+                receiver: {
+                  type: "object",
+                  properties: {
+                    _id: {
+                      type: "string",
+                      example: "65f123456789abcdef123402",
+                    },
+
+                    name: {
+                      type: "string",
+                      example: "AL SLATER RAHEEM",
+                    },
+
+                    whatsapp: {
+                      type: "string",
+                      example: "+97338392623",
+                    },
+
+                    alternativeNo: {
+                      type: "string",
+                      nullable: true,
+                    },
+
+                    country: {
+                      type: "string",
+                      example: "BAHRAIN",
+                    },
+
+                    location: {
+                      type: "string",
+                      nullable: true,
+                    },
+                  },
+                },
+
+                pickupOption: {
+                  type: "object",
+                  properties: {
+                    _id: {
+                      type: "string",
+                      example: "65f123456789abcdef123403",
+                    },
+
+                    name: {
+                      type: "string",
+                      example: "Pickup Partner",
+                    },
+
+                    whatsapp: {
+                      type: "string",
+                      example: "+919876543210",
+                    },
+                  },
+                },
+              },
+            },
+            repackedBy: {
+              type: "string",
+              description: "Name of the person who repacked the package",
+              example: "John",
+            },
+            bundles: {
+              type: "array",
+              items: {
+                $ref: "#/components/schemas/PackageBundle",
+              },
+            },
+
+            status: {
+              type: "boolean",
+              example: true,
+            },
+
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        CreatePackageRequest: {
+          type: "object",
+
+          required: [
+            "booking",
+            "bundles",
+          ],
+
+          properties: {
+            booking: {
+              type: "string",
+              description: "Booking ObjectId",
+              example: "65f123456789abcdef123456",
+            },
+
+            repackedBy: {
+              type: "string",
+              description: "Name of the person who repacked the package",
+              example: "John",
+            },
+
+            bundles: {
+              type: "array",
+
+              items: {
+                type: "object",
+
+                required: [
+                  "bundleNo",
+                  "products",
+                ],
+
+                properties: {
+                  bundleNo: {
+                    type: "number",
+                    example: 1,
+                  },
+
+                  netWeight: {
+                    type: "number",
+                    example: 20,
+                  },
+
+                  grossWeight: {
+                    type: "number",
+                    example: 22,
+                  },
+
+                  products: {
+                    type: "array",
+
+                    items: {
+                      type: "object",
+
+                      required: [
+                        "product",
+                        "quantity",
+                      ],
+
+                      properties: {
+                        product: {
+                          type: "string",
+                          example: "6ac5cc549c7d9b82ddfd8bc6",
+                        },
+
+                        quantity: {
+                          type: "number",
+                          example: 10,
+                        },
+
+                        fabric: {
+                          type: "string",
+                          nullable: true,
+                          example: "6ac5cc619c7d9b82ddfd8bc7",
+                        },
+
+                        description: {
+                          type: "string",
+                          nullable: true,
+                          example: "Cotton shirts",
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+
+        UpdatePackageRequest: {
+          type: "object",
+
+          properties: {
+            booking: {
+              type: "string",
+              description: "Booking ObjectId",
+              example: "65f123456789abcdef123456",
+            },
+
+            repackedBy: {
+              type: "string",
+              description: "Name of the person who repacked the package",
+              example: "John",
+            },
+
+            bundles: {
+              type: "array",
+
+              items: {
+                type: "object",
+
+                properties: {
+                  bundleNo: {
+                    type: "number",
+                    example: 1,
+                  },
+
+                  netWeight: {
+                    type: "number",
+                    example: 20,
+                  },
+
+                  grossWeight: {
+                    type: "number",
+                    example: 22,
+                  },
+
+                  products: {
+                    type: "array",
+
+                    items: {
+                      type: "object",
+
+                      properties: {
+                        product: {
+                          type: "string",
+                          example: "6ac5cc549c7d9b82ddfd8bc6",
+                        },
+
+                        quantity: {
+                          type: "number",
+                          example: 10,
+                        },
+
+                        fabric: {
+                          type: "string",
+                          nullable: true,
+                          example: "6ac5cc619c7d9b82ddfd8bc7",
+                        },
+
+                        description: {
+                          type: "string",
+                          nullable: true,
+                          example: "Cotton shirts",
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
 
         PickupPartner: {
           type: "object",

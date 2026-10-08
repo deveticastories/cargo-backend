@@ -44,10 +44,12 @@ export const createBooking = async (
   }
 };
 
-export const getAllBookings = async () => {
+export const getAllBookings = async (
+  packingStatus?: "Ready to Ship" | "Repacking Required",
+) => {
   try {
     const bookings =
-      await bookingRepository.getAllBookings();
+      await bookingRepository.getAllBookings(packingStatus);
 
     let bundle = 0;
     let box = 0;
