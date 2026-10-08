@@ -46,10 +46,13 @@ export const createBooking = async (
 
 export const getAllBookings = async (
   packingStatus?: "Ready to Ship" | "Repacking Required",
+  packageListStatus?: "Added" | "Pending",
 ) => {
   try {
-    const bookings =
-      await bookingRepository.getAllBookings(packingStatus);
+    const bookings = await bookingRepository.getAllBookings(
+      packingStatus,
+      packageListStatus,
+    );
 
     let bundle = 0;
     let box = 0;
@@ -92,7 +95,6 @@ export const getAllBookings = async (
     );
   }
 };
-
 export const getBookingById = async (
   id: string,
 ): Promise<BookingDocument | null> => {

@@ -80,6 +80,17 @@ export const message = {
     BOOKING_NOT_FOUND: "Booking not found",
     BOOKING_STATUS_UPDATED: "Booking status updated successfully",
     INVALID_BOOKING_ID: "Invalid booking ID",
+    CONTAINER_CREATED: "Container created successfully",
+
+    CONTAINER_UPDATED: "Container updated successfully",
+
+    CONTAINER_DELETED: "Container deleted successfully",
+
+    CONTAINER_NOT_FOUND: "Container not found",
+
+    CONTAINER_STATUS_UPDATED: "Container status updated successfully",
+
+    INVALID_CONTAINER_ID: "Invalid container ID",
 
 
 

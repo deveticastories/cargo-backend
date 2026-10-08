@@ -77,6 +77,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
       {
         name: "Packages",
         description: "Package management APIs",
+      },
+      {
+        name: "Containers",
+        description: "Container management APIs",
       }
     ],
 
@@ -2066,6 +2070,265 @@ const swaggerOptions: swaggerJSDoc.Options = {
             price: {
               type: "number",
               example: 750,
+            },
+          },
+        },
+        Container: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "65f123456789abcdef123456",
+            },
+
+            containerCode: {
+              type: "string",
+              example: "CNT-0001",
+            },
+
+            company: {
+              type: "string",
+              example: "INTROLINES PVT LTD",
+            },
+
+            stuffingCode: {
+              type: "string",
+              nullable: true,
+              example: "STF-0001",
+            },
+
+            stuffingDate: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-08T00:00:00.000Z",
+            },
+
+            cutOffDate: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: "2026-10-10T00:00:00.000Z",
+            },
+
+            etaCok: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: "2026-10-12T00:00:00.000Z",
+            },
+
+            etdCok: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: "2026-10-13T00:00:00.000Z",
+            },
+
+            etaUae: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: "2026-10-20T00:00:00.000Z",
+            },
+
+            containerStatus: {
+              type: "string",
+              enum: [
+                "Active",
+                "Inactive",
+                "Stuffed",
+              ],
+              example: "Active",
+            },
+
+            status: {
+              type: "boolean",
+              example: true,
+            },
+
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+
+            createdBy: {
+              type: "string",
+              nullable: true,
+              example: "65f123456789abcdef123401",
+            },
+
+            updatedBy: {
+              type: "string",
+              nullable: true,
+              example: "65f123456789abcdef123401",
+            },
+
+            deletedBy: {
+              type: "string",
+              nullable: true,
+              example: null,
+            },
+
+            deletedAt: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: null,
+            },
+
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        CreateContainerRequest: {
+          type: "object",
+
+          required: [
+            "company",
+            "stuffingDate",
+          ],
+
+          properties: {
+            company: {
+              type: "string",
+              example: "INTROLINES PVT LTD",
+            },
+
+            stuffingCode: {
+              type: "string",
+              example: "STF-0001",
+            },
+
+            stuffingDate: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-08T00:00:00.000Z",
+            },
+
+            cutOffDate: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: "2026-10-10T00:00:00.000Z",
+            },
+
+            etaCok: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: "2026-10-12T00:00:00.000Z",
+            },
+
+            etdCok: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: "2026-10-13T00:00:00.000Z",
+            },
+
+            etaUae: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: "2026-10-20T00:00:00.000Z",
+            },
+
+            containerStatus: {
+              type: "string",
+              enum: [
+                "Active",
+                "Inactive",
+                "Stuffed",
+              ],
+              example: "Active",
+            },
+          },
+        },
+
+        UpdateContainerRequest: {
+          type: "object",
+
+          properties: {
+            company: {
+              type: "string",
+              example: "INTROLINES PVT LTD",
+            },
+
+            stuffingCode: {
+              type: "string",
+              example: "STF-0001",
+            },
+
+            stuffingDate: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-08T00:00:00.000Z",
+            },
+
+            cutOffDate: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: "2026-10-10T00:00:00.000Z",
+            },
+
+            etaCok: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: "2026-10-12T00:00:00.000Z",
+            },
+
+            etdCok: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: "2026-10-13T00:00:00.000Z",
+            },
+
+            etaUae: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+              example: "2026-10-20T00:00:00.000Z",
+            },
+
+            containerStatus: {
+              type: "string",
+              enum: [
+                "Active",
+                "Inactive",
+                "Stuffed",
+              ],
+              example: "Active",
+            },
+          },
+        },
+
+        UpdateContainerStatusRequest: {
+          type: "object",
+
+          required: [
+            "containerStatus",
+          ],
+
+          properties: {
+            containerStatus: {
+              type: "string",
+              enum: [
+                "Active",
+                "Inactive",
+                "Stuffed",
+              ],
+              example: "Stuffed",
             },
           },
         },

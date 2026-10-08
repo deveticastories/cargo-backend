@@ -58,6 +58,18 @@ router.post("/", verifyToken, createBooking);
  *             - Ready to Ship
  *             - Repacking Required
  *         example: Ready to Ship
+ *
+ *       - in: query
+ *         name: packageListStatus
+ *         required: false
+ *         description: Filter bookings by package list status
+ *         schema:
+ *           type: string
+ *           enum:
+ *             - Added
+ *             - Pending
+ *         example: Added
+ *
  *     responses:
  *       200:
  *         description: Bookings fetched successfully
@@ -88,10 +100,13 @@ router.post("/", verifyToken, createBooking);
  *                 kg:
  *                   type: number
  *                   example: 25
+ *
  *       400:
- *         description: Invalid packing status
+ *         description: Invalid filter value
+ *
  *       401:
  *         description: Unauthorized
+ *
  *       500:
  *         description: Internal server error
  */

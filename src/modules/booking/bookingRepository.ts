@@ -48,6 +48,7 @@ export const updateById = async (
 
 export const getAllBookings = async (
   packingStatus?: "Ready to Ship" | "Repacking Required",
+  packageListStatus?: "Added" | "Pending",
 ): Promise<BookingDocument[]> => {
   const filter: Record<string, any> = {
     isDeleted: false,
@@ -55,6 +56,10 @@ export const getAllBookings = async (
 
   if (packingStatus) {
     filter.packingStatus = packingStatus;
+  }
+
+  if (packageListStatus) {
+    filter.packageListStatus = packageListStatus;
   }
 
   return Booking.find(filter)

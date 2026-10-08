@@ -48,6 +48,7 @@ export const getAllBookings = async (
   }
 
   const packingStatus = req.query.packingStatus;
+  const packageListStatus = req.query.packageListStatus;
 
   if (
     packingStatus !== undefined &&
@@ -61,11 +62,28 @@ export const getAllBookings = async (
     });
   }
 
+  if (
+    packageListStatus !== undefined &&
+    packageListStatus !== "Added" &&
+    packageListStatus !== "Pending"
+  ) {
+    return res.status(400).json({
+      success: false,
+      message:
+        "packageListStatus must be Added or Pending",
+    });
+  }
+
   try {
     const result = await bookingService.getAllBookings(
       packingStatus as
         | "Ready to Ship"
         | "Repacking Required"
+        | undefined,
+
+      packageListStatus as
+        | "Added"
+        | "Pending"
         | undefined,
     );
 
@@ -76,7 +94,8 @@ export const getAllBookings = async (
   } catch (error: any) {
     return res.status(500).json({
       success: false,
-      message: error?.message,
+      message:
+        error?.message || "Failed to get bookings",
     });
   }
 };
