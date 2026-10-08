@@ -74,6 +74,12 @@ export const message = {
     INVALID_PREBOOKING_ID: "Invalid pre-booking ID",
     PRE_BOOKING_STATUS_UPDATED: "Pre-booking status updated successfully",
     INVALID_PRE_BOOKING_ID: "Invalid pre-booking ID",
+    BOOKING_CREATED: "Booking created successfully",
+    BOOKING_UPDATED: "Booking updated successfully",
+    BOOKING_DELETED: "Booking deleted successfully",
+    BOOKING_NOT_FOUND: "Booking not found",
+    BOOKING_STATUS_UPDATED: "Booking status updated successfully",
+    INVALID_BOOKING_ID: "Invalid booking ID",
 
 
 

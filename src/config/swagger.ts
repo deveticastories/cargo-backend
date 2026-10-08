@@ -69,7 +69,11 @@ const swaggerOptions: swaggerJSDoc.Options = {
       {
         name: "PreBookings",
         description: "Pre-booking management APIs",
-      }
+      },
+      {
+        name: "Bookings",
+        description: "Booking management APIs",
+      },
     ],
 
     components: {
@@ -861,9 +865,374 @@ const swaggerOptions: swaggerJSDoc.Options = {
             },
           },
         },
+        Booking: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+
+            bookingId: {
+              type: "string",
+              example: "BKG-0001",
+            },
+
+            sender: {
+              type: "object",
+              description: "Populated sender customer",
+            },
+
+            receiver: {
+              type: "object",
+              description: "Populated receiver customer",
+            },
+
+            pickupOption: {
+              type: "object",
+              description: "Populated pickup partner",
+            },
+
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-07T10:30:00.000Z",
+            },
+
+            billOption: {
+              type: "string",
+              enum: ["With Bill", "Without Bill"],
+              example: "With Bill",
+            },
+
+            bundleCount: {
+              type: "number",
+              example: 12,
+            },
+
+            bundleType: {
+              type: "string",
+              enum: ["Bundle", "Box", "CBM", "KG"],
+              example: "Bundle",
+            },
+
+            bundle: {
+              type: "number",
+              nullable: true,
+              example: 12,
+              description:
+                "Final bundle quantity. Null when packing requires repacking.",
+            },
+
+            productType: {
+              type: "string",
+              enum: ["Branded", "Normal"],
+              example: "Branded",
+            },
+
+            packingStatus: {
+              type: "string",
+              enum: ["Ready to Ship", "Repacking Required"],
+              example: "Ready to Ship",
+            },
+
+            packageListStatus: {
+              type: "string",
+              enum: ["Added", "Pending"],
+              example: "Pending",
+            },
+
+            stuffStatus: {
+              type: "string",
+              enum: ["Pending", "Stuffed"],
+              example: "Pending",
+            },
+
+            stuffed: {
+              type: "boolean",
+              example: false,
+            },
+
+            sentToStuffing: {
+              type: "boolean",
+              example: false,
+            },
+
+            brandHandlingCharge: {
+              type: "number",
+              example: 100,
+            },
+
+            pickupCharge: {
+              type: "number",
+              example: 50,
+            },
+
+            bundleHandlingCharge: {
+              type: "number",
+              example: 25,
+            },
+
+            status: {
+              type: "boolean",
+              example: true,
+            },
+
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        CreateBookingRequest: {
+          type: "object",
+
+          required: [
+            "sender",
+            "receiver",
+            "pickupOption",
+            "date",
+            "billOption",
+            "bundleCount",
+            "bundleType",
+            "productType",
+          ],
+
+          properties: {
+            sender: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+
+            receiver: {
+              type: "string",
+              example: "665c2f8a9b12345678901235",
+            },
+
+            pickupOption: {
+              type: "string",
+              example: "665c2f8a9b12345678901236",
+            },
+
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-07T10:30:00.000Z",
+            },
+
+            billOption: {
+              type: "string",
+              enum: ["With Bill", "Without Bill"],
+              example: "With Bill",
+            },
+
+            bundleCount: {
+              type: "number",
+              minimum: 1,
+              example: 12,
+            },
+
+            bundleType: {
+              type: "string",
+              enum: ["Bundle", "Box", "CBM", "KG"],
+              example: "Bundle",
+            },
+
+            productType: {
+              type: "string",
+              enum: ["Branded", "Normal"],
+              example: "Branded",
+            },
+
+            packingStatus: {
+              type: "string",
+              enum: ["Ready to Ship", "Repacking Required"],
+              example: "Repacking Required",
+            },
+
+            packageListStatus: {
+              type: "string",
+              enum: ["Added", "Pending"],
+              example: "Pending",
+            },
+
+            stuffStatus: {
+              type: "string",
+              enum: ["Pending", "Stuffed"],
+              example: "Pending",
+            },
+
+            stuffed: {
+              type: "boolean",
+              example: false,
+            },
+
+            sentToStuffing: {
+              type: "boolean",
+              example: false,
+            },
+
+            brandHandlingCharge: {
+              type: "number",
+              minimum: 0,
+              example: 100,
+            },
+
+            pickupCharge: {
+              type: "number",
+              minimum: 0,
+              example: 50,
+            },
+
+            bundleHandlingCharge: {
+              type: "number",
+              minimum: 0,
+              example: 25,
+            },
+          },
+        },
+
+        UpdateBookingRequest: {
+          type: "object",
+
+          properties: {
+            sender: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+
+            receiver: {
+              type: "string",
+              example: "665c2f8a9b12345678901235",
+            },
+
+            pickupOption: {
+              type: "string",
+              example: "665c2f8a9b12345678901236",
+            },
+
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-07T10:30:00.000Z",
+            },
+
+            billOption: {
+              type: "string",
+              enum: ["With Bill", "Without Bill"],
+            },
+
+            bundleCount: {
+              type: "number",
+              minimum: 1,
+            },
+
+            bundleType: {
+              type: "string",
+              enum: ["Bundle", "Box", "CBM", "KG"],
+            },
+
+            productType: {
+              type: "string",
+              enum: ["Branded", "Normal"],
+            },
+
+            packingStatus: {
+              type: "string",
+              enum: ["Ready to Ship", "Repacking Required"],
+            },
+
+            packageListStatus: {
+              type: "string",
+              enum: ["Added", "Pending"],
+            },
+
+            stuffStatus: {
+              type: "string",
+              enum: ["Pending", "Stuffed"],
+            },
+
+            stuffed: {
+              type: "boolean",
+            },
+
+            sentToStuffing: {
+              type: "boolean",
+            },
+
+            brandHandlingCharge: {
+              type: "number",
+              minimum: 0,
+            },
+
+            pickupCharge: {
+              type: "number",
+              minimum: 0,
+            },
+
+            bundleHandlingCharge: {
+              type: "number",
+              minimum: 0,
+            },
+          },
+        },
+
+        UpdateBookingStatusRequest: {
+          type: "object",
+
+          required: ["status"],
+
+          properties: {
+            status: {
+              type: "boolean",
+              example: true,
+            },
+          },
+        },
+
+        UpdatePackageListStatusRequest: {
+
+          type: "object",
+
+          required: ["packageListStatus"],
+
+          properties: {
+            packageListStatus: {
+              type: "string",
+              enum: ["Added", "Pending"],
+              example: "Added",
+            },
+          },
+        },
+
+        UpdateStuffStatusRequest: {
+          type: "object",
+
+          required: ["stuffStatus"],
+
+          properties: {
+            stuffStatus: {
+              type: "string",
+              enum: ["Pending", "Stuffed"],
+              example: "Stuffed",
+            },
+          },
+        },
         // =========================
         // EMPLOYEE
         // =========================
+
 
         PickupPartner: {
           type: "object",
