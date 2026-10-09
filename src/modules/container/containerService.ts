@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { ContainerDocument } from "../../models/container";
+import { ContainerDocument } from "../../models/containerModel";
 import * as containerRepository from "./containerRepository";
 
 export const createContainer = async (

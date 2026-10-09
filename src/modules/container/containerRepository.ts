@@ -1,6 +1,6 @@
 import Container, {
   ContainerDocument,
-} from "../../models/container";
+} from "../../models/containerModel";
 
 export const create = async (
   containerData: Partial<ContainerDocument>,

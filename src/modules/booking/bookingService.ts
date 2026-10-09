@@ -59,8 +59,14 @@ export const getAllBookings = async (
     let cbm = 0;
     let kg = 0;
 
+    let addedPackageListCount = 0;
+
     for (const booking of bookings) {
       const quantity = booking.bundleCount || 0;
+
+      if (booking.packageListStatus === "Added") {
+        addedPackageListCount++;
+      }
 
       switch (booking.bundleType) {
         case "Bundle":
@@ -84,6 +90,7 @@ export const getAllBookings = async (
     return {
       totalBookings: bookings.length,
       bookingList: bookings,
+      addedPackageListCount,
       bundle,
       box,
       cbm,

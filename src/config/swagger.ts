@@ -956,7 +956,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
 
             stuffStatus: {
               type: "string",
-              enum: ["Pending", "Stuffed"],
+              enum: ["Pending", "Stuffed","Ready to Stuff"],
               example: "Pending",
             },
 
