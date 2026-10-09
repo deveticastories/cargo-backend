@@ -172,7 +172,7 @@ export const changePackageListStatus = async (
 
 export const changeStuffStatus = async (
   id: string,
-  stuffStatus: "Pending" | "Stuffed",
+  stuffStatus: "Pending" | "Stuffed" | "Ready to Stuff",
   updatedBy?: string,
 ): Promise<BookingDocument | null> => {
   return Booking.findOneAndUpdate(

@@ -81,6 +81,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
       {
         name: "Containers",
         description: "Container management APIs",
+      },
+      {
+        name: "Stuffings",
+        description: "Stuffing management APIs",
       }
     ],
 
@@ -1232,7 +1236,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
           properties: {
             stuffStatus: {
               type: "string",
-              enum: ["Pending", "Stuffed"],
+              enum: ["Pending", "Stuffed", "Ready to Stuff"],
               example: "Stuffed",
             },
           },
@@ -1240,6 +1244,78 @@ const swaggerOptions: swaggerJSDoc.Options = {
         // =========================
         // EMPLOYEE
         // =========================
+        Stuffing: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "65f123456789abcdef123456",
+            },
+            container: {
+              oneOf: [
+                { type: "string" },
+                { $ref: "#/components/schemas/Container" },
+              ],
+            },
+            bookings: {
+              type: "array",
+              items: {
+                oneOf: [
+                  { type: "string" },
+                  { $ref: "#/components/schemas/Booking" },
+                ],
+              },
+            },
+            date: {
+              type: "string",
+              format: "date-time",
+            },
+            status: {
+              type: "boolean",
+              example: true,
+            },
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        CreateStuffingRequest: {
+          type: "object",
+          required: ["container", "bookings"],
+          properties: {
+            container: {
+              type: "string",
+              example: "65f123456789abcdef123456",
+            },
+            bookings: {
+              type: "array",
+              minItems: 1,
+              items: {
+                type: "string",
+              },
+              example: [
+                "65f123456789abcdef123457",
+                "65f123456789abcdef123458",
+              ],
+            },
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-09T10:00:00.000Z",
+            },
+          },
+        },
+
 
         PackageProduct: {
           type: "object",

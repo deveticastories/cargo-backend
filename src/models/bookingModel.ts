@@ -24,7 +24,7 @@ export interface Booking extends BaseDocument {
 
   packageListStatus: "Added" | "Pending";
 
-  stuffStatus: "Pending" | "Stuffed";
+  stuffStatus: "Pending" | "Stuffed" | "Ready to Stuff";
 
   stuffed: boolean;
   sentToStuffing: boolean;

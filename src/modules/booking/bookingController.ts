@@ -366,7 +366,7 @@ export const updateStuffStatus = async (
     });
   }
 
-  const allowedStatuses = ["Pending", "Stuffed"];
+  const allowedStatuses = ["Pending", "Stuffed" , "Ready to Stuff"];
 
   if (!allowedStatuses.includes(req.body.stuffStatus)) {
     return res.status(400).json({

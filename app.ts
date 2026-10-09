@@ -22,6 +22,7 @@ import prebookingRoutes from "./src/modules/prebooking/prebookingRoutes.ts";
 import bookingRoutes from "./src/modules/booking/bookingRoutes.ts";
 import packageRoutes from "./src/modules/package/packageRoutes.ts";
 import containerRoutes from "./src/modules/container/containerRoutes.ts";
+import stuffingRoutes from "./src/modules/stuffing/stuffingRoutes.ts";
 import swaggerSpec from "./src/config/swagger.js";
 
 
@@ -57,4 +58,5 @@ app.use("/api/pre-bookings", prebookingRoutes);
 app.use("/api/packages", packageRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/containers", containerRoutes);
+app.use("/api/stuffings",stuffingRoutes);
 export default app;

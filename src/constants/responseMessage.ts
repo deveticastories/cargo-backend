@@ -91,6 +91,17 @@ export const message = {
     CONTAINER_STATUS_UPDATED: "Container status updated successfully",
 
     INVALID_CONTAINER_ID: "Invalid container ID",
+    STUFFING_CREATED: "Stuffing created successfully",
+
+    STUFFING_UPDATED: "Stuffing updated successfully",
+
+    STUFFING_DELETED: "Stuffing deleted successfully",
+
+    STUFFING_NOT_FOUND: "Stuffing not found",
+
+    STUFFING_STATUS_UPDATED: "Stuffing status updated successfully",
+
+    INVALID_STUFFING_ID: "Invalid stuffing ID",
 
 
 

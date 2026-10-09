@@ -207,7 +207,7 @@ export const updatePackageListStatus = async (
 
 export const updateStuffStatus = async (
   id: string,
-  stuffStatus: "Pending" | "Stuffed",
+  stuffStatus: "Pending" | "Stuffed" | "Ready to Stuff",
   updatedBy?: string,
 ): Promise<BookingDocument | null> => {
   try {
