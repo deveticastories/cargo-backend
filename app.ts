@@ -7,22 +7,22 @@ import express, {
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 
-import authRoutes from "./src/modules/auth/authRoutes.ts";
-import employeeRoutes from "./src/modules/employee/employeeRoutes.ts";
-import customerRoutes from "./src/modules/customer/customerRoutes.ts";
-import storeRoutes from "./src/modules/store/storeRoutes.ts";
-import countryRoutes from "./src/modules/country/countryRoutes.ts";
-import deliveryPartnerRoutes from "./src/modules/deliveryPartner/deliveryPartnerRoutes.ts";
-import pickupPartnerRoutes from "./src/modules/pickupPartner/pickupPartnerRoutes.ts";
-import pricingRoutes from "./src/modules/price/priceRoutes.ts";
-import productRoutes from "./src/modules/product/productRoutes.ts";
-import fabricRoutes from "./src/modules/fabric/fabricRoutes.ts";
-import pickupAssignRoutes from "./src/modules/pickupAssign/pickupAssignRoutes.ts";
-import prebookingRoutes from "./src/modules/prebooking/prebookingRoutes.ts";
-import bookingRoutes from "./src/modules/booking/bookingRoutes.ts";
-import packageRoutes from "./src/modules/package/packageRoutes.ts";
-import containerRoutes from "./src/modules/container/containerRoutes.ts";
-import stuffingRoutes from "./src/modules/stuffing/stuffingRoutes.ts";
+import authRoutes from "./src/modules/auth/authRoutes.js";
+import employeeRoutes from "./src/modules/employee/employeeRoutes.js";
+import customerRoutes from "./src/modules/customer/customerRoutes.js";
+import storeRoutes from "./src/modules/store/storeRoutes.js";
+import countryRoutes from "./src/modules/country/countryRoutes.js";
+import deliveryPartnerRoutes from "./src/modules/deliveryPartner/deliveryPartnerRoutes.js";
+import pickupPartnerRoutes from "./src/modules/pickupPartner/pickupPartnerRoutes.js";
+import pricingRoutes from "./src/modules/price/priceRoutes.js";
+import productRoutes from "./src/modules/product/productRoutes.js";
+import fabricRoutes from "./src/modules/fabric/fabricRoutes.js";
+import pickupAssignRoutes from "./src/modules/pickupAssign/pickupAssignRoutes.js";
+import prebookingRoutes from "./src/modules/prebooking/prebookingRoutes.js";
+import bookingRoutes from "./src/modules/booking/bookingRoutes.js";
+import packageRoutes from "./src/modules/package/packageRoutes.js";
+import containerRoutes from "./src/modules/container/containerRoutes.js";
+import stuffingRoutes from "./src/modules/stuffing/stuffingRoutes.js";
 import swaggerSpec from "./src/config/swagger.js";
 
 
