@@ -372,7 +372,7 @@ export const updateStuffStatus = async (
     return res.status(400).json({
       success: false,
       message:
-        "stuffStatus must be Pending or Stuffed",
+        "stuffStatus must be Pending, Ready to Stuff or Stuffed",
     });
   }
 
