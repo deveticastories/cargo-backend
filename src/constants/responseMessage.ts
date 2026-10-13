@@ -134,7 +134,22 @@ export const message = {
     CREDIT_NOTE_FETCH_FAILED: "Failed to fetch credit note",
     CREDIT_NOTE_DELETED_FAILED: "Failed to delete credit note",
     CREDIT_NOTE_UPDATE_DATA_REQUIRED: "At least one of amount or description must be provided for update",
-    
+    DAILY_EXPENSE_NOT_FOUND: "Daily expense not found",
+    DAILY_EXPENSE_FETCH_FAILED: "Failed to fetch daily expense",
+    DAILY_EXPENSE_UPDATED_FAILED: "Failed to update daily expense",
+    DAILY_EXPENSE_DELETED_FAILED: "Failed to delete daily expense",
+    INVALID_DAILY_EXPENSE_ID: "Invalid daily expense ID",
+    INVALID_DAILY_EXPENSE_DATA: "Invalid daily expense data",
+    DAILY_EXPENSE_UPDATE_DATA_REQUIRED: "At least one of expenseType, paymentType, amount, or description must be provided for update",
+    DAILY_EXPENSE_UPDATED: "Daily expense updated successfully",
+    DAILY_EXPENSE_DELETED: "Daily expense deleted successfully",
+    DAILY_EXPENSES_FETCHED: "Daily expenses fetched successfully",
+    DAILY_EXPENSE_CREATED: "Daily expense created successfully",
+    DAILY_EXPENSE_CREATED_FAILED: "Failed to create daily expense",
+    DAILY_EXPENSES_FETCH_FAILED: "Failed to fetch daily expenses",
+    DAILY_EXPENSE_FETCHED: "Daily expense fetched successfully",
+
+
 
 
 };

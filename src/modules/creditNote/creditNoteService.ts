@@ -1,94 +1,99 @@
 
 import mongoose from "mongoose";
-import { CreditNoteDocument } from "../../models/creditNoteModel.js";
+import {
+  CreditNoteDocument,
+} from "../../models/creditNoteModel.js";
 import * as creditNoteRepository from "./creditNoteRepository.js";
-import logger from "../../utils/logger.js";
-import { message } from "../../constants/responseMessage.js";
+import PettyCash  from "../../models/pettyCashModel.js";
+import {
+  updatePettyCashBalance,
+} from "../pettyCash/pettyCashService.js";
 
 export const createCreditNote = async (
-  creditNoteData: Partial<CreditNoteDocument>,
+  data: Partial<CreditNoteDocument>,
   createdBy: mongoose.Types.ObjectId,
 ): Promise<CreditNoteDocument> => {
-  try {
-    return await creditNoteRepository.create({
-      ...creditNoteData,
-      createdBy,
-      updatedBy: createdBy,
-    });
-  } catch (error: any) {
-    logger.error("Failed to create credit note", error);
-    throw new Error(
-      error?.message || message.CREDIT_NOTE_CREATED_FAILED,
-    );
-  }
+  const creditNote = await creditNoteRepository.create({
+    ...data,
+    createdBy,
+    updatedBy: createdBy,
+  });
+
+  await updatePettyCashBalance();
+
+  return creditNote;
 };
 
-export const getAllCreditNotes = async (): Promise<
-  CreditNoteDocument[]
-> => {
-  try {
-    return await creditNoteRepository.getAllCreditNotes();
-  } catch (error: any) {
-    logger.error("Failed to fetch credit notes", error);
-    throw new Error(
-      error?.message || message.CREDIT_NOTES_FETCH_FAILED,
-    );
-  }
+export const getAllCreditNotes = async () => {
+  const creditNotes = await creditNoteRepository.getAllCreditNotes();
+
+  const pettyCash = await PettyCash.findOne({
+    isDeleted: false,
+  }).select("pettyCashBalance balanceAfterExpenses");
+
+  return {
+    totalCreditNotes: creditNotes.length,
+    creditNoteList: creditNotes,
+    pettyCashBalance: pettyCash?.pettyCashBalance ?? 0,
+    balanceAfterExpenses: pettyCash?.balanceAfterExpenses ?? 0,
+  };
 };
 
 export const getCreditNoteById = async (
   id: string,
 ): Promise<CreditNoteDocument | null> => {
-  try {
-    return await creditNoteRepository.findById(id);
-  } catch (error: any) {
-    logger.error("Failed to fetch credit note", error);
-    throw new Error(
-      error?.message || message.CREDIT_NOTE_FETCH_FAILED,
-    );
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid Credit Note ID");
   }
-};
+
+  return creditNoteRepository.findById(id);
+}
 
 export const editCreditNote = async (
   id: string,
-  creditNoteData: Partial<CreditNoteDocument>,
+  data: Partial<CreditNoteDocument>,
   updatedBy: mongoose.Types.ObjectId,
-): Promise<CreditNoteDocument | null> => {
-  try {
-    const creditNote = await creditNoteRepository.updateById(id, {
-      ...creditNoteData,
+): Promise<CreditNoteDocument> => {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid Credit Note ID");
+  }
+
+  const creditNote = await creditNoteRepository.updateById(
+    id,
+    {
+      ...data,
       updatedBy,
       userUpdatedDate: new Date(),
-    });
+    },
+  );
 
-    if (!creditNote) {
-      throw new Error(message.CREDIT_NOTE_NOT_FOUND);
-    }
-
-    return creditNote;
-  } catch (error: any) {
-    logger.error("Failed to update credit note", error);
-    throw new Error(error?.message || message.CREDIT_NOTE_UPDATED_FAILED);
+  if (!creditNote) {
+    throw new Error("Credit Note not found");
   }
+
+  await updatePettyCashBalance();
+
+  return creditNote;
 };
 
 export const deleteCreditNote = async (
   id: string,
-  deletedBy: mongoose.Types.ObjectId,
-): Promise<CreditNoteDocument | null> => {
-  try {
-    const creditNote = await creditNoteRepository.deleteCreditNote(
-      id,
-      deletedBy,
-    );
-
-    if (!creditNote) {
-      throw new Error(message.CREDIT_NOTE_NOT_FOUND);
-    }
-
-    return creditNote;
-  } catch (error: any) {
-    logger.error("Failed to delete credit note", error);
-    throw new Error(error?.message || message.CREDIT_NOTE_DELETED_FAILED);
+  deletedBy?: mongoose.Types.ObjectId,
+): Promise<CreditNoteDocument> => {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid Credit Note ID");
   }
+
+  const creditNote = await creditNoteRepository.deleteCreditNote(
+    id,
+    deletedBy,
+  );
+
+  if (!creditNote) {
+    throw new Error("Credit Note not found");
+  }
+
+  await updatePettyCashBalance();
+
+  return creditNote;
 };

@@ -12,7 +12,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
 
     servers: [
       {
-        url: `http://localhost:${process.env.PORT || 3000}`,
+        url: `http://localhost:${process.env.PORT}`,
         description: "Local development server",
       },
     ],
@@ -29,6 +29,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
       {
         name: "Employees",
         description: "Employee management APIs",
+      },
+      {
+        name: "Daily Expenses",
+        description: "Daily expense management APIs",
       },
       {
         name: "Pickup Partners",
@@ -72,7 +76,123 @@ const swaggerOptions: swaggerJSDoc.Options = {
       },
       {
         name: "Bookings",
-        description: "Booking management APIs",
+        description: "Booking management APIs", CreateDailyExpenseRequest: {
+          type: "object",
+          required: ["date", "expenseType", "paymentType", "amount"],
+          properties: {
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-08T10:30:00.000Z",
+            },
+            expenseType: {
+              type: "string",
+              example: "Fuel",
+            },
+            paymentType: {
+              type: "string",
+              enum: ["Cash", "UPI"],
+              example: "UPI",
+            },
+            amount: {
+              type: "number",
+              minimum: 0,
+              example: 1500,
+            },
+            description: {
+              type: "string",
+              example: "Vehicle fuel expense",
+            },
+          },
+        },
+
+        UpdateDailyExpenseRequest: {
+          type: "object",
+          minProperties: 1,
+          properties: {
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-08T10:30:00.000Z",
+            },
+            expenseType: {
+              type: "string",
+              example: "Maintenance",
+            },
+            paymentType: {
+              type: "string", CreateDailyExpenseRequest: {
+                type: "object",
+                required: ["date", "expenseType", "paymentType", "amount"],
+                properties: {
+                  date: {
+                    type: "string",
+                    format: "date-time",
+                    example: "2026-10-08T10:30:00.000Z",
+                  },
+                  expenseType: {
+                    type: "string",
+                    example: "Fuel",
+                  },
+                  paymentType: {
+                    type: "string",
+                    enum: ["Cash", "UPI"],
+                    example: "UPI",
+                  },
+                  amount: {
+                    type: "number",
+                    minimum: 0,
+                    example: 1500,
+                  },
+                  description: {
+                    type: "string",
+                    example: "Vehicle fuel expense",
+                  },
+                },
+              },
+
+              UpdateDailyExpenseRequest: {
+                type: "object",
+                minProperties: 1,
+                properties: {
+                  date: {
+                    type: "string",
+                    format: "date-time",
+                    example: "2026-10-08T10:30:00.000Z",
+                  },
+                  expenseType: {
+                    type: "string",
+                    example: "Maintenance",
+                  },
+                  paymentType: {
+                    type: "string",
+                    enum: ["Cash", "UPI"],
+                    example: "Cash",
+                  },
+                  amount: {
+                    type: "number",
+                    minimum: 0,
+                    example: 2000,
+                  },
+                  description: {
+                    type: "string",
+                    example: "Updated expense description",
+                  },
+                },
+              },
+              enum: ["Cash", "UPI"],
+              example: "Cash",
+            },
+            amount: {
+              type: "number",
+              minimum: 0,
+              example: 2000,
+            },
+            description: {
+              type: "string",
+              example: "Updated expense description",
+            },
+          },
+        },
       },
       {
         name: "Packages",
@@ -1200,6 +1320,65 @@ const swaggerOptions: swaggerJSDoc.Options = {
             description: {
               type: "string",
               example: "Updated credit note description",
+            },
+          },
+        },
+        CreateDailyExpenseRequest: {
+          type: "object",
+          required: ["date", "expenseType", "paymentType", "amount"],
+          properties: {
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-08T10:30:00.000Z",
+            },
+            expenseType: {
+              type: "string",
+              example: "Fuel",
+            },
+            paymentType: {
+              type: "string",
+              enum: ["Cash", "UPI"],
+              example: "UPI",
+            },
+            amount: {
+              type: "number",
+              minimum: 0,
+              example: 1500,
+            },
+            description: {
+              type: "string",
+              example: "Vehicle fuel expense",
+            },
+          },
+        },
+
+        UpdateDailyExpenseRequest: {
+          type: "object",
+          minProperties: 1,
+          properties: {
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-08T10:30:00.000Z",
+            },
+            expenseType: {
+              type: "string",
+              example: "Maintenance",
+            },
+            paymentType: {
+              type: "string",
+              enum: ["Cash", "UPI"],
+              example: "Cash",
+            },
+            amount: {
+              type: "number",
+              minimum: 0,
+              example: 2000,
+            },
+            description: {
+              type: "string",
+              example: "Updated expense description",
             },
           },
         },
