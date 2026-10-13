@@ -4,12 +4,14 @@ import logger from "../../utils/logger";
 import * as employeeRepository from "./employeeRepository";
 import { EmployeeDocument } from "../../models/employeeModel";
 
+
 export const createEmployeeProfile = async (
   employeeData: Partial<EmployeeDocument>,
 ): Promise<EmployeeDocument> => {
   try {
     logger.info("Creating a new employee profile", { employeeData });
 
+    // Check duplicate email
     if (employeeData.email) {
       const existingEmployee = await employeeRepository.findByEmail(
         employeeData.email,
@@ -18,6 +20,19 @@ export const createEmployeeProfile = async (
       if (existingEmployee) {
         throw new Error(
           `Employee with email '${employeeData.email}' already exists.`,
+        );
+      }
+    }
+
+    // Check duplicate employee ID
+    if (employeeData.empId) {
+      const existingEmployee = await employeeRepository.findByEmpId(
+        employeeData.empId,
+      );
+
+      if (existingEmployee) {
+        throw new Error(
+          `Employee with ID '${employeeData.empId}' already exists.`,
         );
       }
     }
@@ -49,6 +64,7 @@ export const editEmployeeProfile = async (
       employeeData,
     });
 
+    // Check duplicate email
     if (employeeData.email) {
       const existingEmployee = await employeeRepository.findByEmail(
         employeeData.email,
@@ -64,11 +80,23 @@ export const editEmployeeProfile = async (
       }
     }
 
-    const updatedEmployeeProfile =
-      await employeeRepository.updateById(
-        employeeId,
-        employeeData,
+    if (employeeData.empId) {
+      const existingEmployee = await employeeRepository.findByEmpId(
+        employeeData.empId,
       );
+
+      if (
+        existingEmployee &&
+        existingEmployee._id.toString() !== employeeId
+      ) {
+        throw new Error(
+          `Employee with ID '${employeeData.empId}' already exists.`,
+        );
+      }
+    }
+
+    const updatedEmployeeProfile =
+      await employeeRepository.updateById(employeeId, employeeData);
 
     if (!updatedEmployeeProfile) {
       throw new Error(

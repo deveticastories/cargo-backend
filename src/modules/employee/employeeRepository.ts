@@ -20,6 +20,13 @@ export const findById = async (
     .exec();
 };
 
+
+export const findByEmpId = async (
+  empId: string,
+): Promise<EmployeeDocument | null> => {
+  return Employee.findOne({ empId: empId.trim() }).exec();
+};
+
 export const updateById = async (
   id: string,
   updateData: Partial<EmployeeDocument>,

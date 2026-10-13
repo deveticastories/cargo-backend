@@ -62,3 +62,14 @@ export const findByRoute = async (
     isDeleted: false,
   }).exec();
 };
+export const findPricingByUom = async (
+  uom: "Bundle" | "Box" | "CBM" | "KG",
+): Promise<PricingDocument | null> => {
+  return Pricing.findOne({
+    from: "India",
+    to: "UAE",
+    uom,
+    status: true,
+    isDeleted: false,
+  }).exec();
+};

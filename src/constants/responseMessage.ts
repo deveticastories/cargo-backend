@@ -102,6 +102,22 @@ export const message = {
     STUFFING_STATUS_UPDATED: "Stuffing status updated successfully",
 
     INVALID_STUFFING_ID: "Invalid stuffing ID",
+    INVOICE_REQUIRED_FIELDS: "Container, booking, and delivery partner are required to create an invoice",
+
+    INVOICE_CREATE_SUCCESS: "Invoice created successfully",
+
+    INVOICE_CREATE_FAILED: "Failed to create invoice",
+
+    INVOICE_LIST_SUCCESS: "Invoices retrieved successfully",
+
+    INVOICE_LIST_FAILED: "Failed to retrieve invoices",
+
+    INVALID_INVOICE_ID: "Invalid invoice ID",
+
+    INVOICE_NOT_FOUND: "Invoice not found",
+    INVOICE_DETAILS_SUCCESS: "Invoice details retrieved successfully",
+
+    INVOICE_DETAILS_FAILED: "Failed to retrieve invoice details",
 
 
 

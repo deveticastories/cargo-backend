@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import * as packageService from "./packageService.js";
-import { message } from "../../constants/responseMessage";
 
 import { RequestWithAuthData } from "../../@types/express";
 import { generatePackingListPdf } from "../../utils/generatePackingListPdf.js";

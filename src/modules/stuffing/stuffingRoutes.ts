@@ -35,15 +35,24 @@ const router = Router();
  */
 router.post("/", verifyToken, createStuffing);
 
+
 /**
  * @swagger
  * /api/stuffings:
  *   get:
- *     summary: Get all stuffing records
+ *     summary: Get all stuffing records, optionally filtered by container
  *     tags:
  *       - Stuffings
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: containerId
+ *         required: false
+ *         schema:
+ *           type: string
+ *           example: "6ac72a21a88a604e1afb0683"
+ *         description: MongoDB ObjectId of the container to filter stuffing records
  *     responses:
  *       200:
  *         description: Stuffing records fetched successfully
@@ -62,12 +71,15 @@ router.post("/", verifyToken, createStuffing);
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/Stuffing'
+ *       400:
+ *         description: Invalid container ID
  *       401:
  *         description: Unauthorized
  *       500:
  *         description: Internal server error
  */
 router.get("/", verifyToken, getAllStuffings);
+
 
 /**
  * @swagger

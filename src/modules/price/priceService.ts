@@ -162,3 +162,11 @@ export const deletePricing = async (
     throw new Error(error.message);
   }
 };
+export const getPricingByUom = async (
+  uom: "Bundle" | "Box" | "CBM" | "KG",
+): Promise<PricingDocument | null> => {
+  
+  const price = pricingRepository.findPricingByUom(uom);
+  console.log("Price fetched for UOM:", uom, price);
+  return price;
+};

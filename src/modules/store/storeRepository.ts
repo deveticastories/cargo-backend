@@ -74,3 +74,11 @@ export const changeStoreStatus = async (
     },
   ).exec();
 };
+export const findByLocation = async (
+  location: string,
+): Promise<StoreDocument | null> => {
+  return Store.findOne({
+    location: location.trim(),
+    isDeleted: false,
+  }).exec();
+};

@@ -49,8 +49,22 @@ export const getAllStuffings = async (
   }
 
   try {
-    const result =
-      await stuffingService.getAllStuffings();
+    const { containerId } = req.query;
+
+    if (
+      containerId !== undefined &&
+      (typeof containerId !== "string" ||
+        !mongoose.Types.ObjectId.isValid(containerId))
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid container ID",
+      });
+    }
+
+    const result = await stuffingService.getAllStuffings(
+      containerId as string | undefined,
+    );
 
     return res.status(200).json({
       success: true,
@@ -59,11 +73,10 @@ export const getAllStuffings = async (
   } catch (error: any) {
     return res.status(500).json({
       success: false,
-      message:
-        error?.message || "Failed to get stuffings",
+      message: error?.message || "Failed to get stuffings",
     });
   }
-};
+}
 
 export const getStuffingById = async (
   req: RequestWithAuthData,

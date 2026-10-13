@@ -1,4 +1,5 @@
 
+import mongoose from "mongoose";
 import Stuffing, {
   StuffingDocument,
 } from "../../models/stuffingModel.js";
@@ -26,13 +27,19 @@ export const create = async (
   );
 };
 
-export const getAllStuffings = async (): Promise<
-  StuffingDocument[]
-> => {
+export const getAllStuffings = async (
+  containerId?: string,
+): Promise<StuffingDocument[]> => {
+  const filter: Record<string, unknown> = {
+    isDeleted: false,
+  };
+
+  if (containerId) {
+    filter.container = new mongoose.Types.ObjectId(containerId);
+  }
+
   return populateStuffing(
-    Stuffing.find({ isDeleted: false }).sort({
-      createdAt: -1,
-    }),
+    Stuffing.find(filter).sort({ createdAt: -1 }),
   ).exec();
 };
 

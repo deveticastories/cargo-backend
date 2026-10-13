@@ -43,10 +43,10 @@ export const createStuffing = async (
   }
 };
 
-export const getAllStuffings = async () => {
+export const getAllStuffings = async (containerId?: string) => {
   try {
     const stuffings =
-      await stuffingRepository.getAllStuffings();
+      await stuffingRepository.getAllStuffings(containerId);
 
     return {
       totalStuffings: stuffings.length,

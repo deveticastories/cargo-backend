@@ -85,7 +85,11 @@ const swaggerOptions: swaggerJSDoc.Options = {
       {
         name: "Stuffings",
         description: "Stuffing management APIs",
-      }
+      },
+      {
+        name: "Invoices",
+        description: "Invoice management APIs",
+      },
     ],
 
     components: {
@@ -94,6 +98,19 @@ const swaggerOptions: swaggerJSDoc.Options = {
           type: "http",
           scheme: "bearer",
           bearerFormat: "JWT",
+        },
+      },
+
+      parameters: {
+        ContainerId: {
+          name: "containerId",
+          in: "query",
+          required: false,
+          description: "Filter stuffing records by container MongoDB ObjectId",
+          schema: {
+            type: "string",
+            example: "65f123456789abcdef123456",
+          },
         },
       },
 
@@ -113,96 +130,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
             },
             password: {
               type: "string",
-              fPickupPartner: {
-                type: "object",
-                properties: {
-                  _id: {
-                    type: "string",
-                    example: "665c2f8a9b12345678901234",
-                  },
-
-                  name: {
-                    type: "string",
-                    example: "ABC Pickup Services",
-                  },
-
-                  whatsapp: {
-                    type: "string",
-                    example: "+919876543210",
-                  },
-
-                  status: {
-                    type: "boolean",
-                    example: true,
-                  },
-
-                  isDeleted: {
-                    type: "boolean",
-                    example: false,
-                  },
-
-                  deletedAt: {
-                    type: "string",
-                    format: "date-time",
-                    nullable: true,
-                  },
-
-                  createdAt: {
-                    type: "string",
-                    format: "date-time",
-                  },
-
-                  updatedAt: {
-                    type: "string",
-                    format: "date-time",
-                  },
-                },
-              },
-
-              CreatePickupPartnerRequest: {
-                type: "object",
-                required: [
-                  "name",
-                  "whatsapp",
-                ],
-                properties: {
-                  name: {
-                    type: "string",
-                    example: "ABC Pickup Services",
-                  },
-
-                  whatsapp: {
-                    type: "string",
-                    example: "+919876543210",
-                  },
-                },
-              },
-
-              UpdatePickupPartnerRequest: {
-                type: "object",
-                properties: {
-                  name: {
-                    type: "string",
-                    example: "ABC Pickup Services",
-                  },
-
-                  whatsapp: {
-                    type: "string",
-                    example: "+919876543210",
-                  },
-                },
-              },
-
-              UpdatePickupPartnerStatusRequest: {
-                type: "object",
-                required: ["status"],
-                properties: {
-                  status: {
-                    type: "boolean",
-                    example: false,
-                  },
-                },
-              }, format: "password",
+              format: "password",
               example: "Password@123",
             },
           },
@@ -956,7 +884,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
 
             stuffStatus: {
               type: "string",
-              enum: ["Pending", "Stuffed","Ready to Stuff"],
+              enum: ["Pending", "Stuffed", "Ready to Stuff"],
               example: "Pending",
             },
 
@@ -1252,19 +1180,16 @@ const swaggerOptions: swaggerJSDoc.Options = {
               example: "65f123456789abcdef123456",
             },
             container: {
-              oneOf: [
-                { type: "string" },
-                { $ref: "#/components/schemas/Container" },
-              ],
+              type: "string",
+              description: "Container MongoDB ObjectId",
+              example: "65f123456789abcdef123456",
             },
             bookings: {
               type: "array",
               items: {
-                oneOf: [
-                  { type: "string" },
-                  { $ref: "#/components/schemas/Booking" },
-                ],
+                type: "string",
               },
+              description: "Array of booking MongoDB ObjectIds",
             },
             date: {
               type: "string",
@@ -1311,7 +1236,6 @@ const swaggerOptions: swaggerJSDoc.Options = {
             date: {
               type: "string",
               format: "date-time",
-              example: "2026-10-09T10:00:00.000Z",
             },
           },
         },
@@ -1400,7 +1324,66 @@ const swaggerOptions: swaggerJSDoc.Options = {
             },
           },
         },
+        InvoiceCreateRequest: {
+          type: "object",
+          required: ["container", "booking", "deliveryPartner"],
+          properties: {
+            container: {
+              type: "string",
+              example: "66f123456789abcdef123456",
+            },
+            booking: {
+              type: "string",
+              example: "66f123456789abcdef123457",
+            },
+            deliveryPartner: {
+              type: "string",
+              example: "66f123456789abcdef123458",
+            },
+          },
+        },
 
+        Invoice: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "66f123456789abcdef123459",
+            },
+            invoiceNo: {
+              type: "string",
+              example: "INV-0001",
+            },
+            container: {
+              type: "string",
+              example: "66f123456789abcdef123456",
+            },
+            booking: {
+              type: "string",
+              example: "66f123456789abcdef123457",
+            },
+            subtotal: {
+              type: "number",
+              example: 500,
+            },
+            additionalCharges: {
+              type: "number",
+              example: 80,
+            },
+            receivableDiscount: {
+              type: "number",
+              example: 30,
+            },
+            deliveryPartner: {
+              type: "string",
+              example: "66f123456789abcdef123458",
+            },
+            total: {
+              type: "number",
+              example: 550,
+            },
+          },
+        },
         Package: {
           type: "object",
           properties: {

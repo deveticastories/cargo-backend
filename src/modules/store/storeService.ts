@@ -3,15 +3,26 @@ import logger from "../../utils/logger";
 import * as storeRepository from "./storeRepository";
 import { StoreDocument } from "../../models/storeModel";
 
+
 export const createStore = async (
   storeData: Partial<StoreDocument>,
 ): Promise<StoreDocument> => {
   try {
     logger.info("Creating a new store", { storeData });
 
+    if (storeData.location) {
+      const existingStore = await storeRepository.findByLocation(
+        storeData.location,
+      );
 
-    const newStore =
-      await storeRepository.create(storeData);
+      if (existingStore) {
+        throw new Error(
+          `Store with location '${storeData.location}' already exists.`,
+        );
+      }
+    }
+
+    const newStore = await storeRepository.create(storeData);
 
     logger.info("Store created successfully", {
       storeId: newStore._id,
@@ -37,18 +48,28 @@ export const editStore = async (
       storeData,
     });
 
-   
-
-    const updatedStore =
-      await storeRepository.updateById(
-        storeId,
-        storeData,
+    if (storeData.location) {
+      const existingStore = await storeRepository.findByLocation(
+        storeData.location,
       );
+
+      if (
+        existingStore &&
+        existingStore._id.toString() !== storeId
+      ) {
+        throw new Error(
+          `Store with location '${storeData.location}' already exists.`,
+        );
+      }
+    }
+
+    const updatedStore = await storeRepository.updateById(
+      storeId,
+      storeData,
+    );
 
     if (!updatedStore) {
-      throw new Error(
-        `Store with ID ${storeId} not found`,
-      );
+      throw new Error(`Store with ID ${storeId} not found`);
     }
 
     logger.info("Store updated successfully", {
@@ -65,6 +86,7 @@ export const editStore = async (
     throw new Error(error.message);
   }
 };
+
 
 export const getAllStores = async (): Promise<
   StoreDocument[]

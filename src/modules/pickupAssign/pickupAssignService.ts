@@ -13,7 +13,6 @@ export const createPickupAssign = async (
             pickupAssignData,
         });
 
-        // Check duplicate LR number
         if (pickupAssignData.lrNo) {
             const existingPickupAssign =
                 await pickupAssignRepository.findByLrNo(
@@ -59,7 +58,6 @@ export const editPickupAssign = async (
             },
         );
 
-        // Check duplicate LR number when changing LR number
         if (pickupAssignData.lrNo) {
             const existingPickupAssign =
                 await pickupAssignRepository.findByLrNo(
