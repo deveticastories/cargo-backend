@@ -90,6 +90,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
         name: "Invoices",
         description: "Invoice management APIs",
       },
+      {
+        name: "Credit Notes",
+        description: "Credit note management APIs",
+      },
     ],
 
     components: {
@@ -1166,6 +1170,36 @@ const swaggerOptions: swaggerJSDoc.Options = {
               type: "string",
               enum: ["Pending", "Stuffed", "Ready to Stuff"],
               example: "Stuffed",
+            },
+          },
+        },
+        CreateCreditNoteRequest: {
+          type: "object",
+          required: ["amount"],
+          properties: {
+            amount: {
+              type: "number",
+              minimum: 0,
+              example: 1500,
+            },
+            description: {
+              type: "string",
+              example: "Credit note for customer refund",
+            },
+          },
+        },
+        UpdateCreditNoteRequest: {
+          type: "object",
+          minProperties: 1,
+          properties: {
+            amount: {
+              type: "number",
+              minimum: 0,
+              example: 2000,
+            },
+            description: {
+              type: "string",
+              example: "Updated credit note description",
             },
           },
         },

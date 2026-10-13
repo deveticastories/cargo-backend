@@ -24,6 +24,7 @@ import packageRoutes from "./src/modules/package/packageRoutes.ts";
 import containerRoutes from "./src/modules/container/containerRoutes.ts";
 import stuffingRoutes from "./src/modules/stuffing/stuffingRoutes.ts";
 import invoiceRoutes from "./src/modules/invoice/invoiceRoutes.ts";
+import creditNoteRoutes from "./src/modules/creditNote/creditNoteRoutes.ts";
 import swaggerSpec from "./src/config/swagger.js";
 
 
@@ -61,4 +62,5 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/containers", containerRoutes);
 app.use("/api/stuffings",stuffingRoutes);
 app.use("/api/invoices",invoiceRoutes);
+app.use("/api/credit-notes", creditNoteRoutes);
 export default app;

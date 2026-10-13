@@ -4,6 +4,7 @@ export const message = {
     LOGIN_SUCCESS: "Login successful",
     USER_NOT_FOUND: "User not found",
     EMPLOYEE_CREATED: "Employee created successfully",
+    INTERNAL_SERVER_ERROR: "Internal server error",
     EMPLOYEE_UPDATED: "Employee updated successfully",
     EMPLOYEE_DELETED: "Employee deleted successfully",
     EMPLOYEE_NOT_FOUND: "Employee not found",
@@ -118,7 +119,22 @@ export const message = {
     INVOICE_DETAILS_SUCCESS: "Invoice details retrieved successfully",
 
     INVOICE_DETAILS_FAILED: "Failed to retrieve invoice details",
-
+    CREDIT_NOTE_CREATED: "Credit note created successfully",
+    CREDIT_NOTE_UPDATED: "Credit note updated successfully",
+    CREDIT_NOTE_DELETED: "Credit note deleted successfully",
+    CREDIT_NOTE_NOT_FOUND: "Credit note not found",
+    CREDIT_NOTES_FETCHED: "Credit notes fetched successfully",
+    CREDIT_NOTE_STATUS_UPDATED: "Credit note status updated successfully",
+    INVALID_CREDIT_NOTE_ID: "Invalid credit note ID",
+    CREDIT_NOTE_ALREADY_EXISTS: "Credit note already exists",
+    INVALID_CREDIT_NOTE_AMOUNT: "Amount must be a valid non-negative number",
+    CREDIT_NOTE_UPDATED_FAILED: "Failed to update credit note",
+    CREDIT_NOTE_CREATED_FAILED: "Failed to create credit note",
+    CREDIT_NOTES_FETCH_FAILED: "Failed to fetch credit notes",
+    CREDIT_NOTE_FETCH_FAILED: "Failed to fetch credit note",
+    CREDIT_NOTE_DELETED_FAILED: "Failed to delete credit note",
+    CREDIT_NOTE_UPDATE_DATA_REQUIRED: "At least one of amount or description must be provided for update",
+    
 
 
 };
