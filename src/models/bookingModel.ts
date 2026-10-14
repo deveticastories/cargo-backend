@@ -111,7 +111,7 @@ const BookingSchema: Schema<Booking> = new Schema({
 
   stuffStatus: {
     type: String,
-    enum: ["Pending", "Stuffed"],
+    enum: ["Pending", "Stuffed", "Ready to Stuff"],
     default: "Pending",
   },
 
