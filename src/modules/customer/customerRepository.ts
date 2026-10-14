@@ -80,5 +80,6 @@ export const findByWhatsapp = async (
 ): Promise<CustomerDocument | null> => {
   return Customer.findOne({
     whatsapp: whatsapp.trim(),
+    isDeleted: false,
   }).exec();
 };

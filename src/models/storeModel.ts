@@ -1,3 +1,4 @@
+
 import mongoose, { Schema, Document } from "mongoose";
 import { BaseDocument, BaseSchema } from "./baseModel";
 
@@ -13,16 +14,13 @@ const StoreSchema: Schema<Store> = new Schema({
   location: {
     type: String,
     required: true,
-    unique: true,
     trim: true,
   },
-
   contact: {
     type: String,
     required: true,
     trim: true,
   },
-
   inCharge: {
     type: String,
     required: true,
@@ -31,6 +29,14 @@ const StoreSchema: Schema<Store> = new Schema({
 });
 
 StoreSchema.add(BaseSchema);
+
+StoreSchema.index(
+  { location: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { isDeleted: false },
+  },
+);
 
 export default mongoose.model<StoreDocument>(
   "Store",

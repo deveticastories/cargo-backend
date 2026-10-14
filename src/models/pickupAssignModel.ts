@@ -1,3 +1,4 @@
+
 import mongoose, { Schema, Document } from "mongoose";
 import { BaseDocument, BaseSchema } from "./baseModel";
 import { PickupPartnerDocument } from "./pickupPartnerModel";
@@ -20,38 +21,31 @@ const PickupAssignSchema: Schema<PickupAssign> = new Schema({
     ref: "PickupPartner",
     required: true,
   },
-
   lrNo: {
     type: String,
     required: true,
-    unique: true,
     trim: true,
   },
-
   bundleCount: {
     type: Number,
     required: true,
     min: 1,
   },
-
   amount: {
     type: Number,
     required: true,
     min: 0,
   },
-
   paymentStatus: {
     type: String,
     enum: ["Unpaid", "Paid"],
     default: "Unpaid",
   },
-
   pickupStatus: {
     type: String,
-    enum: ["Pending", "Collected"],
+    enum: ["Pending", "Paid", "Collected"],
     default: "Pending",
   },
-
   collectedBundle: {
     type: Number,
     default: 0,
@@ -60,6 +54,14 @@ const PickupAssignSchema: Schema<PickupAssign> = new Schema({
 });
 
 PickupAssignSchema.add(BaseSchema);
+
+PickupAssignSchema.index(
+  { lrNo: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { isDeleted: false },
+  },
+);
 
 export default mongoose.model<PickupAssignDocument>(
   "PickupAssign",

@@ -24,7 +24,10 @@ export const findById = async (
 export const findByEmpId = async (
   empId: string,
 ): Promise<EmployeeDocument | null> => {
-  return Employee.findOne({ empId: empId.trim() }).exec();
+  return Employee.findOne({
+    empId: empId.trim(),
+    isDeleted: false,
+  }).exec();
 };
 
 export const updateById = async (
@@ -90,6 +93,7 @@ export const findByEmail = async (
   email: string,
 ): Promise<EmployeeDocument | null> => {
   return Employee.findOne({
-    email: email.toLowerCase().trim(),
+    email: email.trim().toLowerCase(),
+    isDeleted: false,
   }).exec();
 };

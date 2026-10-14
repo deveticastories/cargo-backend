@@ -1,3 +1,4 @@
+
 import mongoose, { Schema, Document } from "mongoose";
 import { BaseDocument, BaseSchema } from "./baseModel";
 
@@ -11,12 +12,19 @@ const CountrySchema: Schema<Country> = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
     trim: true,
   },
 });
 
 CountrySchema.add(BaseSchema);
+
+CountrySchema.index(
+  { name: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { isDeleted: false },
+  },
+);
 
 export default mongoose.model<CountryDocument>(
   "Country",

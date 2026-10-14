@@ -1,3 +1,4 @@
+
 import mongoose, { Schema, Document } from "mongoose";
 import { BaseDocument, BaseSchema } from "./baseModel";
 
@@ -14,16 +15,22 @@ const PickupPartnerSchema: Schema<PickupPartner> = new Schema({
     required: true,
     trim: true,
   },
-
   whatsapp: {
     type: String,
     required: true,
-    unique: true,
     trim: true,
   },
 });
 
 PickupPartnerSchema.add(BaseSchema);
+
+PickupPartnerSchema.index(
+  { whatsapp: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { isDeleted: false },
+  },
+);
 
 export default mongoose.model<PickupPartnerDocument>(
   "PickupPartner",

@@ -1,3 +1,4 @@
+
 import mongoose, { Schema, Document } from "mongoose";
 import { BaseDocument, BaseSchema } from "./baseModel";
 
@@ -11,12 +12,19 @@ const ProductSchema: Schema<Product> = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
     trim: true,
   },
 });
 
 ProductSchema.add(BaseSchema);
+
+ProductSchema.index(
+  { name: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { isDeleted: false },
+  },
+);
 
 export default mongoose.model<ProductDocument>(
   "Product",

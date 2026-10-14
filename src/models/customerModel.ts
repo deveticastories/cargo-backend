@@ -1,3 +1,4 @@
+
 import mongoose, { Schema, Document } from "mongoose";
 import { BaseDocument, BaseSchema } from "./baseModel";
 
@@ -19,32 +20,26 @@ const CustomerSchema: Schema<Customer> = new Schema({
     enum: ["Sender", "Receiver"],
     default: "Sender",
   },
-
   name: {
     type: String,
     trim: true,
   },
-
   whatsapp: {
     type: String,
     trim: true,
   },
-
   alternativeNo: {
     type: String,
     trim: true,
   },
-
   country: {
     type: String,
     trim: true,
   },
-
   location: {
     type: String,
     trim: true,
   },
-
   discount: {
     type: Number,
     default: 0,
@@ -52,6 +47,17 @@ const CustomerSchema: Schema<Customer> = new Schema({
 });
 
 CustomerSchema.add(BaseSchema);
+
+CustomerSchema.index(
+  { whatsapp: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      isDeleted: false,
+      whatsapp: { $type: "string" },
+    },
+  },
+);
 
 export default mongoose.model<CustomerDocument>(
   "Customer",
