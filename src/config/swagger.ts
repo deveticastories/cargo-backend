@@ -31,6 +31,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
         description: "Employee management APIs",
       },
       {
+        name: "Receipt Entries",
+        description: "Receipt entry management APIs",
+      },
+      {
         name: "Daily Expenses",
         description: "Daily expense management APIs",
       },
@@ -73,6 +77,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
       {
         name: "PreBookings",
         description: "Pre-booking management APIs",
+      },
+      {
+        name: "Reports",
+        description: "Reports management APIs",
       },
       {
         name: "Bookings",
@@ -346,6 +354,127 @@ const swaggerOptions: swaggerJSDoc.Options = {
             },
           },
         },
+
+        Reports: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+            bookingId: {
+              type: "string",
+              example: "BK001",
+            },
+            sender: {
+              type: "object",
+              description: "Populated sender customer details",
+            },
+            receiver: {
+              type: "object",
+              description: "Populated receiver customer details",
+            },
+            pickupOption: {
+              type: "object",
+              description: "Populated pickup option details",
+            },
+            date: {
+              type: "string",
+              format: "date-time",
+            },
+            billOption: {
+              type: "string",
+              enum: ["With Bill", "Without Bill"],
+            },
+            bundleCount: {
+              type: "integer",
+            },
+            bundleType: {
+              type: "string",
+              enum: ["Bundle", "Box", "CBM", "KG"],
+            },
+            bundle: {
+              type: "number",
+              nullable: true,
+            },
+            productType: {
+              type: "string",
+              enum: ["Branded", "Normal"],
+            },
+            packingStatus: {
+              type: "string",
+              enum: ["Ready to Ship", "Repacking Required"],
+            },
+            packageListStatus: {
+              type: "string",
+              enum: ["Added", "Pending"],
+            },
+            stuffStatus: {
+              type: "string",
+              enum: ["Pending", "Stuffed", "Ready to Stuff"],
+            },
+            stuffed: {
+              type: "boolean",
+            },
+            sentToStuffing: {
+              type: "boolean",
+            },
+            brandHandlingCharge: {
+              type: "number",
+            },
+            pickupCharge: {
+              type: "number",
+            },
+            bundleHandlingCharge: {
+              type: "number",
+            },
+            status: {
+              type: "boolean",
+            },
+            isDeleted: {
+              type: "boolean",
+            },
+            deletedAt: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+            },
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        ReportsResponse: {
+          type: "object",
+          properties: {
+            success: {
+              type: "boolean",
+              example: true,
+            },
+            message: {
+              type: "string",
+              example: "Report fetched successfully",
+            },
+            count: {
+              type: "integer",
+              example: 2,
+            },
+            bookings: {
+              type: "array",
+              items: {
+                $ref: "#/components/schemas/Reports",
+              },
+            },
+          },
+        },
+
+
         Country: {
           type: "object",
           properties: {
@@ -560,16 +689,6 @@ const swaggerOptions: swaggerJSDoc.Options = {
           },
         },
 
-        UpdateDeliveryPartnerStatusRequest: {
-          type: "object",
-          required: ["status"],
-          properties: {
-            status: {
-              type: "boolean",
-              example: false,
-            },
-          },
-        },
         PickupAssign: {
           type: "object",
           properties: {
@@ -2667,6 +2786,164 @@ const swaggerOptions: swaggerJSDoc.Options = {
             status: {
               type: "boolean",
               example: false,
+            },
+          },
+        },
+
+        ReceiptEntry: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+            invoice: {
+              type: "string",
+              example: "665c2f8a9b12345678901235",
+            },
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-14T00:00:00.000Z",
+            },
+            receivableAmount: {
+              type: "number",
+              example: 15000,
+            },
+            receivedAmount: {
+              type: "number",
+              example: 10000,
+            },
+            balanceAmount: {
+              type: "number",
+              example: 5000,
+            },
+            receivedDate: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-14T00:00:00.000Z",
+            },
+            deliveryPartnerAmount: {
+              type: "number",
+              example: 500,
+            },
+            deliveryPartnerStatus: {
+              type: "string",
+              enum: ["Pending", "Paid"],
+              example: "Pending",
+            },
+            status: {
+              type: "boolean",
+              example: true,
+            },
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+            deletedAt: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+            },
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        CreateReceiptEntryRequest: {
+          type: "object",
+          required: ["invoice", "receivableAmount", "receivedAmount"],
+          properties: {
+            invoice: {
+              type: "string",
+              example: "665c2f8a9b12345678901235",
+            },
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-14T00:00:00.000Z",
+            },
+            receivableAmount: {
+              type: "number",
+              minimum: 0,
+              example: 15000,
+            },
+            receivedAmount: {
+              type: "number",
+              minimum: 0,
+              example: 10000,
+            },
+            receivedDate: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-14T00:00:00.000Z",
+            },
+            deliveryPartnerAmount: {
+              type: "number",
+              minimum: 0,
+              example: 500,
+            },
+            deliveryPartnerStatus: {
+              type: "string",
+              enum: ["Pending", "Paid"],
+              example: "Pending",
+            },
+          },
+        },
+
+        UpdateReceiptEntryRequest: {
+          type: "object",
+          properties: {
+            invoice: {
+              type: "string",
+              example: "665c2f8a9b12345678901235",
+            },
+            date: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-14T00:00:00.000Z",
+            },
+            receivableAmount: {
+              type: "number",
+              minimum: 0,
+              example: 15000,
+            },
+            receivedAmount: {
+              type: "number",
+              minimum: 0,
+              example: 10000,
+            },
+            receivedDate: {
+              type: "string",
+              format: "date-time",
+              example: "2026-10-14T00:00:00.000Z",
+            },
+            deliveryPartnerAmount: {
+              type: "number",
+              minimum: 0,
+              example: 500,
+            },
+            deliveryPartnerStatus: {
+              type: "string",
+              enum: ["Pending", "Paid"],
+              example: "Paid",
+            },
+          },
+        },
+        UpdateDeliveryPartnerStatusRequest: {
+          type: "object",
+          required: ["deliveryPartnerStatus"],
+          properties: {
+            deliveryPartnerStatus: {
+              type: "string",
+              enum: ["Pending", "Paid"],
+              example: "Paid",
             },
           },
         },

@@ -148,6 +148,36 @@ export const message = {
     DAILY_EXPENSE_CREATED_FAILED: "Failed to create daily expense",
     DAILY_EXPENSES_FETCH_FAILED: "Failed to fetch daily expenses",
     DAILY_EXPENSE_FETCHED: "Daily expense fetched successfully",
+    BOOKING_REPORT_FETCHED: "Booking report fetched successfully",
+    BOOKING_REPORT_FETCH_FAILED: "Failed to fetch booking report",
+    INVALID_MONTH_YEAR: "Provide a valid month (1-12) and year. Month requires year.",
+    INVALID_PACKING_STATUS: "Invalid packingStatus",
+    INVALID_PACKAGE_LIST_STATUS: "Invalid packageListStatus",
+    CONTAINER_STUFFING_REPORT_FETCHED:
+        "Container stuffing report fetched successfully",
+
+    CONTAINER_STUFFING_REPORT_FETCH_FAILED:
+        "Failed to fetch container stuffing report",
+    INVALID_RECEIPT_ENTRY_ID: "Invalid receipt entry ID",
+    INVALID_AMOUNTS: "Amounts must be valid numbers and cannot be negative",
+    INVALID_DELIVERY_PARTNER_STATUS:
+        "Invalid delivery partner status. Use Pending or Paid",
+    RECEIPT_ENTRY_CREATED: "Receipt entry created successfully",
+    RECEIPT_ENTRY_CREATED_FAILED: "Failed to create receipt entry",
+    RECEIPT_ENTRIES_FETCHED: "Receipt entries fetched successfully",
+    RECEIPT_ENTRIES_FETCH_FAILED: "Failed to fetch receipt entries",
+    RECEIPT_ENTRY_FETCHED: "Receipt entry fetched successfully",
+    RECEIPT_ENTRY_FETCH_FAILED: "Failed to fetch receipt entry",
+    RECEIPT_ENTRY_NOT_FOUND: "Receipt entry not found",
+    RECEIPT_ENTRY_UPDATED: "Receipt entry updated successfully",
+    RECEIPT_ENTRY_UPDATED_FAILED: "Failed to update receipt entry",
+    RECEIPT_ENTRY_DELETED: "Receipt entry deleted successfully",
+    RECEIPT_ENTRY_DELETED_FAILED: "Failed to delete receipt entry",
+    RECEIPT_ENTRY_UPDATE_DATA_REQUIRED:
+        "At least one field is required to update a receipt entry",
+    DELIVERY_PARTNER_STATUS_UPDATE_FAILED: "Failed to update delivery partner status",
+
+
 
 
 

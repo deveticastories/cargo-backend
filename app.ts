@@ -26,6 +26,8 @@ import stuffingRoutes from "./src/modules/stuffing/stuffingRoutes.ts";
 import invoiceRoutes from "./src/modules/invoice/invoiceRoutes.ts";
 import creditNoteRoutes from "./src/modules/creditNote/creditNoteRoutes.ts";
 import dailyExpenseRoutes from "./src/modules/dailyExpense/dailyExpenseRoutes.ts";
+import reportsRoutes from "./src/modules/reports/reportsRoutes.ts";
+import receiptEntryRoutes from "./src/modules/receiptEntry/receiptEntryRoutes.ts";
 import swaggerSpec from "./src/config/swagger.js";
 
 
@@ -61,8 +63,10 @@ app.use("/api/pre-bookings", prebookingRoutes);
 app.use("/api/packages", packageRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/containers", containerRoutes);
-app.use("/api/stuffings",stuffingRoutes);
-app.use("/api/invoices",invoiceRoutes);
+app.use("/api/stuffings", stuffingRoutes);
+app.use("/api/invoices", invoiceRoutes);
 app.use("/api/credit-notes", creditNoteRoutes);
 app.use("/api/daily-expenses", dailyExpenseRoutes);
+app.use("/api/reports", reportsRoutes);
+app.use("/api/receipt-entries", receiptEntryRoutes);
 export default app;
