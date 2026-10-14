@@ -89,8 +89,10 @@ export const changeContainerStatus = async (
   ).exec();
 };
 export const getLastContainer = async (): Promise<ContainerDocument | null> => {
+  // Include soft-deleted records: they still hold their containerCode in the
+  // unique index, so skipping them would reissue a taken code (E11000).
   return Container.findOne({
-    isDeleted: false,
+    containerCode: /^CNT-\d+$/,
   })
     .sort({ createdAt: -1 })
     .exec();

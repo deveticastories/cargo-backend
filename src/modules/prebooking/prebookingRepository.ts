@@ -10,8 +10,10 @@ export const create = async (
     return await preBooking.save();
 };
 export const getLastPreBooking = async (): Promise<PreBookingDocument | null> => {
+    // Include soft-deleted records: they still hold their preBookingId in the
+    // unique index, so skipping them would reissue a taken ID (E11000).
     return PreBooking.findOne({
-        isDeleted: false,
+        preBookingId: /^PBK-\d+$/,
     })
         .sort({ createdAt: -1 })
         .exec();

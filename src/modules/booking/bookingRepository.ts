@@ -136,8 +136,10 @@ export const findByBookingId = async (
 };
 
 export const getLastBooking = async (): Promise<BookingDocument | null> => {
+  // Include soft-deleted records: they still hold their bookingId in the
+  // unique index, so skipping them would reissue a taken ID (E11000).
   return Booking.findOne({
-    isDeleted: false,
+    bookingId: /^BKG-\d+$/,
   })
     .sort({ createdAt: -1 })
     .exec();
