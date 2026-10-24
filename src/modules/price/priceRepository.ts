@@ -65,9 +65,10 @@ export const findByRoute = async (
 export const findPricingByUom = async (
   uom: "Bundle" | "Box" | "CBM" | "KG",
 ): Promise<PricingDocument | null> => {
+  // `from` / `to` are free text in the pricing form, so match any casing and the usual UAE spellings.
   return Pricing.findOne({
-    from: "India",
-    to: "UAE",
+    from: /^\s*india\s*$/i,
+    to: /^\s*(uae|u\.a\.e\.?|united arab emirates|dubai)\s*$/i,
     uom,
     status: true,
     isDeleted: false,
