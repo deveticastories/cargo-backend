@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import logger from "../../utils/logger";
+import bcrypt from "bcrypt";
 
 import * as employeeRepository from "./employeeRepository";
 import { EmployeeDocument } from "../../models/employeeModel";
@@ -11,7 +12,6 @@ export const createEmployeeProfile = async (
   try {
     logger.info("Creating a new employee profile", { employeeData });
 
-    // Check duplicate email
     if (employeeData.email) {
       const existingEmployee = await employeeRepository.findByEmail(
         employeeData.email,
@@ -24,7 +24,6 @@ export const createEmployeeProfile = async (
       }
     }
 
-    // Check duplicate employee ID
     if (employeeData.empId) {
       const existingEmployee = await employeeRepository.findByEmpId(
         employeeData.empId,
@@ -36,6 +35,17 @@ export const createEmployeeProfile = async (
         );
       }
     }
+
+    if (!employeeData.role) {
+      throw new Error("Employee role is required.");
+    }
+
+    if (!employeeData.password) {
+      throw new Error("Employee password is required.");
+    }
+
+    employeeData.email = employeeData.email?.trim().toLowerCase();
+    employeeData.password = await bcrypt.hash(employeeData.password, 12);
 
     const newEmployeeProfile =
       await employeeRepository.create(employeeData);
@@ -64,8 +74,9 @@ export const editEmployeeProfile = async (
       employeeData,
     });
 
-    // Check duplicate email
     if (employeeData.email) {
+      employeeData.email = employeeData.email.trim().toLowerCase();
+
       const existingEmployee = await employeeRepository.findByEmail(
         employeeData.email,
       );
@@ -93,6 +104,13 @@ export const editEmployeeProfile = async (
           `Employee with ID '${employeeData.empId}' already exists.`,
         );
       }
+    }
+
+    if (employeeData.password) {
+      employeeData.password = await bcrypt.hash(
+        employeeData.password,
+        12,
+      );
     }
 
     const updatedEmployeeProfile =
@@ -203,4 +221,18 @@ export const updateEmployeeStatus = async (
 
     throw new Error(error.message);
   }
+}; export const loginEmployee = async (
+  email: string,
+  password: string,
+): Promise<EmployeeDocument | null> => {
+  const employee = await employeeRepository.findByEmail(email);
+
+  if (
+    employee &&
+    (await bcrypt.compare(password, employee.password))
+  ) {
+    return employee;
+  }
+
+  return null;
 };

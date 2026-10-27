@@ -1,4 +1,3 @@
-
 import mongoose, { Schema, Document } from "mongoose";
 import { BaseDocument, BaseSchema } from "./baseModel";
 
@@ -9,7 +8,7 @@ export interface Employee extends BaseDocument {
   bloodGroup?: string;
   email: string;
   password: string;
-  role: "SuperAdmin" | "Admin" | "Employee";
+  role: mongoose.Types.ObjectId;
 }
 
 export type EmployeeDocument = Employee & Document;
@@ -46,9 +45,9 @@ const EmployeeSchema: Schema<Employee> = new Schema({
     select: false,
   },
   role: {
-    type: String,
-    enum: ["SuperAdmin", "Admin", "Employee"],
-    default: "Employee",
+    type: Schema.Types.ObjectId,
+    ref: "Role",
+    required: true,
   },
 });
 

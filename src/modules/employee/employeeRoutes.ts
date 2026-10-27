@@ -8,8 +8,42 @@ const router = Router();
  * @swagger
  * tags:
  *   name: Employees
- *   description: Employee management APIs
+ *   description: Employee management and authentication APIs
  */
+
+/**
+ * @swagger
+ * /api/employees/login:
+ *   post:
+ *     summary: Employee login
+ *     tags: [Employees]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: employee@example.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: Password@123
+ *     responses:
+ *       200:
+ *         description: Employee login successful
+ *       400:
+ *         description: Invalid email or password
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/login", employeeController.loginEmployee);
 
 /**
  * @swagger
@@ -31,6 +65,7 @@ const router = Router();
  *               - contact
  *               - email
  *               - password
+ *               - role
  *             properties:
  *               name:
  *                 type: string
@@ -54,8 +89,8 @@ const router = Router();
  *                 example: Password@123
  *               role:
  *                 type: string
- *                 enum: [Admin, Employee]
- *                 example: Employee
+ *                 description: MongoDB ObjectId of the Role document
+ *                 example: 665c2f8a9b12345678901234
  *     responses:
  *       201:
  *         description: Employee created successfully
@@ -167,8 +202,8 @@ router.get(
  *                 example: Password@123
  *               role:
  *                 type: string
- *                 enum: [Admin, Employee]
- *                 example: Employee
+ *                 description: MongoDB ObjectId of the Role document
+ *                 example: 665c2f8a9b12345678901234
  *     responses:
  *       200:
  *         description: Employee updated successfully

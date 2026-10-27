@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
+import RoleModel from "../models/roleModel.js";
 
 export const seedSuperAdmin = async (): Promise<void> => {
     const email = process.env.SUPER_ADMIN_EMAIL?.toLowerCase().trim();
@@ -9,6 +10,13 @@ export const seedSuperAdmin = async (): Promise<void> => {
         throw new Error(
             "SUPER_ADMIN_EMAIL and SUPER_ADMIN_PASSWORD are required",
         );
+    }
+    const adminRole = await RoleModel.findOne({
+        roleName: "Admin",
+        isDeleted: false,
+    });
+    if (!adminRole) {
+        throw new Error("Admin role not found. Please seed roles first.");
     }
 
     const existingAdmin = await User.findOne({ email });
@@ -23,7 +31,7 @@ export const seedSuperAdmin = async (): Promise<void> => {
     await User.create({
         email,
         password: passwordHash,
-        role: "SuperAdmin",
+        role: adminRole._id,
     });
 
     console.log(`SuperAdmin created: ${email}`);

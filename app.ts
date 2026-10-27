@@ -28,6 +28,7 @@ import creditNoteRoutes from "./src/modules/creditNote/creditNoteRoutes";
 import dailyExpenseRoutes from "./src/modules/dailyExpense/dailyExpenseRoutes";
 import reportsRoutes from "./src/modules/reports/reportsRoutes";
 import receiptEntryRoutes from "./src/modules/receiptEntry/receiptEntryRoutes";
+import roleRoutes from "./src/modules/role/roleRoutes"
 import swaggerSpec from "./src/config/swagger.js";
 
 
@@ -69,4 +70,5 @@ app.use("/api/credit-notes", creditNoteRoutes);
 app.use("/api/daily-expenses", dailyExpenseRoutes);
 app.use("/api/reports", reportsRoutes);
 app.use("/api/receipt-entries", receiptEntryRoutes);
+app.use("/api/roles",roleRoutes)
 export default app;

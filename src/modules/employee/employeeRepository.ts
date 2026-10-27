@@ -13,13 +13,15 @@ export const create = async (
 export const findById = async (
   id: string,
 ): Promise<EmployeeDocument | null> => {
-  return Employee.findById(id)
-    .where({ isDeleted: false })
+  return Employee.findOne({
+    _id: id,
+    isDeleted: false,
+  })
+    .populate("role")
     .populate("createdBy", "name email")
     .populate("updatedBy", "name email")
     .exec();
 };
-
 
 export const findByEmpId = async (
   empId: string,
@@ -27,15 +29,17 @@ export const findByEmpId = async (
   return Employee.findOne({
     empId: empId.trim(),
     isDeleted: false,
-  }).exec();
+  })
+    .populate("role")
+    .exec();
 };
 
 export const updateById = async (
   id: string,
   updateData: Partial<EmployeeDocument>,
 ): Promise<EmployeeDocument | null> => {
-  return Employee.findByIdAndUpdate(
-    id,
+  return Employee.findOneAndUpdate(
+    { _id: id, isDeleted: false },
     {
       $set: {
         ...updateData,
@@ -44,6 +48,7 @@ export const updateById = async (
     },
     { new: true, runValidators: true },
   )
+    .populate("role")
     .populate("createdBy", "name email")
     .populate("updatedBy", "name email")
     .exec();
@@ -51,6 +56,7 @@ export const updateById = async (
 
 export const getAllEmployees = async (): Promise<EmployeeDocument[]> => {
   return Employee.find({ isDeleted: false })
+    .populate("role")
     .populate("createdBy", "name email")
     .populate("updatedBy", "name email")
     .sort({ createdAt: -1 })
@@ -61,8 +67,8 @@ export const deleteEmployee = async (
   employeeId: string,
   deletedBy: mongoose.Types.ObjectId,
 ): Promise<EmployeeDocument | null> => {
-  return Employee.findByIdAndUpdate(
-    employeeId,
+  return Employee.findOneAndUpdate(
+    { _id: employeeId, isDeleted: false },
     {
       $set: {
         isDeleted: true,
@@ -71,15 +77,19 @@ export const deleteEmployee = async (
       },
     },
     { new: true },
-  ).exec();
+  )
+    .populate("role")
+    .populate("createdBy", "name email")
+    .populate("updatedBy", "name email")
+    .exec();
 };
 
 export const changeEmployeeStatus = async (
   id: string,
   updatedData: Partial<EmployeeDocument>,
 ): Promise<EmployeeDocument | null> => {
-  return Employee.findByIdAndUpdate(
-    id,
+  return Employee.findOneAndUpdate(
+    { _id: id, isDeleted: false },
     {
       $set: {
         status: updatedData.status,
@@ -87,13 +97,21 @@ export const changeEmployeeStatus = async (
       },
     },
     { new: true, runValidators: true },
-  ).exec();
+  )
+    .populate("role")
+    .populate("createdBy", "name email")
+    .populate("updatedBy", "name email")
+    .exec();
 };
+
 export const findByEmail = async (
   email: string,
 ): Promise<EmployeeDocument | null> => {
   return Employee.findOne({
     email: email.trim().toLowerCase(),
     isDeleted: false,
-  }).exec();
+  })
+    .select("+password")
+    .populate("role")
+    .exec();
 };

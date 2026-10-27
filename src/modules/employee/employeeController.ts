@@ -1,7 +1,8 @@
-import { Response } from "express";
 import * as employeeService from "./employeeService";
 import { message } from "../../constants/responseMessage";
 import { RequestWithAuthData } from "../../@types/express";
+import generateToken from "../../middleware/generateAuthToken";
+import { Request, Response } from "express";
 
 export const createEmployeeProfile = async (
   req: RequestWithAuthData,
@@ -250,6 +251,39 @@ export const updateEmployeeStatus = async (
   } catch (error: any) {
     return res.status(500).json({
       success: false,
+      message: error.message,
+    });
+  }
+};export const loginEmployee = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>> | undefined> => {
+  const { email, password } = req.body;
+
+  try {
+    const employee = await employeeService.loginEmployee(
+      email,
+      password,
+    );
+
+    if (!employee) {
+      return res.status(400).json({
+        message: message.INVALID_LOGIN,
+      });
+    }
+
+    const token = generateToken(employee);
+    const employeeObject = employee.toObject();
+    const { password: _, ...employeeWithoutPassword } = employeeObject;
+
+    return res.cookie("token", token).status(200).json({
+      success: true,
+      message: message.LOGIN_SUCCESS,
+      token,
+      employee: employeeWithoutPassword,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
       message: error.message,
     });
   }
