@@ -1,3 +1,4 @@
+
 import { Router } from "express";
 import * as roleController from "./roleController";
 import verifyToken from "../../middleware/verifyToken";
@@ -28,9 +29,33 @@ const router = Router();
  *           type: array
  *           items:
  *             type: string
+ *             enum:
+ *               - Dashboard
+ *               - Team
+ *               - Customers
+ *               - Stores
+ *               - Country
+ *               - Delivery partners
+ *               - Pickup partners
+ *               - Pricing
+ *               - Product
+ *               - Fabric
+ *               - Pickup assign
+ *               - Pre-booking
+ *               - Booking
+ *               - Package ready
+ *               - Repacking
+ *               - Containers
+ *               - Ready to stuff
+ *               - Stuffing
+ *               - Invoicing
+ *               - Credit note
+ *               - Daily expense
+ *               - Receipt Entry
+ *               - Reports
  *           example:
  *             - Dashboard
- *             - Staff
+ *             - Team
  *             - Reports
  *         isDeleted:
  *           type: boolean
@@ -97,11 +122,31 @@ const router = Router();
  *             type: string
  *             enum:
  *               - Dashboard
- *               - Staff
+ *               - Team
+ *               - Customers
+ *               - Stores
+ *               - Country
+ *               - Delivery partners
+ *               - Pickup partners
+ *               - Pricing
+ *               - Product
+ *               - Fabric
+ *               - Pickup assign
+ *               - Pre-booking
+ *               - Booking
+ *               - Package ready
+ *               - Repacking
+ *               - Containers
+ *               - Ready to stuff
+ *               - Stuffing
+ *               - Invoicing
+ *               - Credit note
+ *               - Daily expense
+ *               - Receipt Entry
  *               - Reports
  *           example:
  *             - Dashboard
- *             - Staff
+ *             - Team
  *             - Reports
  *
  *     UpdateRole:
@@ -109,18 +154,39 @@ const router = Router();
  *       properties:
  *         roleName:
  *           type: string
- *           example: Employee
+ *           example: Supervisor
  *         modules:
  *           type: array
  *           items:
  *             type: string
  *             enum:
  *               - Dashboard
- *               - Staff
+ *               - Team
+ *               - Customers
+ *               - Stores
+ *               - Country
+ *               - Delivery partners
+ *               - Pickup partners
+ *               - Pricing
+ *               - Product
+ *               - Fabric
+ *               - Pickup assign
+ *               - Pre-booking
+ *               - Booking
+ *               - Package ready
+ *               - Repacking
+ *               - Containers
+ *               - Ready to stuff
+ *               - Stuffing
+ *               - Invoicing
+ *               - Credit note
+ *               - Daily expense
+ *               - Receipt Entry
  *               - Reports
  *           example:
  *             - Dashboard
- *             - Staff
+ *             - Team
+ *             - Reports
  */
 
 /**
@@ -247,6 +313,8 @@ router.get("/:id", verifyToken, roleController.getRoleById);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/RoleResponse'
+ *       400:
+ *         description: Invalid request or role already exists
  *       401:
  *         description: Unauthorized
  *       404:

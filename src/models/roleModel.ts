@@ -4,27 +4,28 @@ import { BaseDocument, BaseSchema } from "./baseModel";
 
 export const ROLE_MODULES = [
     "Dashboard",
-    "Bookings",
-    "Containers",
-    "Countries",
-    "Credit Notes",
+    "Team",
     "Customers",
-    "Employee",
-    "Fabrics",
-    "Invoices",
-    "Packages",
-    "Petty Cash",
-    "Pickup Assign",
-    "Daily Expenses",
-    "Delivery Partners",
-    "Pickup Partner",
-    "Reports",
-    "Pre Booking",
+    "Stores",
+    "Country",
+    "Delivery partners",
+    "Pickup partners",
     "Pricing",
-    "Receipt Entries",
-    "Store",
-    "Stuffings",
-    "Roles"
+    "Product",
+    "Fabric",
+    "Pickup assign",
+    "Pre-booking",
+    "Booking",
+    "Package ready",
+    "Repacking",
+    "Containers",
+    "Ready to stuff",
+    "Stuffing",
+    "Invoicing",
+    "Credit note",
+    "Daily expense",
+    "Receipt Entry",
+    "Reports",
 ] as const;
 
 export type RoleModule = (typeof ROLE_MODULES)[number];
@@ -51,9 +52,6 @@ const RoleSchema = new Schema<RoleDocument>({
     },
 } as mongoose.SchemaDefinition<RoleDocument>);
 
-const RoleModel = mongoose.model<RoleDocument>(
-    "Role",
-    RoleSchema,
-);
+const RoleModel = mongoose.model<RoleDocument>("Role", RoleSchema);
 
 export default RoleModel;

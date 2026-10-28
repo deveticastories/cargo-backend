@@ -1,8 +1,9 @@
 
-import RoleModel from "../models/roleModel";
+import RoleModel, { ROLE_MODULES } from "../models/roleModel";
 
 export const seedRoles = async (): Promise<void> => {
     const roleName = "Admin";
+    const modules = [...ROLE_MODULES];
 
     const existingRole = await RoleModel.findOne({
         roleName,
@@ -10,19 +11,16 @@ export const seedRoles = async (): Promise<void> => {
     });
 
     if (existingRole) {
-        console.log(`Role already exists: ${roleName}`);
+        existingRole.modules = modules;
+        await existingRole.save();
+
+        console.log(`Role updated: ${roleName}`);
         return;
     }
 
     await RoleModel.create({
         roleName,
-        modules: [
-            "Dashboard",
-            "Roles",
-            "Store",
-            "Daily Expenses",
-            "Reports",
-        ],
+        modules,
     });
 
     console.log(`Role created: ${roleName}`);
