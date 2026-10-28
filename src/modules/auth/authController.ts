@@ -11,6 +11,7 @@ export const login = async (
 
   try {
     const user = await authService.loginUser(email, password);
+    console.log("user",user)
 
     if (!user) {
       return res.status(400).json({ message: message.INVALID_LOGIN });

@@ -5,6 +5,21 @@ import * as pickupAssignRepository from "./pickupAssignRepository";
 import {
     PickupAssignDocument,
 } from "../../models/pickupAssignModel";
+const getPickupStatus = (
+    bundleCount: number,
+    collectedBundle: number,
+): "Pending" | "Partially Collected" | "Collected" => {
+    if (collectedBundle === 0) {
+        return "Pending";
+    }
+
+    if (collectedBundle === bundleCount) {
+        return "Collected";
+    }
+
+    return "Partially Collected";
+};
+
 export const createPickupAssign = async (
     pickupAssignData: Partial<PickupAssignDocument>,
 ): Promise<PickupAssignDocument> => {
@@ -26,6 +41,13 @@ export const createPickupAssign = async (
             }
         }
 
+        const bundleCount = pickupAssignData.bundleCount ?? 0;
+        const collectedBundle = pickupAssignData.collectedBundle ?? 0;
+
+        pickupAssignData.pickupStatus = getPickupStatus(
+            bundleCount,
+            collectedBundle,
+        );
 
         const newPickupAssign =
             await pickupAssignRepository.create(
@@ -74,6 +96,27 @@ export const editPickupAssign = async (
                 );
             }
         }
+
+        const existingPickupAssign =
+            await pickupAssignRepository.findById(pickupAssignId);
+
+        if (!existingPickupAssign) {
+            throw new Error(
+                `Pickup assign with ID ${pickupAssignId} not found`,
+            );
+        }
+
+        const bundleCount =
+            pickupAssignData.bundleCount ?? existingPickupAssign.bundleCount;
+
+        const collectedBundle =
+            pickupAssignData.collectedBundle ??
+            existingPickupAssign.collectedBundle;
+
+        pickupAssignData.pickupStatus = getPickupStatus(
+            bundleCount,
+            collectedBundle,
+        );
 
         const updatedPickupAssign =
             await pickupAssignRepository.updateById(
