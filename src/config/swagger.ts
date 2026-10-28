@@ -674,12 +674,6 @@ const swaggerOptions: swaggerJSDoc.Options = {
               example: "Unpaid",
             },
 
-            pickupStatus: {
-              type: "string",
-              enum: ["Pending", "Collected"],
-              example: "Pending",
-            },
-
             collectedBundle: {
               type: "number",
               minimum: 0,
