@@ -1,3 +1,4 @@
+
 import mongoose, { Schema, Document } from "mongoose";
 import { BaseDocument, BaseSchema } from "./baseModel";
 
@@ -53,7 +54,10 @@ UserSchema.index(
     { empId: 1 },
     {
         unique: true,
-        partialFilterExpression: { isDeleted: false },
+        partialFilterExpression: {
+            isDeleted: false,
+            empId: { $type: "string" },
+        },
     },
 );
 
@@ -61,7 +65,10 @@ UserSchema.index(
     { email: 1 },
     {
         unique: true,
-        partialFilterExpression: { isDeleted: false },
+        partialFilterExpression: {
+            isDeleted: false,
+            email: { $type: "string" },
+        },
     },
 );
 
