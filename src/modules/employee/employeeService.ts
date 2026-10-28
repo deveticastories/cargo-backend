@@ -3,12 +3,11 @@ import logger from "../../utils/logger";
 import bcrypt from "bcrypt";
 
 import * as employeeRepository from "./employeeRepository";
-import { EmployeeDocument } from "../../models/employeeModel";
-
+import { UserDocument } from "../../models/userModel";
 
 export const createEmployeeProfile = async (
-  employeeData: Partial<EmployeeDocument>,
-): Promise<EmployeeDocument> => {
+  employeeData: Partial<UserDocument>,
+): Promise<UserDocument> => {
   try {
     logger.info("Creating a new employee profile", { employeeData });
 
@@ -67,8 +66,8 @@ export const createEmployeeProfile = async (
 
 export const editEmployeeProfile = async (
   employeeId: string,
-  employeeData: Partial<EmployeeDocument>,
-): Promise<EmployeeDocument | null> => {
+  employeeData: Partial<UserDocument>,
+): Promise<UserDocument | null> => {
   try {
     logger.info(`Editing employee profile with ID ${employeeId}`, {
       employeeData,
@@ -137,7 +136,7 @@ export const editEmployeeProfile = async (
   }
 };
 
-export const getAllEmployees = async (): Promise<EmployeeDocument[]> => {
+export const getAllEmployees = async (): Promise<UserDocument[]> => {
   logger.info("Getting all employees");
 
   return employeeRepository.getAllEmployees();
@@ -145,7 +144,7 @@ export const getAllEmployees = async (): Promise<EmployeeDocument[]> => {
 
 export const getEmployeeById = async (
   id: string,
-): Promise<EmployeeDocument | null> => {
+): Promise<UserDocument | null> => {
   logger.info(`Getting employee with ID ${id}`);
 
   return employeeRepository.findById(id);
@@ -154,7 +153,7 @@ export const getEmployeeById = async (
 export const deleteEmployee = async (
   employeeId: string,
   deletedBy: mongoose.Types.ObjectId,
-): Promise<EmployeeDocument | null> => {
+): Promise<UserDocument | null> => {
   try {
     logger.info(
       `Deleting employee with ID ${employeeId} by user ${deletedBy}`,
@@ -188,8 +187,8 @@ export const deleteEmployee = async (
 
 export const updateEmployeeStatus = async (
   id: string,
-  updatedData: Partial<EmployeeDocument>,
-): Promise<EmployeeDocument | null> => {
+  updatedData: Partial<UserDocument>,
+): Promise<UserDocument | null> => {
   try {
     logger.info(
       `Updating status for employee with ID ${id} to ${updatedData.status}`,
@@ -224,7 +223,7 @@ export const updateEmployeeStatus = async (
 }; export const loginEmployee = async (
   email: string,
   password: string,
-): Promise<EmployeeDocument | null> => {
+): Promise<UserDocument | null> => {
   const employee = await employeeRepository.findByEmail(email);
 
   if (

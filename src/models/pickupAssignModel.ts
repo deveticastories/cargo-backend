@@ -1,4 +1,3 @@
-
 import mongoose, { Schema, Document } from "mongoose";
 import { BaseDocument, BaseSchema } from "./baseModel";
 import { PickupPartnerDocument } from "./pickupPartnerModel";
@@ -9,7 +8,7 @@ export interface PickupAssign extends BaseDocument {
   bundleCount: number;
   amount: number;
   paymentStatus: "Unpaid" | "Paid";
-  pickupStatus: "Pending" | "Collected";
+  pickupStatus: "Pending" | "Partially Collected" | "Collected";
   collectedBundle: number;
 }
 
@@ -43,7 +42,7 @@ const PickupAssignSchema: Schema<PickupAssign> = new Schema({
   },
   pickupStatus: {
     type: String,
-    enum: ["Pending", "Paid", "Collected"],
+    enum: ["Pending", "Partially Collected", "Collected"],
     default: "Pending",
   },
   collectedBundle: {

@@ -26,6 +26,7 @@ export const createPickupAssign = async (
             }
         }
 
+
         const newPickupAssign =
             await pickupAssignRepository.create(
                 pickupAssignData,

@@ -1,19 +1,17 @@
 import mongoose from "mongoose";
-import Employee, {
-  EmployeeDocument,
-} from "../../models/employeeModel";
+import User, { UserDocument } from "../../models/userModel";
 
 export const create = async (
-  employeeData: Partial<EmployeeDocument>,
-): Promise<EmployeeDocument> => {
-  const employee = new Employee(employeeData);
+  employeeData: Partial<UserDocument>,
+): Promise<UserDocument> => {
+  const employee = new User(employeeData);
   return await employee.save();
 };
 
 export const findById = async (
   id: string,
-): Promise<EmployeeDocument | null> => {
-  return Employee.findOne({
+): Promise<UserDocument | null> => {
+  return User.findOne({
     _id: id,
     isDeleted: false,
   })
@@ -25,8 +23,8 @@ export const findById = async (
 
 export const findByEmpId = async (
   empId: string,
-): Promise<EmployeeDocument | null> => {
-  return Employee.findOne({
+): Promise<UserDocument | null> => {
+  return User.findOne({
     empId: empId.trim(),
     isDeleted: false,
   })
@@ -36,9 +34,9 @@ export const findByEmpId = async (
 
 export const updateById = async (
   id: string,
-  updateData: Partial<EmployeeDocument>,
-): Promise<EmployeeDocument | null> => {
-  return Employee.findOneAndUpdate(
+  updateData: Partial<UserDocument>,
+): Promise<UserDocument | null> => {
+  return User.findOneAndUpdate(
     { _id: id, isDeleted: false },
     {
       $set: {
@@ -54,8 +52,8 @@ export const updateById = async (
     .exec();
 };
 
-export const getAllEmployees = async (): Promise<EmployeeDocument[]> => {
-  return Employee.find({ isDeleted: false })
+export const getAllEmployees = async (): Promise<UserDocument[]> => {
+  return User.find({ isDeleted: false })
     .populate("role")
     .populate("createdBy", "name email")
     .populate("updatedBy", "name email")
@@ -66,8 +64,8 @@ export const getAllEmployees = async (): Promise<EmployeeDocument[]> => {
 export const deleteEmployee = async (
   employeeId: string,
   deletedBy: mongoose.Types.ObjectId,
-): Promise<EmployeeDocument | null> => {
-  return Employee.findOneAndUpdate(
+): Promise<UserDocument | null> => {
+  return User.findOneAndUpdate(
     { _id: employeeId, isDeleted: false },
     {
       $set: {
@@ -86,9 +84,9 @@ export const deleteEmployee = async (
 
 export const changeEmployeeStatus = async (
   id: string,
-  updatedData: Partial<EmployeeDocument>,
-): Promise<EmployeeDocument | null> => {
-  return Employee.findOneAndUpdate(
+  updatedData: Partial<UserDocument>,
+): Promise<UserDocument | null> => {
+  return User.findOneAndUpdate(
     { _id: id, isDeleted: false },
     {
       $set: {
@@ -106,8 +104,8 @@ export const changeEmployeeStatus = async (
 
 export const findByEmail = async (
   email: string,
-): Promise<EmployeeDocument | null> => {
-  return Employee.findOne({
+): Promise<UserDocument | null> => {
+  return User.findOne({
     email: email.trim().toLowerCase(),
     isDeleted: false,
   })
