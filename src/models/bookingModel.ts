@@ -6,7 +6,10 @@ export interface Booking extends BaseDocument {
 
   sender: mongoose.Types.ObjectId;
   receiver: mongoose.Types.ObjectId;
-  pickupOption: mongoose.Types.ObjectId;
+  // A booking is linked to a Pickup Assign run, or (when the partner has no assign yet) straight
+  // to a Pickup Partner — at least one of the two is required (checked in bookingService).
+  pickupOption: mongoose.Types.ObjectId | null;
+  pickupPartner: mongoose.Types.ObjectId | null;
 
   date: Date;
 
@@ -59,7 +62,13 @@ const BookingSchema: Schema<Booking> = new Schema({
   pickupOption: {
     type: Schema.Types.ObjectId,
     ref: "PickupAssign",
-    required: true,
+    default: null,
+  },
+
+  pickupPartner: {
+    type: Schema.Types.ObjectId,
+    ref: "PickupPartner",
+    default: null,
   },
 
   date: {

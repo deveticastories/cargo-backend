@@ -50,6 +50,7 @@ export const getBookingReport = async (
         .populate("sender")
         .populate("receiver")
         .populate("pickupOption")
+        .populate("pickupPartner")
         .sort({ createdAt: -1 })
         .exec();
 };

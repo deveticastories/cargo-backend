@@ -942,7 +942,14 @@ const swaggerOptions: swaggerJSDoc.Options = {
 
             pickupOption: {
               type: "object",
-              description: "Populated pickup partner",
+              nullable: true,
+              description: "Populated pickup assign",
+            },
+
+            pickupPartner: {
+              type: "object",
+              nullable: true,
+              description: "Populated pickup partner (set when booked straight with a partner)",
             },
 
             date: {
@@ -1053,7 +1060,6 @@ const swaggerOptions: swaggerJSDoc.Options = {
           required: [
             "sender",
             "receiver",
-            "pickupOption",
             "date",
             "billOption",
             "bundleCount",
@@ -1074,7 +1080,16 @@ const swaggerOptions: swaggerJSDoc.Options = {
 
             pickupOption: {
               type: "string",
+              nullable: true,
+              description: "PickupAssign id — either this or pickupPartner is required on create",
               example: "665c2f8a9b12345678901236",
+            },
+
+            pickupPartner: {
+              type: "string",
+              nullable: true,
+              description: "PickupPartner id — used when the partner has no pickup assign",
+              example: "665c2f8a9b12345678901237",
             },
 
             date: {
@@ -1171,7 +1186,16 @@ const swaggerOptions: swaggerJSDoc.Options = {
 
             pickupOption: {
               type: "string",
+              nullable: true,
+              description: "PickupAssign id — either this or pickupPartner is required on create",
               example: "665c2f8a9b12345678901236",
+            },
+
+            pickupPartner: {
+              type: "string",
+              nullable: true,
+              description: "PickupPartner id — used when the partner has no pickup assign",
+              example: "665c2f8a9b12345678901237",
             },
 
             date: {

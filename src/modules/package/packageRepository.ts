@@ -32,6 +32,10 @@ export const findById = async (
           path: "pickupOption",
           model: "PickupAssign",
         },
+        {
+          path: "pickupPartner",
+          model: "PickupPartner",
+        },
       ],
     })
     .populate("bundles.products.product")
@@ -61,6 +65,10 @@ export const findByBooking = async (
           path: "pickupOption",
           model: "PickupAssign",
         },
+        {
+          path: "pickupPartner",
+          model: "PickupPartner",
+        },
       ],
     })
     .populate("bundles.products.product")
@@ -86,6 +94,10 @@ export const getAllPackages = async (): Promise<PackageDocument[]> => {
         {
           path: "pickupOption",
           model: "PickupAssign",
+        },
+        {
+          path: "pickupPartner",
+          model: "PickupPartner",
         },
       ],
     })

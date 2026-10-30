@@ -13,6 +13,7 @@ const populateStuffing = (query: any) =>
         { path: "sender", model: "Customer" },
         { path: "receiver", model: "Customer" },
         { path: "pickupOption", model: "PickupAssign" },
+        { path: "pickupPartner", model: "PickupPartner" },
       ],
     });
 

@@ -20,6 +20,7 @@ export const findById = async (
     .populate("sender")
     .populate("receiver")
     .populate("pickupOption")
+    .populate("pickupPartner")
     .exec();
 };
 
@@ -43,6 +44,7 @@ export const updateById = async (
     .populate("sender")
     .populate("receiver")
     .populate("pickupOption")
+    .populate("pickupPartner")
     .exec();
 };
 
@@ -66,6 +68,7 @@ export const getAllBookings = async (
     .populate("sender")
     .populate("receiver")
     .populate("pickupOption")
+    .populate("pickupPartner")
     .sort({ createdAt: -1 })
     .exec();
 };
@@ -91,6 +94,7 @@ export const deleteBooking = async (
     .populate("sender")
     .populate("receiver")
     .populate("pickupOption")
+    .populate("pickupPartner")
     .exec();
 };
 
@@ -119,6 +123,7 @@ export const changeBookingStatus = async (
     .populate("sender")
     .populate("receiver")
     .populate("pickupOption")
+    .populate("pickupPartner")
     .exec();
 };
 
@@ -132,6 +137,7 @@ export const findByBookingId = async (
     .populate("sender")
     .populate("receiver")
     .populate("pickupOption")
+    .populate("pickupPartner")
     .exec();
 };
 
@@ -169,6 +175,7 @@ export const changePackageListStatus = async (
     .populate("sender")
     .populate("receiver")
     .populate("pickupOption")
+    .populate("pickupPartner")
     .exec();
 };
 
@@ -197,6 +204,7 @@ export const changeStuffStatus = async (
     .populate("sender")
     .populate("receiver")
     .populate("pickupOption")
+    .populate("pickupPartner")
     .exec();
 };
 export const changePackingStatus = async (
@@ -234,5 +242,6 @@ export const changePackingStatus = async (
     .populate("sender")
     .populate("receiver")
     .populate("pickupOption")
+    .populate("pickupPartner")
     .exec();
 };
