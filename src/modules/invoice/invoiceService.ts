@@ -5,7 +5,7 @@ import * as invoiceRepository from "./invoiceRepository.js";
 import * as bookingService from "../booking/bookingService.js";
 import * as pricingService from "../price/priceService.js";
 import * as customerService from "../customer/customerService.js";
-
+import * as deliveryPartnerService from "../deliveryPartner/deliveryPartnerService.js"
 interface CreateInvoiceInput {
   container: string;
   booking: string;
@@ -28,7 +28,6 @@ export const createInvoice = async (
   const booking = await bookingService.getBookingById(
     invoiceData.booking,
   );
-  console.log("Booking retrieved:", booking);
 
   if (!booking) {
     throw new Error("Booking not found");
@@ -60,7 +59,7 @@ export const createInvoice = async (
 
   const receiverId =
     typeof booking.receiver === "object" &&
-    "_id" in booking.receiver
+      "_id" in booking.receiver
       ? booking.receiver._id.toString()
       : String(booking.receiver);
 
@@ -79,6 +78,23 @@ export const createInvoice = async (
     throw new Error("Receiver customer is deleted or inactive");
   }
 
+  const deliveryPartner =
+    await deliveryPartnerService.getDeliveryPartnerById(
+      invoiceData.deliveryPartner,
+    );
+
+  if (!deliveryPartner) {
+    throw new Error("Delivery partner not found");
+  }
+
+  if (
+    deliveryPartner.isDeleted ||
+    !Number.isFinite(deliveryPartner.charge) ||
+    deliveryPartner.charge < 0
+  ) {
+    throw new Error("Delivery partner charge must be valid and non-negative");
+  }
+
   const receivableDiscount = receiver.discount ?? 0;
 
   if (
@@ -92,6 +108,7 @@ export const createInvoice = async (
 
   const brandHandlingCharge = booking.brandHandlingCharge ?? 0;
   const pickupCharge = booking.pickupCharge ?? 0;
+  const deliveryPartnerCharge = deliveryPartner.charge ?? 0;
 
   if (
     !Number.isFinite(brandHandlingCharge) ||
@@ -109,8 +126,15 @@ export const createInvoice = async (
   );
 
   const additionalCharges = Number(
-    (brandHandlingCharge + pickupCharge).toFixed(2),
+    (
+      brandHandlingCharge +
+      pickupCharge +
+      deliveryPartnerCharge
+    ).toFixed(2),
   );
+  console.log(brandHandlingCharge)
+  console.log(pickupCharge)
+  console.log(deliveryPartnerCharge)
 
   if (receivableDiscount > subtotal + additionalCharges) {
     throw new Error(
@@ -147,8 +171,8 @@ export const createInvoice = async (
     total,
     createdBy: invoiceData.createdBy
       ? new mongoose.Types.ObjectId(
-          invoiceData.createdBy.toString(),
-        )
+        invoiceData.createdBy.toString(),
+      )
       : undefined,
   });
 };
