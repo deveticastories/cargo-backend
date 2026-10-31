@@ -90,14 +90,3 @@ export const changeDeliveryPartnerStatus = async (
     .exec();
 };
 
-export const findByWhatsapp = async (
-  whatsapp: string,
-): Promise<DeliveryPartnerDocument | null> => {
-  return DeliveryPartner.findOne({
-    whatsapp: whatsapp.trim(),
-    isDeleted: false,
-  })
-    .populate("from")
-    .populate("toCountry")
-    .exec();
-};
