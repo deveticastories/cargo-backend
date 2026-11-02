@@ -10,18 +10,6 @@ export const createDeliveryPartner = async (
       deliveryPartnerData,
     });
 
-    if (deliveryPartnerData.whatsapp) {
-      const existingDeliveryPartner =
-        await deliveryPartnerRepository.findByWhatsapp(
-          deliveryPartnerData.whatsapp,
-        );
-
-      if (existingDeliveryPartner) {
-        throw new Error(
-          `Delivery partner with WhatsApp '${deliveryPartnerData.whatsapp}' already exists.`,
-        );
-      }
-    }
 
     const newDeliveryPartner =
       await deliveryPartnerRepository.create(deliveryPartnerData);
@@ -53,21 +41,6 @@ export const editDeliveryPartner = async (
       },
     );
 
-    if (deliveryPartnerData.whatsapp) {
-      const existingDeliveryPartner =
-        await deliveryPartnerRepository.findByWhatsapp(
-          deliveryPartnerData.whatsapp,
-        );
-
-      if (
-        existingDeliveryPartner &&
-        existingDeliveryPartner._id.toString() !== deliveryPartnerId
-      ) {
-        throw new Error(
-          `Delivery partner with WhatsApp '${deliveryPartnerData.whatsapp}' already exists.`,
-        );
-      }
-    }
 
     const updatedDeliveryPartner =
       await deliveryPartnerRepository.updateById(
