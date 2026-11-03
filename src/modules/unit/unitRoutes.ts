@@ -1,3 +1,4 @@
+
 import { Router } from "express";
 import * as unitController from "./unitController";
 import verifyToken from "../../middleware/verifyToken";
@@ -23,6 +24,10 @@ const router = Router();
  *         name:
  *           type: string
  *           example: Kilogram
+ *         unitStatus:
+ *           type: string
+ *           enum: [Active, Inactive]
+ *           example: Active
  *
  *     UpdateUnit:
  *       type: object
@@ -30,15 +35,10 @@ const router = Router();
  *         name:
  *           type: string
  *           example: Gram
- *
- *     UpdateUnitStatus:
- *       type: object
- *       required:
- *         - status
- *       properties:
- *         status:
+ *         unitStatus:
  *           type: string
- *           example: Active
+ *           enum: [Active, Inactive]
+ *           example: Inactive
  *
  *     Unit:
  *       type: object
@@ -49,8 +49,9 @@ const router = Router();
  *         name:
  *           type: string
  *           example: Kilogram
- *         status:
+ *         unitStatus:
  *           type: string
+ *           enum: [Active, Inactive]
  *           example: Active
  *         isDeleted:
  *           type: boolean
@@ -84,6 +85,8 @@ const router = Router();
  *     responses:
  *       201:
  *         description: Unit created successfully
+ *       400:
+ *         description: Invalid request data
  *       401:
  *         description: Unauthorized
  *       500:
@@ -172,7 +175,7 @@ router.get("/:id", verifyToken, unitController.getUnitById);
  *       200:
  *         description: Unit updated successfully
  *       400:
- *         description: Invalid unit ID
+ *         description: Invalid unit ID or request data
  *       401:
  *         description: Unauthorized
  *       404:
@@ -209,43 +212,5 @@ router.put("/:id", verifyToken, unitController.editUnit);
  *         description: Internal server error
  */
 router.delete("/:id", verifyToken, unitController.deleteUnit);
-
-/**
- * @swagger
- * /api/units/{id}/status:
- *   patch:
- *     summary: Update unit status
- *     tags: [Units]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UpdateUnitStatus'
- *     responses:
- *       200:
- *         description: Unit status updated successfully
- *       400:
- *         description: Invalid unit ID
- *       401:
- *         description: Unauthorized
- *       404:
- *         description: Unit not found
- *       500:
- *         description: Internal server error
- */
-router.patch(
-  "/:id/status",
-  verifyToken,
-  unitController.updateUnitStatus,
-);
 
 export default router;
