@@ -24,6 +24,7 @@ export interface Booking extends BaseDocument {
   packingStatus:
     | "Ready to Ship"
     | "Repacking Required";
+    
 
   packageListStatus: "Added" | "Pending";
 

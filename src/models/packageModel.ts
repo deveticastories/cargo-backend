@@ -4,6 +4,7 @@ import { BaseDocument, BaseSchema } from "./baseModel";
 export interface PackageProduct {
   product: mongoose.Types.ObjectId;
   quantity: number;
+  unit: mongoose.Types.ObjectId;
   fabric?: mongoose.Types.ObjectId;
   description?: string;
 }
@@ -17,9 +18,7 @@ export interface PackageBundle {
 
 export interface Package extends BaseDocument {
   booking: mongoose.Types.ObjectId;
-
   repackedBy?: string;
-
   bundles: PackageBundle[];
 }
 
@@ -37,6 +36,12 @@ const PackageProductSchema = new Schema<PackageProduct>(
       type: Number,
       required: true,
       min: 1,
+    },
+
+    unit: {
+      type: Schema.Types.ObjectId,
+      ref: "Unit",
+      required: true,
     },
 
     fabric: {

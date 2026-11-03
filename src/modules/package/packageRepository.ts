@@ -40,6 +40,7 @@ export const findById = async (
     })
     .populate("bundles.products.product")
     .populate("bundles.products.fabric")
+    .populate("bundles.products.unit")
     .exec();
 };
 
@@ -73,10 +74,13 @@ export const findByBooking = async (
     })
     .populate("bundles.products.product")
     .populate("bundles.products.fabric")
+    .populate("bundles.products.unit")
     .exec();
 };
 
-export const getAllPackages = async (): Promise<PackageDocument[]> => {
+export const getAllPackages = async (): Promise<
+  PackageDocument[]
+> => {
   return Package.find({
     isDeleted: false,
   })
@@ -103,9 +107,11 @@ export const getAllPackages = async (): Promise<PackageDocument[]> => {
     })
     .populate("bundles.products.product")
     .populate("bundles.products.fabric")
+    .populate("bundles.products.unit")
     .sort({ createdAt: -1 })
     .exec();
 };
+
 export const updateById = async (
   id: string,
   updateData: Partial<PackageDocument>,
@@ -126,6 +132,7 @@ export const updateById = async (
     .populate("booking")
     .populate("bundles.products.product")
     .populate("bundles.products.fabric")
+    .populate("bundles.products.unit")
     .exec();
 };
 
@@ -150,5 +157,6 @@ export const deletePackage = async (
     .populate("booking")
     .populate("bundles.products.product")
     .populate("bundles.products.fabric")
+    .populate("bundles.products.unit")
     .exec();
 };

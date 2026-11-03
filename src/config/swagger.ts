@@ -1463,8 +1463,8 @@ const swaggerOptions: swaggerJSDoc.Options = {
               format: "date-time",
             },
           },
-        },
 
+        },
 
         PackageProduct: {
           type: "object",
@@ -1494,6 +1494,21 @@ const swaggerOptions: swaggerJSDoc.Options = {
               example: 10,
             },
 
+            unit: {
+              type: "object",
+              description: "Populated unit",
+              properties: {
+                _id: {
+                  type: "string",
+                  example: "6ac5cc619c7d9b82ddfd8bc8",
+                },
+                name: {
+                  type: "string",
+                  example: "Pieces",
+                },
+              },
+            },
+
             fabric: {
               type: "object",
               nullable: true,
@@ -1517,7 +1532,6 @@ const swaggerOptions: swaggerJSDoc.Options = {
             },
           },
         },
-
         PackageBundle: {
           type: "object",
           properties: {
@@ -1820,6 +1834,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
                       required: [
                         "product",
                         "quantity",
+                        "unit",
                       ],
 
                       properties: {
@@ -1831,6 +1846,12 @@ const swaggerOptions: swaggerJSDoc.Options = {
                         quantity: {
                           type: "number",
                           example: 10,
+                        },
+
+                        unit: {
+                          type: "string",
+                          description: "Unit ObjectId",
+                          example: "6ac5cc619c7d9b82ddfd8bc8",
                         },
 
                         fabric: {
@@ -1906,6 +1927,12 @@ const swaggerOptions: swaggerJSDoc.Options = {
                         quantity: {
                           type: "number",
                           example: 10,
+                        },
+
+                        unit: {
+                          type: "string",
+                          description: "Unit ObjectId",
+                          example: "6ac5cc619c7d9b82ddfd8bc8",
                         },
 
                         fabric: {

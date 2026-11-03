@@ -176,15 +176,21 @@ export const message = {
     RECEIPT_ENTRY_UPDATE_DATA_REQUIRED:
         "At least one field is required to update a receipt entry",
     DELIVERY_PARTNER_STATUS_UPDATE_FAILED: "Failed to update delivery partner status",
-     ROLE_ID_INVALID: "Role id invalid",
+    ROLE_ID_INVALID: "Role id invalid",
     ROLE_CREATED: "Role created successfully",
     ROLE_UPDATED: "Role updated successfully",
     ROLE_DELETED: "Role deleted successfully",
     ROLE_NOT_FOUND: "Role not found",
-     INVALID_ROLE_ID: "Invalid role ID",
+    INVALID_ROLE_ID: "Invalid role ID",
     ROLE_STATUS_UPDATED: "Role status updated successfully",
 
     INVALID_PAGINATION: "Invalid pagination",
+    UNIT_CREATED: "Unit created successfully",
+    UNIT_UPDATED: "Unit updated successfully",
+    UNIT_DELETED: "Unit deleted successfully",
+    UNIT_NOT_FOUND: "Unit not found",
+    INVALID_UNIT_ID: "Invalid unit ID",
+    UNIT_STATUS_UPDATED: "Unit status updated successfully",
 
 
 
