@@ -1,27 +1,40 @@
-
 import RoleModel, { ROLE_MODULES } from "../models/roleModel";
 
 export const seedRoles = async (): Promise<void> => {
-    const roleName = "Admin";
-    const modules = [...ROLE_MODULES];
+    const roles = [
+        {
+            roleName: "Super Admin",
+            modules: [...ROLE_MODULES],
+        },
+        {
+            roleName: "Admin",
+            modules: [...ROLE_MODULES],
+        },
+        {
+            roleName: "Transit",
+            modules: [],
+        },
+        {
+            roleName: "Pickup",
+            modules: [],
+        },
+    ];
 
-    const existingRole = await RoleModel.findOne({
-        roleName,
-        isDeleted: false,
-    });
+    for (const role of roles) {
+        const existingRole = await RoleModel.findOne({
+            roleName: role.roleName,
+            isDeleted: false,
+        });
 
-    if (existingRole) {
-        existingRole.modules = modules;
-        await existingRole.save();
+        if (existingRole) {
+            existingRole.modules = role.modules;
+            await existingRole.save();
 
-        console.log(`Role updated: ${roleName}`);
-        return;
+            console.log(`Role updated: ${role.roleName}`);
+        } else {
+            await RoleModel.create(role);
+
+            console.log(`Role created: ${role.roleName}`);
+        }
     }
-
-    await RoleModel.create({
-        roleName,
-        modules,
-    });
-
-    console.log(`Role created: ${roleName}`);
 };
