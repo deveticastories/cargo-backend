@@ -952,6 +952,11 @@ const swaggerOptions: swaggerJSDoc.Options = {
               description: "Populated pickup partner (set when booked straight with a partner)",
             },
 
+            pickupVia: {
+              type: "string",
+              enum: ["Our Pickup Boy", "Direct to Store", "Pickup Partner"],
+            },
+
             date: {
               type: "string",
               format: "date-time",
@@ -1081,7 +1086,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
             pickupOption: {
               type: "string",
               nullable: true,
-              description: "PickupAssign id — either this or pickupPartner is required on create",
+              description: "PickupAssign id — when pickupVia is 'Pickup Partner', either this or pickupPartner is required on create",
               example: "665c2f8a9b12345678901236",
             },
 
@@ -1090,6 +1095,13 @@ const swaggerOptions: swaggerJSDoc.Options = {
               nullable: true,
               description: "PickupPartner id — used when the partner has no pickup assign",
               example: "665c2f8a9b12345678901237",
+            },
+
+            pickupVia: {
+              type: "string",
+              enum: ["Our Pickup Boy", "Direct to Store", "Pickup Partner"],
+              default: "Our Pickup Boy",
+              example: "Direct to Store",
             },
 
             date: {
@@ -1187,7 +1199,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
             pickupOption: {
               type: "string",
               nullable: true,
-              description: "PickupAssign id — either this or pickupPartner is required on create",
+              description: "PickupAssign id — when pickupVia is 'Pickup Partner', either this or pickupPartner is required on create",
               example: "665c2f8a9b12345678901236",
             },
 
@@ -1196,6 +1208,13 @@ const swaggerOptions: swaggerJSDoc.Options = {
               nullable: true,
               description: "PickupPartner id — used when the partner has no pickup assign",
               example: "665c2f8a9b12345678901237",
+            },
+
+            pickupVia: {
+              type: "string",
+              enum: ["Our Pickup Boy", "Direct to Store", "Pickup Partner"],
+              default: "Our Pickup Boy",
+              example: "Direct to Store",
             },
 
             date: {

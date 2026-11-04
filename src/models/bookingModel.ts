@@ -10,6 +10,7 @@ export interface Booking extends BaseDocument {
   // to a Pickup Partner — at least one of the two is required (checked in bookingService).
   pickupOption: mongoose.Types.ObjectId | null;
   pickupPartner: mongoose.Types.ObjectId | null;
+  pickupVia: "Our Pickup Boy" | "Direct to Store" | "Pickup Partner";
 
   date: Date;
 
@@ -70,6 +71,14 @@ const BookingSchema: Schema<Booking> = new Schema({
     type: Schema.Types.ObjectId,
     ref: "PickupPartner",
     default: null,
+  },
+
+  // How the goods reach the store. Only "Pickup Partner" needs a ref
+  // (pickupPartner or pickupOption); the other two may have neither.
+  pickupVia: {
+    type: String,
+    enum: ["Our Pickup Boy", "Direct to Store", "Pickup Partner"],
+    default: "Our Pickup Boy",
   },
 
   date: {

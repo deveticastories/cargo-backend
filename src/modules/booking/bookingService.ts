@@ -5,9 +5,13 @@ export const createBooking = async (
   bookingData: Partial<BookingDocument>,
 ): Promise<BookingDocument> => {
   try {
-    if (!bookingData.pickupOption && !bookingData.pickupPartner) {
+    if (
+      bookingData.pickupVia === "Pickup Partner" &&
+      !bookingData.pickupOption &&
+      !bookingData.pickupPartner
+    ) {
       throw new Error(
-        "Either pickupOption (pickup assign) or pickupPartner is required",
+        "Either pickupOption (pickup assign) or pickupPartner is required when pickupVia is 'Pickup Partner'",
       );
     }
 
