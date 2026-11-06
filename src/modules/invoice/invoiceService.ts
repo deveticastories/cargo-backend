@@ -109,12 +109,15 @@ export const createInvoice = async (
   const brandHandlingCharge = booking.brandHandlingCharge ?? 0;
   const pickupCharge = booking.pickupCharge ?? 0;
   const deliveryPartnerCharge = deliveryPartner.charge ?? 0;
+  const bundleHandlingCharge = booking.bundleHandlingCharge ?? 0;
 
   if (
     !Number.isFinite(brandHandlingCharge) ||
     brandHandlingCharge < 0 ||
     !Number.isFinite(pickupCharge) ||
-    pickupCharge < 0
+    pickupCharge < 0 ||
+    !Number.isFinite(bundleHandlingCharge) ||
+    bundleHandlingCharge < 0
   ) {
     throw new Error(
       "Booking charges must be valid non-negative numbers",
@@ -128,9 +131,7 @@ export const createInvoice = async (
   const additionalCharges = Number(
     (
       brandHandlingCharge +
-      pickupCharge +
-      deliveryPartnerCharge
-    ).toFixed(2),
+      pickupCharge + bundleHandlingCharge).toFixed(2),
   );
   console.log(brandHandlingCharge)
   console.log(pickupCharge)
@@ -144,11 +145,12 @@ export const createInvoice = async (
 
   const total = Number(
     (
-      subtotal +
+      subtotal + deliveryPartnerCharge +
       additionalCharges -
       receivableDiscount
     ).toFixed(2),
   );
+  console.log(total, 'total')
 
   const lastInvoice = await invoiceRepository.getLastInvoice();
 
