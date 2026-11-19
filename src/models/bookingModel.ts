@@ -1,3 +1,4 @@
+
 import mongoose, { Schema, Document } from "mongoose";
 import { BaseDocument, BaseSchema } from "./baseModel";
 
@@ -6,8 +7,8 @@ export interface Booking extends BaseDocument {
 
   sender: mongoose.Types.ObjectId;
   receiver: mongoose.Types.ObjectId;
-  // A booking is linked to a Pickup Assign run, or (when the partner has no assign yet) straight
-  // to a Pickup Partner — at least one of the two is required (checked in bookingService).
+
+  // Pickup Assign or Pickup Partner
   pickupOption: mongoose.Types.ObjectId | null;
   pickupPartner: mongoose.Types.ObjectId | null;
   pickupVia: "Our Pickup Boy" | "Direct to Store" | "Pickup Partner";
@@ -25,7 +26,6 @@ export interface Booking extends BaseDocument {
   packingStatus:
     | "Ready to Ship"
     | "Repacking Required";
-    
 
   packageListStatus: "Added" | "Pending";
 
@@ -34,9 +34,14 @@ export interface Booking extends BaseDocument {
   stuffed: boolean;
   sentToStuffing: boolean;
 
+  // Existing charge fields
   brandHandlingCharge: number;
   pickupCharge: number;
   bundleHandlingCharge: number;
+
+  // New total charge fields
+  totalBrandHandlingCharge: number;
+  totalBundleHandlingCharge: number;
 }
 
 export type BookingDocument = Booking & Document;
@@ -144,6 +149,7 @@ const BookingSchema: Schema<Booking> = new Schema({
     default: false,
   },
 
+  // Existing charge fields
   brandHandlingCharge: {
     type: Number,
     default: 0,
@@ -157,6 +163,19 @@ const BookingSchema: Schema<Booking> = new Schema({
   },
 
   bundleHandlingCharge: {
+    type: Number,
+    default: 0,
+    min: 0,
+  },
+
+  // New total charge fields
+  totalBrandHandlingCharge: {
+    type: Number,
+    default: 0,
+    min: 0,
+  },
+
+  totalBundleHandlingCharge: {
     type: Number,
     default: 0,
     min: 0,

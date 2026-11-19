@@ -20,6 +20,7 @@ const getPickupStatus = (
     return "Partially Collected";
 };
 
+
 export const createPickupAssign = async (
     pickupAssignData: Partial<PickupAssignDocument>,
 ): Promise<PickupAssignDocument> => {
@@ -50,9 +51,11 @@ export const createPickupAssign = async (
         );
 
         const newPickupAssign =
-            await pickupAssignRepository.create(
-                pickupAssignData,
-            );
+            await pickupAssignRepository.create({
+                ...pickupAssignData,
+                sender: pickupAssignData.sender ?? undefined,
+                receiver: pickupAssignData.receiver ?? undefined,
+            });
 
         logger.info("Pickup assign created successfully", {
             pickupAssignId: newPickupAssign._id,
@@ -68,6 +71,8 @@ export const createPickupAssign = async (
         throw new Error(error.message);
     }
 };
+
+
 
 export const editPickupAssign = async (
     pickupAssignId: string,
@@ -107,7 +112,8 @@ export const editPickupAssign = async (
         }
 
         const bundleCount =
-            pickupAssignData.bundleCount ?? existingPickupAssign.bundleCount;
+            pickupAssignData.bundleCount ??
+            existingPickupAssign.bundleCount;
 
         const collectedBundle =
             pickupAssignData.collectedBundle ??
@@ -121,7 +127,16 @@ export const editPickupAssign = async (
         const updatedPickupAssign =
             await pickupAssignRepository.updateById(
                 pickupAssignId,
-                pickupAssignData,
+                {
+                    ...pickupAssignData,
+                    sender: pickupAssignData.sender !== undefined
+                        ? pickupAssignData.sender
+                        : existingPickupAssign.sender,
+
+                    receiver: pickupAssignData.receiver !== undefined
+                        ? pickupAssignData.receiver
+                        : existingPickupAssign.receiver,
+                },
             );
 
         if (!updatedPickupAssign) {
@@ -144,6 +159,7 @@ export const editPickupAssign = async (
         throw new Error(error.message);
     }
 };
+
 
 export const getAllPickupAssigns = async (): Promise<
     PickupAssignDocument[]

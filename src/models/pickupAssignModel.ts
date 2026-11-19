@@ -4,6 +4,8 @@ import { PickupPartnerDocument } from "./pickupPartnerModel";
 
 export interface PickupAssign extends BaseDocument {
   transport: PickupPartnerDocument["_id"];
+  sender?: mongoose.Types.ObjectId;
+  receiver?: mongoose.Types.ObjectId;
   lrNo: string;
   bundleCount: number;
   amount: number;
@@ -19,6 +21,16 @@ const PickupAssignSchema: Schema<PickupAssign> = new Schema({
     type: Schema.Types.ObjectId,
     ref: "PickupPartner",
     required: true,
+  },
+  sender: {
+    type: Schema.Types.ObjectId,
+    ref: "Customer",
+    required: false,
+  },
+  receiver: {
+    type: Schema.Types.ObjectId,
+    ref: "Customer",
+    required: false,
   },
   lrNo: {
     type: String,

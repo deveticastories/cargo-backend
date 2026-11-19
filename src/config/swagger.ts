@@ -133,12 +133,12 @@ const swaggerOptions: swaggerJSDoc.Options = {
             email: {
               type: "string",
               format: "email",
-              example: "admin@example.com",
+              example: "superadmincargo@gmail.com",
             },
             password: {
               type: "string",
               format: "password",
-              example: "Password@123",
+              example: "Cargo@123",
             },
           },
         },
@@ -564,169 +564,213 @@ const swaggerOptions: swaggerJSDoc.Options = {
           },
         },
 
-        PickupAssign: {
-          type: "object",
-          properties: {
-            _id: {
-              type: "string",
-              example: "665c2f8a9b12345678901234",
-            },
+       
+PickupAssign: {
+  type: "object",
+  properties: {
+    _id: {
+      type: "string",
+      example: "665c2f8a9b12345678901234",
+    },
 
-            transport: {
-              $ref: "#/components/schemas/PickupPartner",
-            },
+    transport: {
+      $ref: "#/components/schemas/PickupPartner",
+    },
 
-            lrNo: {
-              type: "string",
-              example: "LR-2026-00125",
-            },
+    sender: {
+      type: "string",
+      nullable: true,
+      description: "Sender ID",
+      example: "665c2f8a9b12345678901235",
+    },
 
-            bundleCount: {
-              type: "number",
-              example: 10,
-            },
+    receiver: {
+      type: "string",
+      nullable: true,
+      description: "Receiver ID",
+      example: "665c2f8a9b12345678901236",
+    },
 
-            amount: {
-              type: "number",
-              example: 2500,
-            },
+    lrNo: {
+      type: "string",
+      example: "LR-2026-00125",
+    },
 
-            paymentStatus: {
-              type: "string",
-              enum: ["Unpaid", "Paid"],
-              example: "Unpaid",
-            },
+    bundleCount: {
+      type: "number",
+      example: 10,
+    },
 
-            pickupStatus: {
-              type: "string",
-              enum: ["Pending", "Collected"],
-              example: "Pending",
-            },
+    amount: {
+      type: "number",
+      example: 2500,
+    },
 
-            collectedBundle: {
-              type: "number",
-              example: 0,
-            },
+    paymentStatus: {
+      type: "string",
+      enum: ["Unpaid", "Paid"],
+      example: "Unpaid",
+    },
 
-            status: {
-              type: "boolean",
-              example: true,
-            },
+    pickupStatus: {
+      type: "string",
+      enum: ["Pending", "Partially Collected", "Collected"],
+      example: "Pending",
+    },
 
-            isDeleted: {
-              type: "boolean",
-              example: false,
-            },
+    collectedBundle: {
+      type: "number",
+      example: 0,
+    },
 
-            deletedAt: {
-              type: "string",
-              format: "date-time",
-              nullable: true,
-            },
+    status: {
+      type: "boolean",
+      example: true,
+    },
 
-            createdAt: {
-              type: "string",
-              format: "date-time",
-            },
+    isDeleted: {
+      type: "boolean",
+      example: false,
+    },
 
-            updatedAt: {
-              type: "string",
-              format: "date-time",
-            },
-          },
-        },
+    deletedAt: {
+      type: "string",
+      format: "date-time",
+      nullable: true,
+    },
 
-        CreatePickupAssignRequest: {
-          type: "object",
-          required: [
-            "transport",
-            "lrNo",
-            "bundleCount",
-            "amount",
-          ],
-          properties: {
-            transport: {
-              type: "string",
-              description: "Pickup Partner ID",
-              example: "665c2f8a9b12345678901234",
-            },
+    createdAt: {
+      type: "string",
+      format: "date-time",
+    },
 
-            lrNo: {
-              type: "string",
-              example: "LR-2026-00125",
-            },
+    updatedAt: {
+      type: "string",
+      format: "date-time",
+    },
+  },
+},
 
-            bundleCount: {
-              type: "number",
-              minimum: 1,
-              example: 10,
-            },
+CreatePickupAssignRequest: {
+  type: "object",
+  required: [
+    "transport",
+    "lrNo",
+    "bundleCount",
+    "amount",
+  ],
+  properties: {
+    transport: {
+      type: "string",
+      description: "Pickup Partner ID",
+      example: "665c2f8a9b12345678901234",
+    },
 
-            amount: {
-              type: "number",
-              minimum: 0,
-              example: 2500,
-            },
+    sender: {
+      type: "string",
+      nullable: true,
+      description: "Sender ID (Optional)",
+      example: "665c2f8a9b12345678901235",
+    },
 
-            paymentStatus: {
-              type: "string",
-              enum: ["Unpaid", "Paid"],
-              example: "Unpaid",
-            },
+    receiver: {
+      type: "string",
+      nullable: true,
+      description: "Receiver ID (Optional)",
+      example: "665c2f8a9b12345678901236",
+    },
 
-            collectedBundle: {
-              type: "number",
-              minimum: 0,
-              example: 0,
-            },
-          },
-        },
+    lrNo: {
+      type: "string",
+      example: "LR-2026-00125",
+    },
 
-        UpdatePickupAssignRequest: {
-          type: "object",
-          properties: {
-            transport: {
-              type: "string",
-              description: "Pickup Partner ID",
-              example: "665c2f8a9b12345678901234",
-            },
+    bundleCount: {
+      type: "number",
+      minimum: 1,
+      example: 10,
+    },
 
-            lrNo: {
-              type: "string",
-              example: "LR-2026-00125",
-            },
+    amount: {
+      type: "number",
+      minimum: 0,
+      example: 2500,
+    },
 
-            bundleCount: {
-              type: "number",
-              minimum: 1,
-              example: 15,
-            },
+    paymentStatus: {
+      type: "string",
+      enum: ["Unpaid", "Paid"],
+      example: "Unpaid",
+    },
 
-            amount: {
-              type: "number",
-              minimum: 0,
-              example: 3000,
-            },
+    collectedBundle: {
+      type: "number",
+      minimum: 0,
+      example: 0,
+    },
+  },
+},
 
-            paymentStatus: {
-              type: "string",
-              enum: ["Unpaid", "Paid"],
-              example: "Paid",
-            },
+UpdatePickupAssignRequest: {
+  type: "object",
+  properties: {
+    transport: {
+      type: "string",
+      description: "Pickup Partner ID",
+      example: "665c2f8a9b12345678901234",
+    },
 
-            pickupStatus: {
-              type: "string",
-              enum: ["Pending", "Collected"],
-              example: "Pending",
-            },
+    sender: {
+      type: "string",
+      nullable: true,
+      description: "Sender ID (Optional)",
+      example: "665c2f8a9b12345678901235",
+    },
 
-            collectedBundle: {
-              type: "number",
-              minimum: 0,
-              example: 5,
-            },
-          },
-        },
+    receiver: {
+      type: "string",
+      nullable: true,
+      description: "Receiver ID (Optional)",
+      example: "665c2f8a9b12345678901236",
+    },
+
+    lrNo: {
+      type: "string",
+      example: "LR-2026-00125",
+    },
+
+    bundleCount: {
+      type: "number",
+      minimum: 1,
+      example: 15,
+    },
+
+    amount: {
+      type: "number",
+      minimum: 0,
+      example: 3000,
+    },
+
+    paymentStatus: {
+      type: "string",
+      enum: ["Unpaid", "Paid"],
+      example: "Paid",
+    },
+
+    pickupStatus: {
+      type: "string",
+      enum: ["Pending", "Partially Collected", "Collected"],
+      example: "Pending",
+    },
+
+    collectedBundle: {
+      type: "number",
+      minimum: 0,
+      example: 5,
+    },
+  },
+},
+
 
         UpdatePickupAssignStatusRequest: {
           type: "object",

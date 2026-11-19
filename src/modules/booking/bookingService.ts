@@ -1,6 +1,7 @@
 import { BookingDocument } from "../../models/bookingModel.js";
 import * as bookingRepository from "./bookingRepository.js";
 
+
 export const createBooking = async (
   bookingData: Partial<BookingDocument>,
 ): Promise<BookingDocument> => {
@@ -33,17 +34,33 @@ export const createBooking = async (
 
     const bookingId = `BKG-${String(nextNumber).padStart(4, "0")}`;
 
+    const bundleCount = bookingData.bundleCount ?? 0;
+
     // Ready to Ship -> bundle = bundleCount
     // Repacking Required -> bundle = null
     const bundle =
       bookingData.packingStatus === "Ready to Ship"
-        ? bookingData.bundleCount || 0
+        ? bundleCount
         : null;
+
+    // Brand handling calculation
+    const totalBrandHandlingCharge =
+      bookingData.productType === "Branded"
+        ? (bookingData.brandHandlingCharge ?? 0) * bundleCount
+        : 0;
+
+    // Bundle handling calculation (only below 5 bundles)
+    const totalBundleHandlingCharge =
+      bundleCount < 5
+        ? (bookingData.bundleHandlingCharge ?? 0) * bundleCount
+        : 0;
 
     const booking = await bookingRepository.create({
       ...bookingData,
       bookingId,
       bundle,
+      totalBrandHandlingCharge,
+      totalBundleHandlingCharge,
     });
 
     return booking;
@@ -53,6 +70,7 @@ export const createBooking = async (
     );
   }
 };
+
 
 export const getAllBookings = async (
   packingStatus?: "Ready to Ship" | "Repacking Required",
@@ -124,22 +142,64 @@ export const getBookingById = async (
   }
 };
 
+
 export const editBooking = async (
   id: string,
   bookingData: Partial<BookingDocument>,
 ): Promise<BookingDocument | null> => {
   try {
+    const existingBooking = await bookingRepository.findById(id);
+
+    if (!existingBooking) {
+      throw new Error("Booking not found");
+    }
+
+    const bundleCount =
+      bookingData.bundleCount ?? existingBooking.bundleCount;
+
+    const productType =
+      bookingData.productType ?? existingBooking.productType;
+
+    const brandHandlingCharge =
+      bookingData.brandHandlingCharge ??
+      existingBooking.brandHandlingCharge ??
+      0;
+
+    const bundleHandlingCharge =
+      bookingData.bundleHandlingCharge ??
+      existingBooking.bundleHandlingCharge ??
+      0;
+
+    // Ready to Ship -> bundle = bundleCount
+    // Repacking Required -> bundle = null
+    const packingStatus =
+      bookingData.packingStatus ?? existingBooking.packingStatus;
+
     const bundle =
-      bookingData.packingStatus === "Ready to Ship"
-        ? bookingData.bundleCount || 0
-        : bookingData.packingStatus === "Repacking Required"
+      packingStatus === "Ready to Ship"
+        ? bundleCount
+        : packingStatus === "Repacking Required"
           ? null
-          : bookingData.bundle;
+          : bookingData.bundle ?? existingBooking.bundle;
+
+    // Brand handling: only for Branded products
+    const totalBrandHandlingCharge =
+      productType === "Branded"
+        ? brandHandlingCharge * bundleCount
+        : 0;
+
+    // Bundle handling: only when bundle count is below 5
+    const totalBundleHandlingCharge =
+      bundleCount < 5
+        ? bundleHandlingCharge * bundleCount
+        : 0;
 
     const booking =
       await bookingRepository.updateById(id, {
         ...bookingData,
         bundle,
+        totalBrandHandlingCharge,
+        totalBundleHandlingCharge,
       });
 
     if (!booking) {
@@ -153,6 +213,7 @@ export const editBooking = async (
     );
   }
 };
+
 
 export const deleteBooking = async (
   id: string,
