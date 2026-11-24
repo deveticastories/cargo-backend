@@ -1,10 +1,12 @@
 import logger from "../../utils/logger.js";
 
 import * as pickupAssignRepository from "./pickupAssignRepository";
+import * as walletService from "../wallet/walletService";
 
 import {
     PickupAssignDocument,
 } from "../../models/pickupAssignModel";
+import mongoose from "mongoose";
 const getPickupStatus = (
     bundleCount: number,
     collectedBundle: number,
@@ -269,19 +271,74 @@ export const updatePickupAssignStatus = async (
         throw new Error(error.message);
     }
 };
-
 export const updatePaymentStatus = async (
     id: string,
     paymentStatus: "Unpaid" | "Paid",
-    updatedBy?: string,
+    updatedBy: string,
+    userRole: string,
 ): Promise<PickupAssignDocument | null> => {
+    console.log("\n========== UPDATE PAYMENT STATUS SERVICE ==========");
+
     try {
-        logger.info(
-            `Updating payment status for pickup assign ${id}`,
-            {
-                paymentStatus,
-            },
-        );
+        console.log("Pickup assignment ID:", id);
+        console.log("Payment status:", paymentStatus);
+        console.log("Updated by:", updatedBy);
+        console.log("User role:", userRole);
+
+        // Step 1: Find pickup assignment
+        console.log("\nSTEP 1: Finding pickup assignment...");
+
+        const pickupAssign =
+            await pickupAssignRepository.findById(id);
+
+        console.log("Pickup assignment:", pickupAssign);
+
+        if (!pickupAssign) {
+            throw new Error("Pickup assignment not found");
+        }
+
+        console.log("Current payment status:", pickupAssign.paymentStatus);
+        console.log("Booking amount:", pickupAssign.amount);
+
+        // Step 2: Check existing payment status
+        console.log("\nSTEP 2: Checking existing payment status...");
+
+        if (pickupAssign.paymentStatus === "Paid") {
+            if (paymentStatus === "Unpaid") {
+                throw new Error(
+                    "Paid assignments cannot be changed to Unpaid",
+                );
+            }
+
+            console.log("Assignment is already Paid");
+            return pickupAssign;
+        }
+
+        // Step 3: Deduct wallet only for Pickup role
+        if (paymentStatus === "Paid" && userRole === "Pickup") {
+            console.log("\nSTEP 3: WALLET DEDUCTION STARTED");
+
+            console.log("Wallet user ID:", updatedBy);
+            console.log("Deduction amount:", pickupAssign.amount);
+            console.log("Booking reference:", id);
+
+            const walletResult =
+                await walletService.deductWalletMoney(
+                    updatedBy,
+                    pickupAssign.amount,
+                    id,
+                );
+
+            console.log("Wallet deduction result:", walletResult);
+            console.log("Wallet deduction completed successfully");
+        } else {
+            console.log("\nSTEP 3: WALLET DEDUCTION SKIPPED");
+            console.log("Payment status:", paymentStatus);
+            console.log("User role:", userRole);
+        }
+
+        // Step 4: Update pickup assignment payment status
+        console.log("\nSTEP 4: Updating pickup assignment...");
 
         const updatedPickupAssign =
             await pickupAssignRepository.changePaymentStatus(
@@ -290,34 +347,27 @@ export const updatePaymentStatus = async (
                 updatedBy,
             );
 
+        console.log("Updated pickup assignment:", updatedPickupAssign);
+
         if (!updatedPickupAssign) {
             throw new Error(
-                `Pickup assign with ID ${id} not found`,
+                "Pickup assignment payment status update failed",
             );
         }
 
-        logger.info(
-            "Pickup assign payment status updated successfully",
-            {
-                pickupAssignId: id,
-                paymentStatus,
-            },
-        );
+        console.log("PAYMENT STATUS UPDATED SUCCESSFULLY");
+        console.log("====================================================\n");
 
         return updatedPickupAssign;
     } catch (error: any) {
-        logger.error(
-            "Error updating pickup assign payment status",
-            {
-                pickupAssignId: id,
-                error: error.message,
-            },
-        );
+        console.error("\n========== UPDATE PAYMENT STATUS ERROR ==========");
+        console.error("Error message:", error.message);
+        console.error("Full error:", error);
+        console.error("==================================================\n");
 
-        throw new Error(error.message);
+        throw error;
     }
 };
-
 export const markCollected = async (
     id: string,
     collectedBundle: number,

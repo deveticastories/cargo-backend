@@ -5,6 +5,7 @@ import * as pickupAssignService from "./pickupAssignService";
 import { message } from "../../constants/responseMessage";
 
 import { RequestWithAuthData } from "../../@types/express";
+import mongoose from "mongoose";
 
 export const createPickupAssign = async (
     req: RequestWithAuthData,
@@ -258,55 +259,80 @@ export const updatePickupAssignStatus = async (
     }
 };
 
+
+
 export const updatePaymentStatus = async (
     req: RequestWithAuthData,
     res: Response,
 ) => {
     const { id } = req.params;
+    const { paymentStatus } = req.body;
+
+    console.log("\n========== UPDATE PAYMENT STATUS CONTROLLER ==========");
+
+    console.log("User ID:", req.userId);
+    console.log("Role:", req.role);
 
     if (!req.userId) {
         return res.status(401).json({
             success: false,
-            message: message.UNAUTHORIZED,
+            message: "Unauthorized",
         });
     }
 
-    if (typeof id !== "string") {
+    if (
+        typeof id !== "string" ||
+        !mongoose.Types.ObjectId.isValid(id)
+    ) {
         return res.status(400).json({
             success: false,
-            message: message.INVALID_PICKUP_ASSIGN_ID,
+            message: "Invalid pickup assignment ID",
         });
     }
 
-    try {
-        const updatedPickupAssign =
-            await pickupAssignService.updatePaymentStatus(
-                id,
-                req.body.paymentStatus,
-                req.userId.toString(),
-            );
+    if (!["Unpaid", "Paid"].includes(paymentStatus)) {
+        return res.status(400).json({
+            success: false,
+            message: "Invalid payment status",
+        });
+    }
 
-        if (!updatedPickupAssign) {
-            return res.status(404).json({
-                success: false,
-                message: message.PICKUP_ASSIGN_NOT_FOUND,
-            });
-        }
+    const userRole =
+        typeof req.role === "string"
+            ? req.role
+            : (req.role as any)?.roleName;
+
+    if (!userRole) {
+        return res.status(403).json({
+            success: false,
+            message: "User role not found",
+        });
+    }
+
+    console.log("Passing role to service:", userRole);
+
+    try {
+        const result = await pickupAssignService.updatePaymentStatus(
+            id,
+            paymentStatus as "Unpaid" | "Paid",
+            req.userId.toString(),
+            userRole,
+        );
 
         return res.status(200).json({
             success: true,
-            message:
-                message.PICKUP_ASSIGN_PAYMENT_STATUS_UPDATED,
-            pickupAssign: updatedPickupAssign,
+            message: "Pickup assignment payment status updated successfully",
+            pickupAssign: result,
         });
     } catch (error: any) {
-        return res.status(500).json({
+        console.error("CONTROLLER ERROR:", error);
+
+        return res.status(400).json({
             success: false,
             message: error.message,
         });
     }
 };
-
 export const markCollected = async (
     req: RequestWithAuthData,
     res: Response,

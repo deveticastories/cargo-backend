@@ -117,31 +117,30 @@ export const findByLrNo = async (
 };
 
 export const changePaymentStatus = async (
-  id: string,
-  paymentStatus: "Unpaid" | "Paid",
-  updatedBy?: string,
+    id: string,
+    paymentStatus: "Unpaid" | "Paid",
+    updatedBy?: string,
 ): Promise<PickupAssignDocument | null> => {
-  return populatePickupAssign(
-    PickupAssign.findOneAndUpdate(
-      {
-        _id: id,
-        isDeleted: false,
-      },
-      {
-        $set: {
-          paymentStatus,
-          updatedBy,
-          updatedAt: new Date(),
-        },
-      },
-      {
-        returnDocument: "after",
-        runValidators: true,
-      },
-    ),
-  ).exec();
+    return populatePickupAssign(
+        PickupAssign.findOneAndUpdate(
+            {
+                _id: id,
+                isDeleted: false,
+            },
+            {
+                $set: {
+                    paymentStatus,
+                    updatedBy,
+                    updatedAt: new Date(),
+                },
+            },
+            {
+                returnDocument: "after",
+                runValidators: true,
+            },
+        ),
+    ).exec();
 };
-
 export const markCollected = async (
   id: string,
   collectedBundle: number,

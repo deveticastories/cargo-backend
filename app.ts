@@ -30,6 +30,7 @@ import reportsRoutes from "./src/modules/reports/reportsRoutes";
 import receiptEntryRoutes from "./src/modules/receiptEntry/receiptEntryRoutes";
 import roleRoutes from "./src/modules/role/roleRoutes";
 import unitRoutes from "./src/modules/unit/unitRoutes";
+import walletRoutes from "./src/modules/wallet/walletRoutes";
 import swaggerSpec from "./src/config/swagger.js";
 
 
@@ -57,6 +58,8 @@ app.use("/api/stores", storeRoutes);
 app.use("/api/countries", countryRoutes);
 app.use("/api/delivery-partners", deliveryPartnerRoutes);
 app.use("/api/pickup-partners", pickupPartnerRoutes);
+app.use("/api/wallet", walletRoutes);
+
 app.use("/api/pricing", pricingRoutes);
 app.use("/api/fabrics", fabricRoutes);
 app.use("/api/products", productRoutes);
