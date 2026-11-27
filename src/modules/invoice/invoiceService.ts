@@ -13,7 +13,6 @@ interface CreateInvoiceInput {
   receivableDiscount?: number;
   createdBy?: mongoose.Types.ObjectId | string;
 }
-
 export const createInvoice = async (
   invoiceData: CreateInvoiceInput,
 ): Promise<InvoiceDocument> => {
@@ -59,7 +58,7 @@ export const createInvoice = async (
 
   const receiverId =
     typeof booking.receiver === "object" &&
-      "_id" in booking.receiver
+    "_id" in booking.receiver
       ? booking.receiver._id.toString()
       : String(booking.receiver);
 
@@ -92,7 +91,9 @@ export const createInvoice = async (
     !Number.isFinite(deliveryPartner.charge) ||
     deliveryPartner.charge < 0
   ) {
-    throw new Error("Delivery partner charge must be valid and non-negative");
+    throw new Error(
+      "Delivery partner charge must be valid and non-negative",
+    );
   }
 
   const receivableDiscount = receiver.discount ?? 0;
@@ -108,7 +109,6 @@ export const createInvoice = async (
 
   const brandHandlingCharge = booking.brandHandlingCharge ?? 0;
   const pickupCharge = booking.pickupCharge ?? 0;
-  const deliveryPartnerCharge = deliveryPartner.charge ?? 0;
   const bundleHandlingCharge = booking.bundleHandlingCharge ?? 0;
 
   if (
@@ -128,29 +128,35 @@ export const createInvoice = async (
     (pricing.price * quantity).toFixed(2),
   );
 
+  const deliveryPartnerCharge = Number(
+    (deliveryPartner.charge * quantity).toFixed(2),
+  );
+
   const additionalCharges = Number(
     (
       brandHandlingCharge +
-      pickupCharge + bundleHandlingCharge).toFixed(2),
+      pickupCharge +
+      bundleHandlingCharge
+    ).toFixed(2),
   );
-  console.log(brandHandlingCharge)
-  console.log(pickupCharge)
-  console.log(deliveryPartnerCharge)
 
-  if (receivableDiscount > subtotal + additionalCharges) {
+  const grossTotal = Number(
+    (
+      subtotal +
+      deliveryPartnerCharge +
+      additionalCharges
+    ).toFixed(2),
+  );
+
+  if (receivableDiscount > grossTotal) {
     throw new Error(
       "Receiver discount cannot exceed the total amount",
     );
   }
 
   const total = Number(
-    (
-      subtotal + deliveryPartnerCharge +
-      additionalCharges -
-      receivableDiscount
-    ).toFixed(2),
+    (grossTotal - receivableDiscount).toFixed(2),
   );
-  console.log(total, 'total')
 
   const lastInvoice = await invoiceRepository.getLastInvoice();
 
@@ -173,8 +179,8 @@ export const createInvoice = async (
     total,
     createdBy: invoiceData.createdBy
       ? new mongoose.Types.ObjectId(
-        invoiceData.createdBy.toString(),
-      )
+          invoiceData.createdBy.toString(),
+        )
       : undefined,
   });
 };

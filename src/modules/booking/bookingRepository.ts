@@ -245,3 +245,110 @@ export const changePackingStatus = async (
     .populate("pickupPartner")
     .exec();
 };
+
+
+import BookingModel from "../../models/bookingModel";
+
+export const findAllBookingsOutsideUAE = () => {
+  return BookingModel.aggregate([
+    {
+      $match: {
+        isDeleted: false,
+      },
+    },
+    {
+      $lookup: {
+        from: "stuffings",
+        localField: "_id",
+        foreignField: "bookings",
+        as: "stuffingDetails",
+      },
+    },
+    {
+      $unwind: "$stuffingDetails",
+    },
+    {
+      $lookup: {
+        from: "containers",
+        localField: "stuffingDetails.container",
+        foreignField: "_id",
+        as: "containerDetails",
+      },
+    },
+    {
+      $unwind: "$containerDetails",
+    },
+    {
+      $match: {
+        "containerDetails.containerStatus": "Stuffed",
+        "containerDetails.isDeleted": false,
+      },
+    },
+    {
+      $lookup: {
+        from: "customers",
+        localField: "receiver",
+        foreignField: "_id",
+        as: "receiverDetails",
+      },
+    },
+    {
+      $unwind: "$receiverDetails",
+    },
+    {
+      $match: {
+        "receiverDetails.isDeleted": false,
+      },
+    },
+    {
+      $lookup: {
+        from: "countries",
+        localField: "receiverDetails.country",
+        foreignField: "_id",
+        as: "receiverCountry",
+      },
+    },
+    {
+      $unwind: "$receiverCountry",
+    },
+    {
+      $match: {
+        "receiverCountry.name": {
+          $not: /^UAE$/i,
+        },
+      },
+    },
+    {
+      $lookup: {
+        from: "customers",
+        localField: "sender",
+        foreignField: "_id",
+        as: "senderDetails",
+      },
+    },
+    {
+      $unwind: {
+        path: "$senderDetails",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        booking: {
+          $first: "$$ROOT",
+        },
+      },
+    },
+    {
+      $replaceRoot: {
+        newRoot: "$booking",
+      },
+    },
+    {
+      $sort: {
+        date: -1,
+      },
+    },
+  ]);
+};

@@ -1,3 +1,4 @@
+
 import { Router } from "express";
 import {
   createBooking,
@@ -8,6 +9,7 @@ import {
   updateBookingStatus,
   updatePackageListStatus,
   updateStuffStatus,
+  getAllBookingsOutsideUAE,
 } from "./bookingController.js";
 import verifyToken from "../../middleware/verifyToken";
 
@@ -69,48 +71,40 @@ router.post("/", verifyToken, createBooking);
  *             - Added
  *             - Pending
  *         example: Added
- *
  *     responses:
  *       200:
  *         description: Bookings fetched successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 totalBookings:
- *                   type: number
- *                   example: 3
- *                 bookingList:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Booking'
- *                 bundle:
- *                   type: number
- *                   example: 10
- *                 box:
- *                   type: number
- *                   example: 5
- *                 cbm:
- *                   type: number
- *                   example: 3
- *                 kg:
- *                   type: number
- *                   example: 25
- *
  *       400:
  *         description: Invalid filter value
- *
  *       401:
  *         description: Unauthorized
- *
  *       500:
  *         description: Internal server error
  */
 router.get("/", verifyToken, getAllBookings);
+
+/**
+ * @swagger
+ * /api/bookings/outside-uae:
+ *   get:
+ *     summary: Get all stuffed bookings where receiver is outside UAE
+ *     tags:
+ *       - Bookings
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Bookings fetched successfully
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
+router.get(
+  "/outside-uae",
+  verifyToken,
+  getAllBookingsOutsideUAE,
+);
 
 /**
  * @swagger

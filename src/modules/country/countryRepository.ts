@@ -38,7 +38,7 @@ export const getAllCountries = async (): Promise<
   CountryDocument[]
 > => {
   return Country.find({ isDeleted: false })
-    .sort({ createdAt: -1 })
+    .sort({ name: 1 })
     .exec();
 };
 
@@ -84,4 +84,15 @@ export const findByName = async (
     name: name.trim(),
     isDeleted: false,
   }).exec();
+};
+
+export const getLocationsByCountry = async (
+  name: string,
+): Promise<string[]> => {
+  const country = await Country.findOne({
+    name: name.trim(),
+    isDeleted: false,
+  }).lean();
+
+  return country?.location || [];
 };

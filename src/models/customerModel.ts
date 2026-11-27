@@ -1,5 +1,5 @@
 
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 import { BaseDocument, BaseSchema } from "./baseModel";
 
 export interface Customer extends BaseDocument {
@@ -7,7 +7,7 @@ export interface Customer extends BaseDocument {
   name?: string;
   whatsapp?: string;
   alternativeNo?: string;
-  country?: string;
+  country?: Types.ObjectId;
   location?: string;
   discount?: number;
 }
@@ -33,8 +33,8 @@ const CustomerSchema: Schema<Customer> = new Schema({
     trim: true,
   },
   country: {
-    type: String,
-    trim: true,
+    type: Schema.Types.ObjectId,
+    ref: "Country",
   },
   location: {
     type: String,

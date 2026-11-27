@@ -8,7 +8,6 @@ export interface Booking extends BaseDocument {
   sender: mongoose.Types.ObjectId;
   receiver: mongoose.Types.ObjectId;
 
-  // Pickup Assign or Pickup Partner
   pickupOption: mongoose.Types.ObjectId | null;
   pickupPartner: mongoose.Types.ObjectId | null;
   pickupVia: "Our Pickup Boy" | "Direct to Store" | "Pickup Partner";
@@ -20,6 +19,7 @@ export interface Booking extends BaseDocument {
   bundleCount: number;
   bundleType: "Bundle" | "Box" | "CBM" | "KG";
   bundle: number | null;
+  bundleAfterPacked?: number | null;
 
   productType: "Branded" | "Normal";
 
@@ -34,12 +34,10 @@ export interface Booking extends BaseDocument {
   stuffed: boolean;
   sentToStuffing: boolean;
 
-  // Existing charge fields
   brandHandlingCharge: number;
   pickupCharge: number;
   bundleHandlingCharge: number;
 
-  // New total charge fields
   totalBrandHandlingCharge: number;
   totalBundleHandlingCharge: number;
 }
@@ -78,8 +76,6 @@ const BookingSchema: Schema<Booking> = new Schema({
     default: null,
   },
 
-  // How the goods reach the store. Only "Pickup Partner" needs a ref
-  // (pickupPartner or pickupOption); the other two may have neither.
   pickupVia: {
     type: String,
     enum: ["Our Pickup Boy", "Direct to Store", "Pickup Partner"],
@@ -149,7 +145,6 @@ const BookingSchema: Schema<Booking> = new Schema({
     default: false,
   },
 
-  // Existing charge fields
   brandHandlingCharge: {
     type: Number,
     default: 0,
@@ -168,7 +163,6 @@ const BookingSchema: Schema<Booking> = new Schema({
     min: 0,
   },
 
-  // New total charge fields
   totalBrandHandlingCharge: {
     type: Number,
     default: 0,
@@ -183,6 +177,19 @@ const BookingSchema: Schema<Booking> = new Schema({
 });
 
 BookingSchema.add(BaseSchema);
+
+// Return bundle as bundleAfterPacked in API responses.
+BookingSchema.virtual("bundleAfterPacked").get(function () {
+  return this.bundle;
+});
+
+BookingSchema.set("toJSON", {
+  virtuals: true,
+});
+
+BookingSchema.set("toObject", {
+  virtuals: true,
+});
 
 export default mongoose.model<BookingDocument>(
   "Booking",

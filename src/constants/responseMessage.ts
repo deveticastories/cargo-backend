@@ -191,8 +191,12 @@ export const message = {
     UNIT_NOT_FOUND: "Unit not found",
     INVALID_UNIT_ID: "Invalid unit ID",
     UNIT_STATUS_UPDATED: "Unit status updated successfully",
-
-
+    DELIVERY_ASSIGN_CREATED: "Delivery assignment created successfully",
+    DELIVERY_ASSIGN_UPDATED: "Delivery assignment updated successfully",
+    DELIVERY_ASSIGN_DELETED: "Delivery assignment deleted successfully",
+    DELIVERY_ASSIGN_NOT_FOUND: "Delivery assignment not found",
+    INVALID_DELIVERY_ASSIGN_ID: "Invalid delivery assignment ID",
+    DELIVERY_ASSIGN_STATUS_UPDATED: "Delivery assignment status updated successfully",
 
 
 

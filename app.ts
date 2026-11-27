@@ -31,6 +31,9 @@ import receiptEntryRoutes from "./src/modules/receiptEntry/receiptEntryRoutes";
 import roleRoutes from "./src/modules/role/roleRoutes";
 import unitRoutes from "./src/modules/unit/unitRoutes";
 import walletRoutes from "./src/modules/wallet/walletRoutes";
+import whatsappGroupRoutes from "./src/modules/whatsappGroup/whatsappGroupRoutes";
+import whatsappMessageRoutes from "./src/modules/whatsppMessage/whatsappMessageRoutes";
+import deliveryAssignRoutes from "./src/modules/deliveryAssign/deliveryAssignRoutes";
 import swaggerSpec from "./src/config/swagger.js";
 
 
@@ -59,7 +62,6 @@ app.use("/api/countries", countryRoutes);
 app.use("/api/delivery-partners", deliveryPartnerRoutes);
 app.use("/api/pickup-partners", pickupPartnerRoutes);
 app.use("/api/wallet", walletRoutes);
-
 app.use("/api/pricing", pricingRoutes);
 app.use("/api/fabrics", fabricRoutes);
 app.use("/api/products", productRoutes);
@@ -76,4 +78,7 @@ app.use("/api/reports", reportsRoutes);
 app.use("/api/receipt-entries", receiptEntryRoutes);
 app.use("/api/roles",roleRoutes),
 app.use("/api/units", unitRoutes);
+app.use("/api/whatsapp-groups",whatsappGroupRoutes);
+app.use("/api/whatsapp-messages",whatsappMessageRoutes);
+app.use("/api/delivery-assigns",deliveryAssignRoutes);
 export default app;

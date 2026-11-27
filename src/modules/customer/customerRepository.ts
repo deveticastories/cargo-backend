@@ -1,3 +1,4 @@
+
 import Customer, {
   CustomerDocument,
 } from "../../models/customerModel";
@@ -13,8 +14,11 @@ export const create = async (
 export const findById = async (
   id: string,
 ): Promise<CustomerDocument | null> => {
-  return Customer.findById(id)
-    .where({ isDeleted: false })
+  return Customer.findOne({
+    _id: id,
+    isDeleted: false,
+  })
+    .populate("country", "name location")
     .exec();
 };
 
@@ -22,8 +26,11 @@ export const updateById = async (
   id: string,
   updateData: Partial<CustomerDocument>,
 ): Promise<CustomerDocument | null> => {
-  return Customer.findByIdAndUpdate(
-    id,
+  return Customer.findOneAndUpdate(
+    {
+      _id: id,
+      isDeleted: false,
+    },
     {
       $set: updateData,
     },
@@ -31,11 +38,16 @@ export const updateById = async (
       new: true,
       runValidators: true,
     },
-  ).exec();
+  )
+    .populate("country", "name location")
+    .exec();
 };
 
 export const getAllCustomers = async (): Promise<CustomerDocument[]> => {
-  return Customer.find({ isDeleted: false })
+  return Customer.find({
+    isDeleted: false,
+  })
+    .populate("country", "name location")
     .sort({ createdAt: -1 })
     .exec();
 };
@@ -43,8 +55,11 @@ export const getAllCustomers = async (): Promise<CustomerDocument[]> => {
 export const deleteCustomer = async (
   customerId: string,
 ): Promise<CustomerDocument | null> => {
-  return Customer.findByIdAndUpdate(
-    customerId,
+  return Customer.findOneAndUpdate(
+    {
+      _id: customerId,
+      isDeleted: false,
+    },
     {
       $set: {
         isDeleted: true,
@@ -54,15 +69,20 @@ export const deleteCustomer = async (
     {
       new: true,
     },
-  ).exec();
+  )
+    .populate("country", "name location")
+    .exec();
 };
 
 export const changeCustomerStatus = async (
   id: string,
   updatedData: Partial<CustomerDocument>,
 ): Promise<CustomerDocument | null> => {
-  return Customer.findByIdAndUpdate(
-    id,
+  return Customer.findOneAndUpdate(
+    {
+      _id: id,
+      isDeleted: false,
+    },
     {
       $set: {
         status: updatedData.status,
@@ -72,7 +92,9 @@ export const changeCustomerStatus = async (
       new: true,
       runValidators: true,
     },
-  ).exec();
+  )
+    .populate("country", "name location")
+    .exec();
 };
 
 export const findByWhatsapp = async (
@@ -81,5 +103,7 @@ export const findByWhatsapp = async (
   return Customer.findOne({
     whatsapp: whatsapp.trim(),
     isDeleted: false,
-  }).exec();
+  })
+    .populate("country", "name location")
+    .exec();
 };

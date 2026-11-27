@@ -359,7 +359,20 @@ const swaggerOptions: swaggerJSDoc.Options = {
             },
             name: {
               type: "string",
-              example: "India",
+              example: "UAE",
+            },
+            location: {
+              type: "array",
+              items: {
+                type: "string",
+              },
+              example: [
+                "AJMAN",
+                "SHARJAH",
+                "ABUDHABI",
+                "FUJAIRAH",
+                "DUBAI",
+              ],
             },
             status: {
               type: "boolean",
@@ -391,7 +404,20 @@ const swaggerOptions: swaggerJSDoc.Options = {
           properties: {
             name: {
               type: "string",
-              example: "India",
+              example: "UAE",
+            },
+            location: {
+              type: "array",
+              items: {
+                type: "string",
+              },
+              example: [
+                "AJMAN",
+                "SHARJAH",
+                "ABUDHABI",
+                "FUJAIRAH",
+                "DUBAI",
+              ],
             },
           },
         },
@@ -401,7 +427,20 @@ const swaggerOptions: swaggerJSDoc.Options = {
           properties: {
             name: {
               type: "string",
-              example: "United Arab Emirates",
+              example: "UAE",
+            },
+            location: {
+              type: "array",
+              items: {
+                type: "string",
+              },
+              example: [
+                "AJMAN",
+                "SHARJAH",
+                "ABUDHABI",
+                "FUJAIRAH",
+                "DUBAI",
+              ],
             },
           },
         },
@@ -564,212 +603,212 @@ const swaggerOptions: swaggerJSDoc.Options = {
           },
         },
 
-       
-PickupAssign: {
-  type: "object",
-  properties: {
-    _id: {
-      type: "string",
-      example: "665c2f8a9b12345678901234",
-    },
 
-    transport: {
-      $ref: "#/components/schemas/PickupPartner",
-    },
+        PickupAssign: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
 
-    sender: {
-      type: "string",
-      nullable: true,
-      description: "Sender ID",
-      example: "665c2f8a9b12345678901235",
-    },
+            transport: {
+              $ref: "#/components/schemas/PickupPartner",
+            },
 
-    receiver: {
-      type: "string",
-      nullable: true,
-      description: "Receiver ID",
-      example: "665c2f8a9b12345678901236",
-    },
+            sender: {
+              type: "string",
+              nullable: true,
+              description: "Sender ID",
+              example: "665c2f8a9b12345678901235",
+            },
 
-    lrNo: {
-      type: "string",
-      example: "LR-2026-00125",
-    },
+            receiver: {
+              type: "string",
+              nullable: true,
+              description: "Receiver ID",
+              example: "665c2f8a9b12345678901236",
+            },
 
-    bundleCount: {
-      type: "number",
-      example: 10,
-    },
+            lrNo: {
+              type: "string",
+              example: "LR-2026-00125",
+            },
 
-    amount: {
-      type: "number",
-      example: 2500,
-    },
+            bundleCount: {
+              type: "number",
+              example: 10,
+            },
 
-    paymentStatus: {
-      type: "string",
-      enum: ["Unpaid", "Paid"],
-      example: "Unpaid",
-    },
+            amount: {
+              type: "number",
+              example: 2500,
+            },
 
-    pickupStatus: {
-      type: "string",
-      enum: ["Pending", "Partially Collected", "Collected"],
-      example: "Pending",
-    },
+            paymentStatus: {
+              type: "string",
+              enum: ["Unpaid", "Paid"],
+              example: "Unpaid",
+            },
 
-    collectedBundle: {
-      type: "number",
-      example: 0,
-    },
+            pickupStatus: {
+              type: "string",
+              enum: ["Pending", "Partially Collected", "Collected"],
+              example: "Pending",
+            },
 
-    status: {
-      type: "boolean",
-      example: true,
-    },
+            collectedBundle: {
+              type: "number",
+              example: 0,
+            },
 
-    isDeleted: {
-      type: "boolean",
-      example: false,
-    },
+            status: {
+              type: "boolean",
+              example: true,
+            },
 
-    deletedAt: {
-      type: "string",
-      format: "date-time",
-      nullable: true,
-    },
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
 
-    createdAt: {
-      type: "string",
-      format: "date-time",
-    },
+            deletedAt: {
+              type: "string",
+              format: "date-time",
+              nullable: true,
+            },
 
-    updatedAt: {
-      type: "string",
-      format: "date-time",
-    },
-  },
-},
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
 
-CreatePickupAssignRequest: {
-  type: "object",
-  required: [
-    "transport",
-    "lrNo",
-    "bundleCount",
-    "amount",
-  ],
-  properties: {
-    transport: {
-      type: "string",
-      description: "Pickup Partner ID",
-      example: "665c2f8a9b12345678901234",
-    },
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
 
-    sender: {
-      type: "string",
-      nullable: true,
-      description: "Sender ID (Optional)",
-      example: "665c2f8a9b12345678901235",
-    },
+        CreatePickupAssignRequest: {
+          type: "object",
+          required: [
+            "transport",
+            "lrNo",
+            "bundleCount",
+            "amount",
+          ],
+          properties: {
+            transport: {
+              type: "string",
+              description: "Pickup Partner ID",
+              example: "665c2f8a9b12345678901234",
+            },
 
-    receiver: {
-      type: "string",
-      nullable: true,
-      description: "Receiver ID (Optional)",
-      example: "665c2f8a9b12345678901236",
-    },
+            sender: {
+              type: "string",
+              nullable: true,
+              description: "Sender ID (Optional)",
+              example: "665c2f8a9b12345678901235",
+            },
 
-    lrNo: {
-      type: "string",
-      example: "LR-2026-00125",
-    },
+            receiver: {
+              type: "string",
+              nullable: true,
+              description: "Receiver ID (Optional)",
+              example: "665c2f8a9b12345678901236",
+            },
 
-    bundleCount: {
-      type: "number",
-      minimum: 1,
-      example: 10,
-    },
+            lrNo: {
+              type: "string",
+              example: "LR-2026-00125",
+            },
 
-    amount: {
-      type: "number",
-      minimum: 0,
-      example: 2500,
-    },
+            bundleCount: {
+              type: "number",
+              minimum: 1,
+              example: 10,
+            },
 
-    paymentStatus: {
-      type: "string",
-      enum: ["Unpaid", "Paid"],
-      example: "Unpaid",
-    },
+            amount: {
+              type: "number",
+              minimum: 0,
+              example: 2500,
+            },
 
-    collectedBundle: {
-      type: "number",
-      minimum: 0,
-      example: 0,
-    },
-  },
-},
+            paymentStatus: {
+              type: "string",
+              enum: ["Unpaid", "Paid"],
+              example: "Unpaid",
+            },
 
-UpdatePickupAssignRequest: {
-  type: "object",
-  properties: {
-    transport: {
-      type: "string",
-      description: "Pickup Partner ID",
-      example: "665c2f8a9b12345678901234",
-    },
+            collectedBundle: {
+              type: "number",
+              minimum: 0,
+              example: 0,
+            },
+          },
+        },
 
-    sender: {
-      type: "string",
-      nullable: true,
-      description: "Sender ID (Optional)",
-      example: "665c2f8a9b12345678901235",
-    },
+        UpdatePickupAssignRequest: {
+          type: "object",
+          properties: {
+            transport: {
+              type: "string",
+              description: "Pickup Partner ID",
+              example: "665c2f8a9b12345678901234",
+            },
 
-    receiver: {
-      type: "string",
-      nullable: true,
-      description: "Receiver ID (Optional)",
-      example: "665c2f8a9b12345678901236",
-    },
+            sender: {
+              type: "string",
+              nullable: true,
+              description: "Sender ID (Optional)",
+              example: "665c2f8a9b12345678901235",
+            },
 
-    lrNo: {
-      type: "string",
-      example: "LR-2026-00125",
-    },
+            receiver: {
+              type: "string",
+              nullable: true,
+              description: "Receiver ID (Optional)",
+              example: "665c2f8a9b12345678901236",
+            },
 
-    bundleCount: {
-      type: "number",
-      minimum: 1,
-      example: 15,
-    },
+            lrNo: {
+              type: "string",
+              example: "LR-2026-00125",
+            },
 
-    amount: {
-      type: "number",
-      minimum: 0,
-      example: 3000,
-    },
+            bundleCount: {
+              type: "number",
+              minimum: 1,
+              example: 15,
+            },
 
-    paymentStatus: {
-      type: "string",
-      enum: ["Unpaid", "Paid"],
-      example: "Paid",
-    },
+            amount: {
+              type: "number",
+              minimum: 0,
+              example: 3000,
+            },
 
-    pickupStatus: {
-      type: "string",
-      enum: ["Pending", "Partially Collected", "Collected"],
-      example: "Pending",
-    },
+            paymentStatus: {
+              type: "string",
+              enum: ["Unpaid", "Paid"],
+              example: "Paid",
+            },
 
-    collectedBundle: {
-      type: "number",
-      minimum: 0,
-      example: 5,
-    },
-  },
-},
+            pickupStatus: {
+              type: "string",
+              enum: ["Pending", "Partially Collected", "Collected"],
+              example: "Pending",
+            },
+
+            collectedBundle: {
+              type: "number",
+              minimum: 0,
+              example: 5,
+            },
+          },
+        },
 
 
         UpdatePickupAssignStatusRequest: {
@@ -961,6 +1000,157 @@ UpdatePickupAssignRequest: {
             },
           },
         },
+
+        WhatsAppGroup: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+
+            name: {
+              type: "string",
+              example: "Kerala Customers",
+            },
+
+            mobilenumbers: {
+              type: "array",
+              items: {
+                type: "string",
+              },
+              example: [
+                "9876543210",
+                "9876543211",
+                "9876543212",
+              ],
+            },
+
+            isDeleted: {
+              type: "boolean",
+              example: false,
+            },
+
+            createdBy: {
+              type: "string",
+              example: "665c2f8a9b12345678901234",
+            },
+
+            updatedBy: {
+              type: "string",
+              nullable: true,
+              example: "665c2f8a9b12345678901235",
+            },
+
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        CreateWhatsAppGroupRequest: {
+          type: "object",
+
+          required: ["name"],
+
+          properties: {
+            name: {
+              type: "string",
+              example: "Kerala Customers",
+            },
+
+            mobilenumbers: {
+              type: "array",
+              items: {
+                type: "string",
+              },
+              example: [
+                "9876543210",
+                "9876543211",
+              ],
+            },
+          },
+        },
+
+        UpdateWhatsAppGroupRequest: {
+          type: "object",
+
+          properties: {
+            name: {
+              type: "string",
+              example: "Updated Kerala Customers",
+            },
+
+            addNumbers: {
+              type: "array",
+              items: {
+                type: "string",
+              },
+              example: [
+                "9876543212",
+                "9876543213",
+              ],
+            },
+
+            removeNumbers: {
+              type: "array",
+              items: {
+                type: "string",
+              },
+              example: [
+                "9876543210",
+              ],
+            },
+          },
+        },
+
+        WhatsAppGroupResponse: {
+          type: "object",
+          properties: {
+            success: {
+              type: "boolean",
+              example: true,
+            },
+
+            message: {
+              type: "string",
+              example: "WhatsApp group fetched successfully",
+            },
+
+            data: {
+              $ref: "#/components/schemas/WhatsAppGroup",
+            },
+          },
+        },
+
+        WhatsAppGroupsResponse: {
+          type: "object",
+          properties: {
+            success: {
+              type: "boolean",
+              example: true,
+            },
+
+            message: {
+              type: "string",
+              example: "WhatsApp groups fetched successfully",
+            },
+
+            data: {
+              type: "array",
+              items: {
+                $ref: "#/components/schemas/WhatsAppGroup",
+              },
+            },
+          },
+        },
+
         Booking: {
           type: "object",
           properties: {
@@ -2931,6 +3121,7 @@ UpdatePickupAssignRequest: {
           },
         },
 
+
         Customer: {
           type: "object",
           properties: {
@@ -2956,8 +3147,24 @@ UpdatePickupAssignRequest: {
               example: "9123456780",
             },
             country: {
-              type: "string",
-              example: "India",
+              type: "object",
+              properties: {
+                _id: {
+                  type: "string",
+                  example: "674abc123456789012345678",
+                },
+                name: {
+                  type: "string",
+                  example: "India",
+                },
+                location: {
+                  type: "array",
+                  items: {
+                    type: "string",
+                  },
+                  example: ["Kochi", "Mumbai", "Delhi"],
+                },
+              },
             },
             location: {
               type: "string",
@@ -2968,9 +3175,8 @@ UpdatePickupAssignRequest: {
               example: 10,
             },
             status: {
-              type: "string",
-              enum: ["Active", "Inactive"],
-              example: "Active",
+              type: "boolean",
+              example: true,
             },
             isDeleted: {
               type: "boolean",
@@ -3009,7 +3215,8 @@ UpdatePickupAssignRequest: {
             },
             country: {
               type: "string",
-              example: "India",
+              example: "674abc123456789012345678",
+              description: "Country ObjectId",
             },
             location: {
               type: "string",
@@ -3020,9 +3227,8 @@ UpdatePickupAssignRequest: {
               example: 10,
             },
             status: {
-              type: "string",
-              enum: ["Active", "Inactive"],
-              example: "Active",
+              type: "boolean",
+              example: true,
             },
           },
         },
@@ -3049,7 +3255,8 @@ UpdatePickupAssignRequest: {
             },
             country: {
               type: "string",
-              example: "UAE",
+              example: "674abc123456789012345678",
+              description: "Country ObjectId",
             },
             location: {
               type: "string",
@@ -3060,9 +3267,8 @@ UpdatePickupAssignRequest: {
               example: 10,
             },
             status: {
-              type: "string",
-              enum: ["Active", "Inactive"],
-              example: "Active",
+              type: "boolean",
+              example: true,
             },
           },
         },
@@ -3071,12 +3277,12 @@ UpdatePickupAssignRequest: {
           type: "object",
           properties: {
             status: {
-              type: "string",
-              enum: ["Active", "Inactive"],
-              example: "Active",
+              type: "boolean",
+              example: true,
             },
           },
         },
+
       },
     },
   },

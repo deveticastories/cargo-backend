@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 import { PackageDocument } from "../../models/packageModel.js";
 import * as packageRepository from "./packageRepository.js";
+import * as bookingRepository from "../booking/bookingRepository.js"
 
 export const createPackage = async (
   packageData: Partial<PackageDocument>,
@@ -11,7 +12,11 @@ export const createPackage = async (
       throw new Error("Booking is required");
     }
 
-    if (!mongoose.Types.ObjectId.isValid(packageData.booking.toString())) {
+    if (
+      !mongoose.Types.ObjectId.isValid(
+        packageData.booking.toString(),
+      )
+    ) {
       throw new Error("Invalid booking ID");
     }
 
@@ -26,14 +31,43 @@ export const createPackage = async (
       );
     }
 
-    return await packageRepository.create(packageData);
+    const booking =
+      await bookingRepository.findById(
+        packageData.booking.toString(),
+      );
+
+    if (!booking) {
+      throw new Error("Booking not found");
+    }
+
+    const createdPackage =
+      await packageRepository.create(packageData);
+
+    const bundleAfterPacked =
+      booking.packingStatus === "Ready to Ship"
+        ? booking.bundleCount
+        : createdPackage.bundles.length;
+
+    const updatedBooking =
+      await bookingRepository.updateById(
+        booking._id.toString(),
+        {
+          bundle: bundleAfterPacked,
+          packageListStatus: "Added",
+        },
+      );
+
+    if (!updatedBooking) {
+      throw new Error("Failed to update booking");
+    }
+
+    return createdPackage;
   } catch (error: any) {
     throw new Error(
       error?.message || "Failed to create package",
     );
   }
 };
-
 export const getAllPackages = async () => {
   try {
     const packages =
@@ -98,24 +132,41 @@ export const getPackageByBooking = async (
 
 export const updatePackage = async (
   id: string,
-  packageData: Partial<PackageDocument>,
+  updateData: Partial<PackageDocument>,
 ): Promise<PackageDocument | null> => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new Error("Invalid package ID");
-    }
-
-    const packageDoc =
+    const updatedPackage =
       await packageRepository.updateById(
         id,
-        packageData,
+        updateData,
       );
 
-    if (!packageDoc) {
+    if (!updatedPackage) {
       throw new Error("Package not found");
     }
 
-    return packageDoc;
+    const booking =
+      await bookingRepository.findById(
+        updatedPackage.booking.toString(),
+      );
+
+    if (!booking) {
+      throw new Error("Booking not found");
+    }
+
+    const bundleAfterPacked =
+      booking.packingStatus === "Ready to Ship"
+        ? booking.bundleCount
+        : updatedPackage.bundles.length;
+
+    await bookingRepository.updateById(
+      booking._id.toString(),
+      {
+        bundle: bundleAfterPacked,
+      },
+    );
+
+    return updatedPackage;
   } catch (error: any) {
     throw new Error(
       error?.message || "Failed to update package",
@@ -171,7 +222,7 @@ export const getPackageForDownload =
     } catch (error: any) {
       throw new Error(
         error?.message ||
-          "Failed to get package",
+        "Failed to get package",
       );
     }
   };

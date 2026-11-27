@@ -403,3 +403,23 @@ export const updateStuffStatus = async (
     });
   }
 };
+export const getAllBookingsOutsideUAE = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const bookings =
+      await bookingService.getAllBookingsOutsideUAE();
+
+    return res.status(200).json({
+      success: true,
+      message: "Bookings fetched successfully",
+      data: bookings,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error?.message,
+    });
+  }
+};
